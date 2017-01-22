@@ -1,0 +1,9 @@
+<form role="form" (ngSubmit)="saveNewTask(); formAdd.reset() " #formAdd="ngForm">
+
+    <div class="form-group">
+        <input class="form-control" type="text" name="newTitle" [(ngModel)]="newTitle"
+               placeholder="Введите новую задачу" minlength="5"
+               required>
+    </div>
+    <button class="btn btn-success" [class.disabled]="formAdd.form.invalid" type="submit">add</button>
+</form>
