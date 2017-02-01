@@ -18,4 +18,12 @@
     </bean>
 
     <mvc:view-controller path="/index.html" view-name="index"/>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/*"/>
+            <mvc:mapping path="/api"/>
+            <bean class="ru.plutonii.AccessInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
