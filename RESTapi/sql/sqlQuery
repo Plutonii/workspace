@@ -1,0 +1,47 @@
+CREATE TABLE `workspace_v_1`.`task` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `maker_id` INT NOT NULL,
+  `project_id` INT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `maker_id_UNIQUE` (`maker_id` ASC),
+  UNIQUE INDEX `project_id_UNIQUE` (`project_id` ASC));
+
+
+CREATE TABLE `workspace_v_1`.`project` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(45) NOT NULL,
+  `description` VARCHAR(255) NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC));
+
+
+CREATE TABLE `workspace_v_1`.`team` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `project_id` INT NOT NULL,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `project_id_UNIQUE` (`project_id` ASC));
+
+
+CREATE TABLE `workspace_v_1`.`user` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(45) NULL,
+  `avatar` BLOB NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
+
+
+CREATE TABLE `workspace_v_1`.`token` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `token` VARCHAR(255) NULL,
+  `lifetime` DATETIME NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `user_id_UNIQUE` (`user_id` ASC));
+
