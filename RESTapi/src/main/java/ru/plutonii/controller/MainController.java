@@ -1,18 +1,14 @@
 package ru.plutonii.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.support.HttpRequestHandlerServlet;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created by plutonii on 31.01.17.
  */
-@RequestMapping("/api")
+@RequestMapping("/r")
 @RestController
 public class MainController {
 
@@ -20,17 +16,19 @@ public class MainController {
 
     @GetMapping(produces = "application/json")
     @ResponseBody
-    public String get(String token) {
+    public String get(String token, HttpServletRequest request) {
+        String str = request.getHeader("abc");
         /*System.out.println(token);
         System.out.println(this.token);
         if (token.equals(this.token)) {
             System.out.println("Yes");
         } else System.out.println("No");*/
 
-        return "рома";
+        return "рома " + str;
     }
 
-    @RequestMapping(path = "/t", method = RequestMethod.GET)
+
+    @RequestMapping(path = "/t", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public String getT(HttpServletRequest request) {
         System.out.println("inController");
@@ -40,7 +38,7 @@ public class MainController {
 
     @RequestMapping(path = "/123/{a}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public String getS(@PathVariable(name = "a") String a) throws AccessException{
+    public String getS(@PathVariable(name = "a") String a) throws AccessException {
         //this.controllAccess(2);
         if (a.equals("1")) {
             return "1";
@@ -56,7 +54,7 @@ public class MainController {
 }
 
 class AccessException extends RuntimeException {
-    public AccessException(int id){
+    public AccessException(int id) {
         super("NO ACCEESS FOR " + id);
         System.out.println("in ex");
     }
