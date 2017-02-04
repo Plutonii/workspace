@@ -20,7 +20,7 @@
         <mvc:interceptor>
             <mvc:mapping path="/api/*"/>
             <mvc:mapping path="/api"/>
-            <bean class="ru.plutonii.AccessInterceptor"/>
+            <bean class="ru.plutonii.access.AccessInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>
