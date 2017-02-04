@@ -1,4 +1,4 @@
-package ru.plutonii;
+package ru.plutonii.access;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
