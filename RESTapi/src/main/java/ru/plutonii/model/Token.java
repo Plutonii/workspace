@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 /**
  * Created by plutonii on 04.02.17.
  */
-@Entity
+@Entity(name = "token")
 public class Token {
     private int id;
     private int userId;

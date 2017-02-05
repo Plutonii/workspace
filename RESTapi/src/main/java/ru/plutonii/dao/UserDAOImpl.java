@@ -2,9 +2,11 @@ package ru.plutonii.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.plutonii.exception.UserAlreadyExistsException;
 import ru.plutonii.model.User;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
     private SessionFactory sessionFactory;
 
     @Autowired
-    UserDAOImpl(SessionFactory sessionFactory){
+    UserDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -27,13 +29,13 @@ public class UserDAOImpl implements UserDAO {
         return this.sessionFactory.getCurrentSession();
     }
 
-    public User insert(User user) {
-        getCurrentSession().saveOrUpdate(user);
+    public User insertOrUpdate(User user) {
+        try {
+            getCurrentSession().saveOrUpdate(user);
+        } catch (ConstraintViolationException e){
+            throw new UserAlreadyExistsException(e.getConstraintName());
+        }
         return user;
-    }
-
-    public void update(User user) {
-        getCurrentSession().saveOrUpdate(user);
     }
 
     public void delete(User user) {
@@ -42,26 +44,26 @@ public class UserDAOImpl implements UserDAO {
 
     @Transactional(readOnly = true)
     public List<User> findAll() {
-        return getCurrentSession().createQuery("from User u").list();
+        return getCurrentSession().createQuery("from user u").list();
     }
 
     @Transactional(readOnly = true)
     public User findById(int id) {
-        return (User) getCurrentSession().createQuery("from User u where u.id = :id")
+        return (User) getCurrentSession().createQuery("from user u where u.id = :id")
                 .setParameter("id", id)
                 .uniqueResult();
     }
 
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
-        return (User) getCurrentSession().createQuery("from User u where u.username = :username")
+        return (User) getCurrentSession().createQuery("from user u where u.username = :username")
                 .setParameter("username", username)
                 .uniqueResult();
     }
 
     @Transactional(readOnly = true)
     public User findByEmail(String email) {
-        return (User) getCurrentSession().createQuery("from User u where u.email = :email")
+        return (User) getCurrentSession().createQuery("from user u where u.email = :email")
                 .setParameter("email", email)
                 .uniqueResult();
     }

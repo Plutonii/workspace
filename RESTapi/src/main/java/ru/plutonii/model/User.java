@@ -6,7 +6,7 @@ import java.util.Arrays;
 /**
  * Created by plutonii on 04.02.17.
  */
-@Entity
+@Entity(name = "user")
 public class User {
     private int id;
     private String username;
@@ -89,5 +89,10 @@ public class User {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(avatar);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return id + "|" + username + "|" + password;
     }
 }

@@ -14,13 +14,13 @@
 
     <mvc:annotation-driven/>
 
-    <context:component-scan base-package="ru.plutonii"/>
+    <context:component-scan base-package="ru.plutonii.controller"/>
 
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/api/*"/>
             <mvc:mapping path="/api"/>
-            <bean class="ru.plutonii.access.AccessInterceptor"/>
+            <bean class="ru.plutonii.interceptor.AccessInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>

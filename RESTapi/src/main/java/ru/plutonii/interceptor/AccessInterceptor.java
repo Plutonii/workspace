@@ -1,4 +1,4 @@
-package ru.plutonii.access;
+package ru.plutonii.interceptor;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -8,14 +8,18 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 public class AccessInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public boolean preHandle(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("inHandler");
-        Integer id = 2;
+    public boolean preHandle(javax.servlet.http.HttpServletRequest request,
+                             javax.servlet.http.HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
-        if (token != null && token.equals("123")){
+        if (token != null && token.equals("123"))
+
+        {
             request.setAttribute("abcdf", id);
             return true;
-        } else {
+        } else
+
+        {
+            System.out.println(false);
             response.setStatus(403);
             return false;
         }

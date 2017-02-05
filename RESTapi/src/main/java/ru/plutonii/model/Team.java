@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * Created by plutonii on 04.02.17.
  */
-@Entity
+@Entity(name = "team")
 public class Team {
     private int id;
     private int projectId;
