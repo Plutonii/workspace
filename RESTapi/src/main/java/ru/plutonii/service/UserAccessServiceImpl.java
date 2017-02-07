@@ -43,10 +43,10 @@ public class UserAccessServiceImpl implements UserAccessService {
         } else {
             Token token = new Token();
             token.setUserId(realUser.getId());
-            token.setLifetime(new Timestamp(1000));
-            token.setToken(token.getUserId() + "|" + GeneratorService.generateStrToken());
+            token.setLifetime(new Timestamp(System.currentTimeMillis() + 10000));
+            token.setToken(GeneratorService.generateStrToken());
             tokenDAO.insert(token);
-            return token.getToken();
+            return token.getUserId() + "|" + token.getToken();
         }
     }
 

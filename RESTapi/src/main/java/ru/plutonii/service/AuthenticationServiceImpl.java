@@ -15,18 +15,23 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private TokenDAO tokenDAO;
 
     @Autowired
-    AuthenticationServiceImpl(TokenDAO tokenDAO){
+    AuthenticationServiceImpl(TokenDAO tokenDAO) {
         this.tokenDAO = tokenDAO;
     }
 
     public boolean authentication(String token) {
+        System.out.println(token);
         int indexSeparator = token.indexOf('|');
         if (indexSeparator == -1) return false;
         try {
             int id = Integer.parseInt(token.substring(0, indexSeparator));
-            token = token.substring(indexSeparator);
+
+            System.out.println("index=" + id);
+            token = token.substring(indexSeparator + 1);
+            System.out.println(token);
             Token realToken = tokenDAO.findByUserId(id);
             if (realToken == null) return false;
+            System.out.println("realToken="+realToken.getToken());
             if (!realToken.getToken().equals(token)) return false;
         } catch (NumberFormatException NFE) {
             return false;
