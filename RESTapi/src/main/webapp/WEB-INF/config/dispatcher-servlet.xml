@@ -18,9 +18,9 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/api/*"/>
-            <mvc:mapping path="/api"/>
-            <bean class="ru.plutonii.interceptor.AccessInterceptor"/>
+            <!--<mvc:mapping path="/"/>-->
+            <mvc:mapping path="/api/**"/>
+            <bean class="ru.plutonii.interceptor.AccessChecksInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
 </beans>
