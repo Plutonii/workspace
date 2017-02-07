@@ -2,9 +2,11 @@ package ru.plutonii.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.plutonii.exception.AlreadyAuthorizedException;
 import ru.plutonii.model.Token;
 
 /**
@@ -25,7 +27,12 @@ public class TokenDAOImpl implements TokenDAO{
     }
 
     public Token insert(Token token) {
-        getCurrentSession().saveOrUpdate(token);
+        try {
+            getCurrentSession().saveOrUpdate(token);
+        } catch (ConstraintViolationException e){
+            AlreadyAuthorizedException E = new AlreadyAuthorizedException(e.getMessage(), token.getToken());
+            throw  E;
+        }
         return token;
     }
 
