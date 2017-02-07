@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ru.plutonii.exception.AlreadyAuthorizedException;
 import ru.plutonii.exception.InvalidDataUserException;
 import ru.plutonii.exception.ProjectNotFound;
 import ru.plutonii.exception.UserAlreadyExistsException;
@@ -29,6 +30,12 @@ public class GlobalExceptionHandlerController {
     @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Проект не найден")
     @ExceptionHandler(ProjectNotFound.class)
     void handleProjectNotFoundException(ProjectNotFound e) {
+        System.err.println(e.getMessage());
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_GATEWAY, reason = "You")
+    @ExceptionHandler(AlreadyAuthorizedException.class)
+    void handleAlreadyAuthorizedException(AlreadyAuthorizedException e) {
         System.err.println(e.getMessage());
     }
 }
