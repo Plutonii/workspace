@@ -5,7 +5,7 @@ import javax.persistence.*;
 /**
  * Created by plutonii on 04.02.17.
  */
-@Entity(name =" task")
+@Entity(name ="task")
 public class Task {
     private int id;
     private String title;
