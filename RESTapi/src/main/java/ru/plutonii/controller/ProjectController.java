@@ -27,7 +27,7 @@ public class ProjectController {
         return projectService.findById(id);
     }
 
-    @GetMapping(path = "/{id}/project")
+    @GetMapping(path = "/project/userid/{id}")
     @ResponseBody
     List<Project> getProjectsByUserId(@PathVariable(name = "id") int id){
         return projectService.findByUserId(id);

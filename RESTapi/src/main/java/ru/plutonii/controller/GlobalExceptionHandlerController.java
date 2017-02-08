@@ -4,10 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import ru.plutonii.exception.AlreadyAuthorizedException;
-import ru.plutonii.exception.InvalidDataUserException;
-import ru.plutonii.exception.ProjectNotFound;
-import ru.plutonii.exception.UserAlreadyExistsException;
+import ru.plutonii.exception.*;
 
 /**
  * Created by plutonii on 05.02.17.
@@ -15,27 +12,27 @@ import ru.plutonii.exception.UserAlreadyExistsException;
 @ControllerAdvice
 public class GlobalExceptionHandlerController {
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Такой пользователь уже существует")
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "This user already exists")
     @ExceptionHandler(UserAlreadyExistsException.class)
     void handleUserAlreadyExistsException(UserAlreadyExistsException e) {
         System.err.println(e.getMessage());
     }
 
-    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Неверные данные")
+    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Incorrect data")
     @ExceptionHandler(InvalidDataUserException.class)
     void handleInvalidLoginException(InvalidDataUserException e) {
         System.err.println(e.getMessage());
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Проект не найден")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "project not found")
     @ExceptionHandler(ProjectNotFound.class)
     void handleProjectNotFoundException(ProjectNotFound e) {
         System.err.println(e.getMessage());
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_GATEWAY, reason = "You")
-    @ExceptionHandler(AlreadyAuthorizedException.class)
-    void handleAlreadyAuthorizedException(AlreadyAuthorizedException e) {
+    @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "Task not found")
+    @ExceptionHandler(TaskNotFound.class)
+    void handleTaskNotFoundException(TaskNotFound e) {
         System.err.println(e.getMessage());
     }
 }
