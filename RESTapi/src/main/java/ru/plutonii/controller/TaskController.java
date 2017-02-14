@@ -10,6 +10,8 @@ import java.util.List;
 /**
  * Created by plutonii on 08.02.17.
  */
+
+@CrossOrigin(origins = "http://plutonii.ru", exposedHeaders = "token") //for dev
 @RestController
 @RequestMapping("/api")
 public class TaskController {

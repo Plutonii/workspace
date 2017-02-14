@@ -2,12 +2,13 @@ package ru.plutonii.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.plutonii.exception.AlreadyAuthorizedException;
 import ru.plutonii.model.User;
 import ru.plutonii.service.UserAccessService;
 
 import javax.servlet.http.HttpServletResponse;
 
+
+@CrossOrigin(origins = "http://plutonii.ru", exposedHeaders = "token") //for dev
 @RequestMapping("/access")
 @RestController
 public class UserAccessController {
@@ -20,8 +21,9 @@ public class UserAccessController {
     }
 
     @PostMapping(path = "/new", consumes = "application/json")
-    void register(@RequestBody User user) {
-        userAccess.registerUser(user);
+    void register(@RequestBody User user, HttpServletResponse response) {
+        String token = userAccess.registerUser(user);
+        response.setHeader("token", token);
     }
 
     @PostMapping(path = "/remove", consumes = "application/json")
@@ -31,12 +33,8 @@ public class UserAccessController {
 
     @PostMapping(path = "/login", consumes = "application/json")
     void login(@RequestBody User user, HttpServletResponse response) {
-        try {
-            String token = userAccess.login(user);
-            response.setHeader("token", token);
-        } catch (AlreadyAuthorizedException e) {
-            response.setHeader("token", e.getOldToken());
-        }
+        String token = userAccess.login(user);
+        response.setHeader("token", token);
     }
 
     @PostMapping(path = "/logout", consumes = "application/json")

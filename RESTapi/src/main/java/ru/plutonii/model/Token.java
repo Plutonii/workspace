@@ -77,4 +77,9 @@ public class Token {
         result = 31 * result + (lifetime != null ? lifetime.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return this.getId() + " | " + this.getUserId() + " | " + this.getToken();
+    }
 }

@@ -93,6 +93,6 @@ public class User {
 
     @Override
     public String toString() {
-        return id + "|" + username + "|" + password;
+        return "User: " + id + "|" + username + "|" + password;
     }
 }

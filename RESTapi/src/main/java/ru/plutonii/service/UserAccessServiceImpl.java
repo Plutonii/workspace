@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 /**
  * Created by plutonii on 04.02.17.
  */
-@Service
+@Service("userAccessService")
 @Transactional
 public class UserAccessServiceImpl implements UserAccessService {
 
@@ -27,13 +27,22 @@ public class UserAccessServiceImpl implements UserAccessService {
         this.tokenDAO = tokenDAO;
     }
 
-    public void registerUser(User user) {//change (return token if user registered)
+    public String registerUser(User user) {//change (return token if user registered)
         userDAO.insertOrUpdate(user);
+        Token token = new Token();
+        token.setUserId(user.getId());
+        token.setLifetime(new Timestamp(System.currentTimeMillis() + 10000));
+        token.setToken(GeneratorService.generateStrToken());
+        tokenDAO.insert(token);
+        return token.getUserId() + "|" + token.getToken();
     }
 
     public void removeUser(User user) {
         User realUser = userDAO.findById(user.getId());
-        userDAO.delete(realUser);//create trigger (when delete user, entry moves in another table "deleteUsers")
+        if (realUser != null) {
+            logout(realUser);
+            userDAO.delete(realUser);//create trigger (when delete user, entry moves in another table "deleteUsers")
+        }
     }
 
     public String login(User user) {
@@ -41,17 +50,23 @@ public class UserAccessServiceImpl implements UserAccessService {
         if (realUser == null || !realUser.getPassword().equals(user.getPassword())) {
             throw new InvalidDataUserException("Неверные данные");
         } else {
-            Token token = new Token();
-            token.setUserId(realUser.getId());
-            token.setLifetime(new Timestamp(System.currentTimeMillis() + 10000));
-            token.setToken(GeneratorService.generateStrToken());
-            tokenDAO.insert(token);
-            return token.getUserId() + "|" + token.getToken();
+            Token realToken = tokenDAO.findByUserId(realUser.getId());
+            if (realToken != null) return realToken.getUserId() + "|" + realToken.getToken();
+            else {
+                Token token = new Token();
+                token.setUserId(realUser.getId());
+                token.setLifetime(new Timestamp(System.currentTimeMillis() + 10000));
+                token.setToken(GeneratorService.generateStrToken());
+                tokenDAO.insert(token);
+                return token.getUserId() + "|" + token.getToken();
+            }
         }
     }
 
     public void logout(User user) {
         Token realToken = tokenDAO.findByUserId(user.getId());
-        tokenDAO.delete(realToken);
+        if (realToken != null) {
+            tokenDAO.delete(realToken);
+        }
     }
 }

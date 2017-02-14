@@ -1,8 +1,0 @@
-<div class="todos">
-    <div class="todo-item" *ngFor="let todo of todos" [class.completed]="todo.completed">
-        <input type="checkbox" name="completed" [(ngModel)]="todo.completed" (click)="saveCompleted()">
-        {{todo.title}}
-        <i routerLink="/edit-task">     |edit</i>
-        <i class="glyphicon glyphicon-remove" style="text-align: right" aria-hidden="true" (click)="deleteTask(todo)"></i>
-    </div>
-</div>

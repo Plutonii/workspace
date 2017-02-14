@@ -1,0 +1,8 @@
+<div *ngIf="_isAuthorized">
+<ws-header></ws-header>
+<ws-left-menu></ws-left-menu>
+<ws-main></ws-main>
+</div>
+<div *ngIf="!_isAuthorized">
+    <ws-login></ws-login>
+</div>

@@ -6,19 +6,19 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.plutonii.exception.AlreadyAuthorizedException;
 import ru.plutonii.model.Token;
 
 /**
  * Created by plutonii on 04.02.17.
  */
 @Repository("tokenDAO")
-public class TokenDAOImpl implements TokenDAO{
+@Transactional
+public class TokenDAOImpl implements TokenDAO {
 
     private SessionFactory sessionFactory;
 
     @Autowired
-    TokenDAOImpl(SessionFactory sessionFactory){
+    TokenDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -27,12 +27,7 @@ public class TokenDAOImpl implements TokenDAO{
     }
 
     public Token insert(Token token) {
-        try {
-            getCurrentSession().saveOrUpdate(token);
-        } catch (ConstraintViolationException e){
-            AlreadyAuthorizedException E = new AlreadyAuthorizedException(e.getMessage(), token.getToken());
-            throw  E;
-        }
+        getCurrentSession().saveOrUpdate(token);
         return token;
     }
 
@@ -42,6 +37,7 @@ public class TokenDAOImpl implements TokenDAO{
     }
 
     public void delete(Token token) {
+        System.out.println(token);
         getCurrentSession().delete(token);
     }
 
