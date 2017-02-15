@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserAccessService} from "../../service/user-access.service";
+import {UserAccessService} from "../../../services/user-access.service";
 
 @Component({
     selector: 'ws-header',
@@ -15,10 +15,10 @@ export class HeaderComponent implements OnInit{
     }
 
     logout():void {
-        this.accessService.logout().subscribe((data)=>{
+        /*this.accessService.logout().subscribe((data)=>{
             console.log(data);
         }, (error:any) =>{
             console.log("error in Log" + error);
-        });
+        });*/
     }
 }

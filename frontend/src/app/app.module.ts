@@ -3,27 +3,22 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 
-import {AppComponent} from './component/app.component';
-import { HeaderComponent } from './component/header/header.component';
-import { LeftMenuComponent } from './component/left-menu/left-menu.component';
-import { MainComponent } from './component/content/main/main.component';
-import { LoginComponent } from './component/login/login.component';
-import {UserAccessService} from "./service/user-access.service";
-
-
+import {AppComponent} from './app.component';
+import {UserAccessService} from "./services/user-access.service";
+import {routing} from "./app.routing";
+import {PagesModule} from "./pages/pages.module";
+import {Router} from "@angular/router";
 
 @NgModule({
     declarations: [
-        AppComponent,
-        HeaderComponent,
-        LeftMenuComponent,
-        MainComponent,
-        LoginComponent
+        AppComponent
     ],
     imports: [
         BrowserModule,
         FormsModule,
-        HttpModule
+        HttpModule,
+        routing,
+        PagesModule
     ],
     providers: [UserAccessService],
     bootstrap: [AppComponent]

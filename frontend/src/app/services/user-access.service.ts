@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
-import {User} from "../model/user";
+import {User} from "../models/user";
 import {Headers, Http, Response} from "@angular/http";
 import {Observable, Subject} from "rxjs";
 
 @Injectable()
 export class UserAccessService {
 
-    private _isAuthorized: boolean;
+    /*private*/ _isAuthorized: boolean;
     private changeAccess = new Subject<boolean>();
     changedAccess = this.changeAccess.asObservable();
     private user: User;
     private token:string = null;
     private _headers: Headers;
+    public redirectUrl:string;
 
     constructor(private http: Http) {
         this._headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
