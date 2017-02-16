@@ -1,6 +1,13 @@
 .left-menu {
-    background-color: #f8f8f8;
+    background-color: #222222;
     position: fixed;
     height: 100%;
     width: 200px;
+}
+
+.left-menu-hidden{
+    background-color: #222222;
+    position: fixed;
+    height: 100%;
+    width: 20px;
 }

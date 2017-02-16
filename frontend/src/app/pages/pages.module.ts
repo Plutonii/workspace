@@ -4,6 +4,8 @@ import {routing} from "./pages.routing";
 import {HeaderComponent} from "./base/header/header.component";
 import {LeftMenuComponent} from "./base/left-menu/left-menu.component";
 import {AuthGuardService} from "../services/auth-guard.service";
+import { RegisterComponent } from './register/register.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
     imports:[routing],

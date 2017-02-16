@@ -1,19 +1,31 @@
-<div class="login">
-  <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-      <div class="col-md-4 col-md-offset-4">
-        <form (submit)="login()">
-          <div class="form-group">
-            <label for="username">Имя пользователя</label>
-            <input type="text" id="username" name="username" [(ngModel)]="user.username" class="form-control" placeholder="username">
-          </div>
-          <div class="form-group">
-            <label for="password">Пароль</label>
-            <input type="password" id="password" name="password" [(ngModel)]="user.password" placeholder="password" class="form-control">
-          </div>
-          <button class="btn btn-success btn-block">Войти</button>
-        </form>
-      </div>
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="auth">
+                <h1>Вход в WorkSpace</h1>
+                <a routerLink="/registration">Новичок? Зарегистрируйся</a>
+                <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+                    <div class="form-group has-feedback">
+                        <label for="username">Имя пользователя</label>
+                        <input type="text" id="username" name="username" [(ngModel)]="user.username"
+                               class="form-control" placeholder="username" formControlName="userNameControl">
+                        <span *ngIf="!loginForm.controls['userNameControl'].invalid && loginForm.controls['userNameControl'].touched"
+                              class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span *ngIf="loginForm.controls['userNameControl'].invalid && loginForm.controls['userNameControl'].touched"
+                              class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label for="password">Пароль</label>
+                        <input type="password" id="password" name="password" [(ngModel)]="user.password"
+                               placeholder="password" class="form-control" formControlName="passwordControl">
+                        <span *ngIf="!loginForm.controls['passwordControl'].invalid && loginForm.controls['passwordControl'].touched"
+                              class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span *ngIf="loginForm.controls['passwordControl'].invalid && loginForm.controls['passwordControl'].touched"
+                              class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    </div>
+                    <button class="btn btn-success btn-block" [disabled]="loginForm.invalid">Войти</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

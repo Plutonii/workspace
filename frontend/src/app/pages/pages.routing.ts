@@ -8,14 +8,21 @@ export const routes: Routes = [
         loadChildren: 'app/pages/login/login.module#LoginModule'
     },
     {
+        path: 'registration',
+        loadChildren: 'app/pages/register/register.module#RegisterModule'
+    },
+    {
         path: 'pages',
         component: PagesComponent,
         canActivate: [AuthGuardService],
         children: [
-            {path: '', redirectTo: 'welcome', pathMatch: 'full'},
-            {path: 'welcome', loadChildren: 'app/pages/welcome/welcome.module#WelcomeModule'}
+            {path: '', redirectTo: 'projects', pathMatch: 'full'},
+            {path: 'projects', loadChildren: 'app/pages/projects/projects.module#ProjectsModule'},
+            {path: 'welcome', loadChildren: 'app/pages/welcome/welcome.module#WelcomeModule'},
+            {path: '**', redirectTo: 'projects', pathMatch: 'full'},
         ]
     }
 ];
+
 
 export const routing: ModuleWithProviders = RouterModule.forChild(routes);

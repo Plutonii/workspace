@@ -1,0 +1,17 @@
+.toggle-menu {
+    width: 30px;
+    height: 4px;
+    background-color: #9d9d9d;
+    margin: 6px 0;
+}
+
+.toggle-menu-center:hover .toggle-menu {
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 6px 0;
+}
+
+.toggle-menu-center {
+    padding-top: 7px;
+}

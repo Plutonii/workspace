@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+            <div class="auth">
+                <h1>Регистрация в WorkSpace</h1>
+                <a routerLink="/login">Уже есть аккаунт? Войди!</a>
+                <form [formGroup]="regForm" novalidate (ngSubmit)="registration()">
+                    <div class="form-group has-feedback">
+                        <label for="email">E-Mail</label>
+                        <!--<div class="alert alert-danger"
+                             *ngIf="regForm.controls['emailControl'].invalid && regForm.controls['emailControl'].touched">
+                            Email указан в неверном формате!
+                        </div>-->
+                        <input type="text" id="email" name="email" [(ngModel)]="user.email"
+                               class="form-control" placeholder="example@gmail.com" formControlName="emailControl">
+                        <span *ngIf="!regForm.controls['emailControl'].invalid && regForm.controls['emailControl'].touched"
+                              class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span *ngIf="regForm.controls['emailControl'].invalid && regForm.controls['emailControl'].touched"
+                              class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <label for="username">Имя пользователя</label>
+                        <!--<div class="alert alert-danger"
+                             *ngIf="regForm.controls['userNameControl'].invalid && regForm.controls['userNameControl'].touched">
+                            Не указано имя пользователя!
+                        </div>-->
+                        <input type="text" id="username" name="username" [(ngModel)]="user.username"
+                               class="form-control" placeholder="username" formControlName="userNameControl">
+                        <span *ngIf="!regForm.controls['userNameControl'].invalid && regForm.controls['userNameControl'].touched"
+                              class="glyphicon glyphicon-ok form-control-feedback"></span>
+                        <span *ngIf="regForm.controls['userNameControl'].invalid && regForm.controls['userNameControl'].touched"
+                              class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    </div>
+                    <div formGroupName="passwords">
+                        <div class="form-group has-feedback">
+                            <label for="password">Пароль</label>
+                            <input type="password" id="password" name="password" [(ngModel)]="user.password"
+                                   placeholder="minimum 5 characters" class="form-control" formControlName="passwordControl">
+                            <span *ngIf="!regForm.controls['passwords'].controls['passwordControl'].invalid &&
+                            regForm.controls['passwords'].controls['passwordControl'].touched"
+                                  class="glyphicon glyphicon-ok form-control-feedback"></span>
+                            <span *ngIf="regForm.controls['passwords'].controls['passwordControl'].invalid &&
+                            regForm.controls['passwords'].controls['passwordControl'].touched"
+                                  class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                            <label for="repeatPassword">Повторите пароль</label>
+                            <input type="password" id="repeatPassword" name="repeatPassword"
+                                   [(ngModel)]="repeatPassword"
+                                   placeholder="minimum 5 characters" class="form-control"
+                                   formControlName="repeatPasswordControl">
+                            <span *ngIf="!regForm.controls['passwords'].invalid &&
+                            regForm.controls['passwords'].controls['repeatPasswordControl'].touched"
+                                  class="glyphicon glyphicon-ok form-control-feedback"></span>
+                            <span *ngIf="regForm.controls['passwords'].invalid &&
+                            regForm.controls['passwords'].controls['repeatPasswordControl'].touched"
+                                  class="glyphicon glyphicon-remove form-control-feedback"></span>
+                        </div>
+                    </div>
+                    <button class="btn btn-success btn-block" [disabled]="regForm.invalid">Зарегистрироваться
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

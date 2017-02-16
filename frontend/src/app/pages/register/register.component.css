@@ -1,0 +1,45 @@
+.auth {
+    border-radius: 10px;
+    background-color: rgba(83, 131, 176, 0.25);
+    padding: 15px;
+    margin-top: 0;
+}
+
+@media (min-height: 600px) {
+    .auth{
+        margin-top: 5vh;
+    }
+}
+
+.auth h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.auth a {
+    font-size: 16px;
+    color: #042aff;
+    text-decoration: none;
+    text-align: center;
+    display: block;
+    margin-bottom: 20px;
+}
+
+.auth a:hover{
+    color: #2588ff;
+}
+
+.auth form{
+    margin: 0 10px 15px 10px;
+}
+
+input.ng-touched.ng-invalid {
+    border: solid red 1px;
+    border-radius: 5px;
+}
+
+input.ng-touched.ng-valid {
+    border: solid green 1px;
+    border-radius: 5px;
+}
