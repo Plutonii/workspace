@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {EventListenerService} from "../services/event-listener.service";
 
 @Component({
-  selector: 'app-pages',
-  templateUrl: './pages.component.html',
-  styleUrls: ['./pages.component.css']
+    selector: 'app-pages',
+    templateUrl: './pages.component.html',
+    styleUrls: ['./pages.component.css']
 })
 export class PagesComponent implements OnInit {
 
-  constructor() { }
+    private isHiddenLeftMenu: boolean;
 
-  ngOnInit() {
-  }
+    constructor(private eventListener: EventListenerService) {
+        this.isHiddenLeftMenu = false;
+        this.eventListener.changedToggleLeftMenu.subscribe(() => {
+            this.isHiddenLeftMenu = !this.isHiddenLeftMenu;
+        });
+    }
+
+    ngOnInit() {
+    }
 
 }
