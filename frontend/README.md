@@ -1,8 +1,4 @@
 # WorkSpace
 
-## Start work:
-npm install
-
-ng server
-
-open http://localhost:4200/
+## Demo:
+<a target="_blank" href="http://plutonii.ru/">plutonii.ru</a>
