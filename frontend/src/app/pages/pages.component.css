@@ -1,12 +1,16 @@
 .main-content {
     padding-top: 20px;
+    padding-bottom: 20px;
     padding-left: 0;
     transition-property: padding-left;
     transition-duration: 1s;
+    height:auto !important;
+    min-height: 100%;
+
 }
 
 .increase-width-animation{
-    padding-left: 30px !important;
+    padding-left: 50px !important;
 }
 
 @media (min-width: 768px) {
@@ -18,4 +22,8 @@
 .content{
     background-color: rgba(153, 216, 118, 0.89);
     padding: 15px;
+    margin: 5px;
+    height: 80vh;
+    overflow: auto;
+    border-radius: 5px;
 }

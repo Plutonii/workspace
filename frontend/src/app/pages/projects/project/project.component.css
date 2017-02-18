@@ -1,0 +1,73 @@
+.project {
+    background-color: #5bc0de;
+    border-radius: 7px;
+    cursor: default;
+    user-select: none;
+}
+
+.project h2 {
+    font-size: 18px;
+    margin: 3px 15px 8px 0;
+    text-align: center;
+}
+
+.open:hover {
+    cursor: pointer;
+}
+
+.favourites {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    opacity: 0.35;
+}
+
+.favourites:hover {
+    opacity: 0.9;
+    color: azure;
+}
+
+.head-project {
+    padding: 10px 10px 0 0;
+    position: relative;
+}
+
+.modification {
+    height: 7px;
+    margin-bottom: 1px;
+}
+
+.modification div {
+    transition-property: background-color, width;
+    transition-duration: 1s;
+}
+
+.users-info {
+    font-size: 16px;
+    padding: 3px 10px 0px 10px;
+}
+
+.users-info:after {
+    clear: both;
+}
+
+.all-users {
+    float: left;
+}
+
+.maker-user {
+    text-align: right;
+}
+
+.maker-user i {
+    opacity: 0.4;
+}
+
+.maker-user i:hover {
+    opacity: 1;
+}
+
+.changed-col {
+    padding-left: 5px;
+    padding-right: 5px;
+}

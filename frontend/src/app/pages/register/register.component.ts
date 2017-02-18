@@ -5,7 +5,7 @@ import {FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {EqualPasswordsValidator} from "./equalPasswordsValidator";
 
 @Component({
-    selector: 'app-register',
+    selector: 'ws-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css']
 })
