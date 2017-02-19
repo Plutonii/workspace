@@ -18,6 +18,7 @@ export const routes: Routes = [
         children: [
             {path: '', redirectTo: 'projects', pathMatch: 'full'},
             {path: 'projects', loadChildren: 'app/pages/projects/projects.module#ProjectsModule'},
+            {path: 'project/:id', loadChildren: 'app/pages/tasks/tasks.module#TasksModule'},
             {path: 'welcome', loadChildren: 'app/pages/welcome/welcome.module#WelcomeModule'},
             {path: '**', redirectTo: 'projects', pathMatch: 'full'},
         ]

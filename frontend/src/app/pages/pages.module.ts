@@ -6,6 +6,7 @@ import {LeftMenuComponent} from "./base/left-menu/left-menu.component";
 import {AuthGuardService} from "../services/auth-guard.service";
 import { RegisterComponent } from './register/register.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 @NgModule({
     imports:[routing],

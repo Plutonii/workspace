@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Project} from "../../../models/project";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'ws-project',
@@ -17,11 +18,12 @@ export class ProjectComponent implements OnInit {
 
     project:Project;
 
-    constructor() {
+    constructor(private router:Router) {
         this.project = new Project();
         this.project.numberOfCompletedTasks = 75;
         this.project.numberOfTasks = 100;
         this.project.numberOfUsers = 3;
+        this.project.id = 2;
 /*        this._numberOfAllTasks = 100;
         this._numberOfCompletedTasks = 75;*/
     }
@@ -39,7 +41,8 @@ export class ProjectComponent implements OnInit {
     }
 
     open(){
-        console.log("open");
+        console.log("213");
+        this.router.navigate(['/pages/project', 2]);
     }
 
     ngOnInit() {

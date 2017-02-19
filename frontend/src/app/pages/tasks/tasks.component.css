@@ -1,0 +1,52 @@
+div.container-fluid {
+    padding: 0;
+}
+
+.nav-tabs > li > a {
+    padding: 3px 10px 1px 10px;
+}
+
+.all-tasks {
+    background-color: rgba(153, 216, 118, 0.85);
+    border: 1px solid #ddd;
+}
+
+.all-tasks ul {
+    list-style-type: none;
+    padding: 1px 1px 1px 1px;
+    margin: 1px
+}
+
+.all-tasks > ul > li {
+    border-bottom: 1px solid #296424;
+    opacity: 0.8;
+    padding: 5px 10px 5px 10px;
+    font-size: 17px;
+}
+
+.all-tasks > ul > li:last-child,
+.all-tasks > ul > li:last-child:hover {
+    border-bottom: none;
+}
+
+.all-tasks > ul > li:hover {
+    border-bottom: 1px solid #296424;
+    opacity: 1;
+    background-color: #6bd82e;
+}
+
+.head-tasks>h3 {
+    text-align: center;
+    padding: 10px;
+    margin:0;
+    border-bottom: 1px solid #ddd;
+}
+
+.all-tasks > ul > li:first-child,
+.all-tasks > ul > li:first-child:hover {
+    background-color: rgba(153, 216, 118, 0.85);
+}
+
+#titleOfNewTask {
+    width: 70%;
+}

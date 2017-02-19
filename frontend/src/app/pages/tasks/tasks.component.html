@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="rows">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+            <ul class="nav nav-tabs nav-justified">
+                <li><a>Главная</a></li>
+                <li class="active"><a>Профиль</a></li>
+                <li><a>Сообщение</a></li>
+            </ul>
+            <div class="all-tasks">
+                <div class="head-tasks">
+                    <h3>{{project.title}}</h3>
+                </div>
+                <ul>
+                    <li *ngIf="!isViewInput" (click)="setTrueIsViewInput();">
+                        <span class="glyphicon glyphicon-plus"></span> Добавить новую задачу...
+                    </li>
+                    <li *ngIf="isViewInput">
+                            <input type="text" name="titleOfNewTask" id="titleOfNewTask"
+                                   [(ngModel)]="newTask.title" autofocus #inputOfAddNewTask>
+                            <button type="button" class="btn btn-success btn-sm" (click)="addNewTask();"
+                                    [disabled]="inputOfAddNewTask.value==''">
+                                ОК
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" (click)="cancelAddNewTask();">
+                                Отмена
+                            </button>
+                    </li>
+                    <li *ngFor="let task of tasks">{{task.title}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
