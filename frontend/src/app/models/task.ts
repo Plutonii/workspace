@@ -4,4 +4,5 @@ export class Task {
     description: string;
     makerId: number;
     projectId: number;
+    completed:boolean;
 }

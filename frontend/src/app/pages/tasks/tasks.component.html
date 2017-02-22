@@ -1,11 +1,7 @@
 <div class="container-fluid">
     <div class="rows">
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-            <ul class="nav nav-tabs nav-justified">
-                <li><a>Главная</a></li>
-                <li class="active"><a>Профиль</a></li>
-                <li><a>Сообщение</a></li>
-            </ul>
+        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
+             [ngClass]="{'col-sm-offset-3 col-md-offset-3 col-lg-offset-3': !isOpenDetails&& !isViewInput}">
             <div class="all-tasks">
                 <div class="head-tasks">
                     <h3>{{project.title}}</h3>
@@ -15,18 +11,78 @@
                         <span class="glyphicon glyphicon-plus"></span> Добавить новую задачу...
                     </li>
                     <li *ngIf="isViewInput">
+                        <form (ngSubmit)="addNewTask()">
                             <input type="text" name="titleOfNewTask" id="titleOfNewTask"
                                    [(ngModel)]="newTask.title" autofocus #inputOfAddNewTask>
-                            <button type="button" class="btn btn-success btn-sm" (click)="addNewTask();"
+                            <button type="submit" class="btn btn-success btn-sm"
                                     [disabled]="inputOfAddNewTask.value==''">
                                 ОК
                             </button>
                             <button type="button" class="btn btn-danger btn-sm" (click)="cancelAddNewTask();">
-                                Отмена
+                                <span class="glyphicon glyphicon-remove"></span>
                             </button>
+                        </form>
                     </li>
-                    <li *ngFor="let task of tasks">{{task.title}}</li>
+                    <li *ngFor="let task of tasks">
+                        <div class="single-task" (click)="openDetailWindow(task)">
+                            <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
+                                <div></div>
+                            </div>
+                            {{task.title}}
+                            <div *ngIf="task.makerId" class="user-maker">
+                                @userMakerId
+                            </div>
+                            <div *ngIf="!task.makerId" class="user-maker">
+                                <span class="glyphicon glyphicon-plus-sign"></span>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
+            </div>
+        </div>
+        <div *ngIf="isOpenDetails" [ngClass]="{'col-xs-12 col-sm-6 col-md-6 col-lg-6': isOpenDetails}">
+            <div class="details">
+                <div class="head-details">
+                    <h3>
+                        <span>{{selectTask.title}}</span>
+                        <div class="buttons"><span class="glyphicon glyphicon-ok-circle"></span>
+                            <span class="glyphicon glyphicon-star-empty"></span>
+                            <span class="glyphicon glyphicon-cog"></span>
+                            <span id="close-open" class="glyphicon glyphicon-remove"
+                                  (click)="closeDetailWindow()"></span>
+                        </div>
+                    </h3>
+                </div>
+                <div class="body-details">
+                    <p class="maker">Ответственный: {{selectTask.makerId}}</p>
+                    <p>Описание: {{selectTask.description}}</p>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isViewInput" [ngClass]="{'col-xs-12 col-sm-6 col-md-6 col-lg-6': isViewInput}">
+            <div class="details">
+                <div class="head-details">
+                    <h3>
+                        <span>{{newTask.title}}</span>
+                        <div class="buttons">
+                            <span id="close-open" class="glyphicon glyphicon-remove" (click)="cancelAddNewTask()">
+                            </span>
+                        </div>
+                    </h3>
+                </div>
+                <div class="body-details">
+                    <form>
+                        <div class="form-group">
+                            <label for="newTaskMakerId">Ответственный</label>
+                            <input id="newTaskMakerId" type="text" [(ngModel)]="newTask.makerId" name="newTaskMakerId">
+                        </div>
+                        <div class="form-group">
+                            <label for="newTaskDescription">Описание</label><br>
+                            <textarea id="newTaskDescription" [(ngModel)]="newTask.description"
+                                      name="newTaskDescription"></textarea>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

@@ -11,13 +11,16 @@ export class TasksComponent implements OnInit {
 
     private project: Project;
     private tasks: Task[];
+    private selectTask:Task;
     private isViewInput: boolean;
+    private isOpenDetails:boolean;
     private newTask: Task;
     @ViewChild("inputOfAddNewTask")
     input: ElementRef;
 
     constructor() {
         this.isViewInput = false;
+        this.isOpenDetails = false;
         this.project = new Project;
         this.project.id = 2;
         this.project.numberOfUsers = 3;
@@ -26,6 +29,7 @@ export class TasksComponent implements OnInit {
         let task = new Task();
         task.title = "Available task";
         task.description = "This is description of task by name 'Available task'";
+        task.completed = false;
         task.id = 1;
         task.makerId = 222;
         task.projectId = 2;
@@ -34,10 +38,10 @@ export class TasksComponent implements OnInit {
         task1.title = "Taken task";
         task1.description = "This is description of task by name 'Taken task'";
         task1.id = 2;
+        task1.completed = true;
         task1.projectId = 2;
         this.tasks.push(task1);
     }
-
 
     ngOnInit() {
     }
@@ -45,6 +49,7 @@ export class TasksComponent implements OnInit {
     setTrueIsViewInput() {
         this.newTask = new Task();
         this.isViewInput = true;
+        this.isOpenDetails = false;
         setTimeout(()=>console.dir(this.input.nativeElement.focus(), 5));
     }
 
@@ -57,5 +62,14 @@ export class TasksComponent implements OnInit {
     cancelAddNewTask(){
         this.newTask = null;
         this.isViewInput = false;
+    }
+
+    openDetailWindow(task:Task) {
+        this.isOpenDetails = true;
+        this.selectTask = task;
+    }
+
+    closeDetailWindow() {
+        this.isOpenDetails = false;
     }
 }

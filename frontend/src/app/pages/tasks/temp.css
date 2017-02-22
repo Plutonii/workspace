@@ -3,8 +3,8 @@ div.container-fluid {
 }
 
 .all-tasks {
-    background-color: rgba(231, 244, 219, 0.85);
-    border: 1px solid #6edd5e;
+    background-color: rgba(153, 216, 118, 0.85);
+    border: 1px solid #ddd;
 }
 
 .all-tasks ul {
@@ -28,7 +28,7 @@ div.container-fluid {
 .all-tasks > ul > li:hover {
     border-bottom: 1px solid #296424;
     opacity: 1;
-    background-color: #d4ddd4;
+    background-color: #6bd82e;
 }
 
 .head-tasks > h3 {
@@ -40,7 +40,7 @@ div.container-fluid {
 
 .all-tasks > ul > li:first-child,
 .all-tasks > ul > li:first-child:hover {
-    background-color: rgba(231, 244, 219, 0.85);
+    background-color: rgba(153, 216, 118, 0.85);
 }
 
 #titleOfNewTask {
@@ -56,14 +56,10 @@ div.container-fluid {
     font-size: 17px;
 }
 
-.maker{
-    border-bottom: 1px solid #dddddd;
-}
-
 .details {
     position: relative;
-    background-color: rgba(231, 244, 219, 0.85);
-    border: 1px solid #6edd5e;
+    background-color: rgba(153, 216, 118, 0.85);
+    border: 1px solid #ddd;
 }
 
 .buttons {
@@ -75,56 +71,10 @@ div.container-fluid {
 .head-details > h3{
     padding: 10px;
     margin: 0;
-    border-bottom: 1px solid #6edd5e;
-    min-height: 47px;
+    border-bottom: 1px solid #ddd;
 }
 
 #close-open {
-    opacity: 0.4;
-}
-
-#close-open:hover {
-    opacity: 0.95;
-}
-
-.not-completed {
-    width: 17px;
-    height: 17px;
-    display: inline-block;
-}
-
-.not-completed > div{
-    background-color: #ff090e;
-    width: 12px;
-    height: 12px;
-    margin: 5px 5px 0 0;
-}
-
-.completed {
-    width: 17px;
-    height: 17px;
-    display: inline-block;
-}
-
-.completed > div {
-    width: 12px;
-    height: 12px;
-    margin: 5px 5px 0 0;
-    background-color: #0cab46;
-}
-
-.user-maker {
-    display: inline-block;
-    position: absolute;
-    right: 2%;
     font-size: 12px;
-    padding-top: 5px;
-}
-
-#newTaskDescription {
-    width:100%;
-}
-
-#newTaskMakerId {
-    width:100%;
+    position: absolute;
 }
