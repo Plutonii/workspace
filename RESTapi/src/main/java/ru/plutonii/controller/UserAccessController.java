@@ -8,7 +8,7 @@ import ru.plutonii.service.UserAccessService;
 import javax.servlet.http.HttpServletResponse;
 
 
-@CrossOrigin(origins = "http://plutonii.ru", exposedHeaders = "token") //for dev
+@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "token", maxAge = 3600) //for dev
 @RequestMapping("/access")
 @RestController
 public class UserAccessController {

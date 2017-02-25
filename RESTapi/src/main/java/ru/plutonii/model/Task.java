@@ -1,21 +1,24 @@
 package ru.plutonii.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * Created by plutonii on 04.02.17.
+ * Created by plutonii on 25.02.17.
  */
-@Entity(name ="task")
+@Entity(name = "task")
 public class Task {
     private int id;
     private String title;
     private String description;
     private int makerId;
     private Integer projectId;
+    private boolean completed;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -64,6 +67,16 @@ public class Task {
         this.projectId = projectId;
     }
 
+    @Basic
+    @Column(name = "completed", nullable = false)
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -73,6 +86,7 @@ public class Task {
 
         if (id != task.id) return false;
         if (makerId != task.makerId) return false;
+        if (completed != task.completed) return false;
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (description != null ? !description.equals(task.description) : task.description != null) return false;
         if (projectId != null ? !projectId.equals(task.projectId) : task.projectId != null) return false;
@@ -87,6 +101,7 @@ public class Task {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + makerId;
         result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
+        result = 31 * result + (completed ? 1 : 0);
         return result;
     }
 }

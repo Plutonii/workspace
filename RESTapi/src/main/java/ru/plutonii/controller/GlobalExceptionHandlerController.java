@@ -3,6 +3,7 @@ package ru.plutonii.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.plutonii.exception.*;
 
@@ -12,16 +13,20 @@ import ru.plutonii.exception.*;
 @ControllerAdvice
 public class GlobalExceptionHandlerController {
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "This user already exists")
     @ExceptionHandler(UserAlreadyExistsException.class)
-    void handleUserAlreadyExistsException(UserAlreadyExistsException e) {
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public UserAlreadyExistsException.ErrorReg handleUserAlreadyExistsException(UserAlreadyExistsException e) {
         System.err.println(e.getMessage());
+        return e.getError();
     }
 
-    @ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Incorrect data")
     @ExceptionHandler(InvalidDataUserException.class)
-    void handleInvalidLoginException(InvalidDataUserException e) {
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public InvalidDataUserException.ErrorLogin handleInvalidLoginException(InvalidDataUserException e) {
         System.err.println(e.getMessage());
+        return e.getError();
     }
 
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "project not found")

@@ -11,7 +11,7 @@ import java.util.List;
  * Created by plutonii on 05.02.17.
  */
 
-@CrossOrigin(origins = "http://plutonii.ru", exposedHeaders = "token") //for dev
+@CrossOrigin(origins = "http://localhost:4200", exposedHeaders = "token", maxAge = 3600) //for dev
 @RestController
 @RequestMapping("/api")
 public class ProjectController {

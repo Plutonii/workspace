@@ -76,4 +76,9 @@ public class Project {
         result = 31 * result + userId;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return this.title + " " + this.getId() + " " + this.getUserId();
+    }
 }
