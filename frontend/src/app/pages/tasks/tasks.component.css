@@ -35,7 +35,7 @@ div.container-fluid {
     text-align: center;
     padding: 10px;
     margin: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #6edd5e;
 }
 
 .all-tasks > ul > li:first-child,
@@ -49,6 +49,18 @@ div.container-fluid {
 
 .single-task {
     position: relative;
+}
+
+.task {
+    width: 75%;
+}
+
+.single-task > div{
+    display: inline-block;
+}
+
+.title{
+    display: inline-block;
 }
 
 .body-details {
@@ -77,14 +89,6 @@ div.container-fluid {
     margin: 0;
     border-bottom: 1px solid #6edd5e;
     min-height: 47px;
-}
-
-#close-open {
-    opacity: 0.4;
-}
-
-#close-open:hover {
-    opacity: 0.95;
 }
 
 .not-completed {
@@ -121,10 +125,22 @@ div.container-fluid {
     padding-top: 5px;
 }
 
+.user-maker > span {
+    font-size: 15px;
+}
+
 #newTaskDescription {
     width:100%;
 }
 
 #newTaskMakerId {
     width:100%;
+}
+
+.buttons > span{
+    opacity: 0.4;
+}
+
+.buttons > span:hover{
+    opacity: 0.95;
 }

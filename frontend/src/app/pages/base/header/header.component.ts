@@ -21,16 +21,11 @@ export class HeaderComponent implements OnInit{
     }
 
     logout():void {
-        this.accessService._isAuthorized = false;
-        this.router.navigate(['/login']);
-        /*this.accessService.logout().subscribe((data)=>{
-            console.log(data);
+        this.accessService.logout().subscribe((data)=>{
+         this.router.navigate(['/login']);
         }, (error:any) =>{
-            console.log("error in Log" + error);
-        });*/
-    }
-
-    toggle(){
-        this.eventListenerService.toggleLeftMenu();
+         console.log("header.component.ts: Error logout;");
+         console.log(error);
+        });
     }
 }

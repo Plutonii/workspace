@@ -5,6 +5,9 @@
                 <h1>Вход в WorkSpace</h1>
                 <a routerLink="/registration">Новичок? Зарегистрируйся</a>
                 <form [formGroup]="loginForm" (ngSubmit)="login()" novalidate>
+                    <div class="alert alert-danger" *ngIf="messageError">
+                        {{messageError}}
+                    </div>
                     <div class="form-group has-feedback">
                         <label for="username">Имя пользователя</label>
                         <input type="text" id="username" name="username" [(ngModel)]="user.username"

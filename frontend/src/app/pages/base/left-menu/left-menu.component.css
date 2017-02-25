@@ -2,7 +2,7 @@
     background-color: #222222;
     position: fixed;
     height: 100%;
-    width: 200px;
+    width: 160px;
 }
 
 .left-menu-hidden {
@@ -14,5 +14,41 @@
 
 .animation {
     transition-property: width;
-    transition-duration: 1s;
+    transition-duration: 200ms;
+}
+
+.menu {
+    width: 100%;
+    margin: 20px 0 5px 15px;
+}
+
+.line > p {
+    display: inline-block;
+    margin: 0;
+}
+
+.line {
+    color: white;
+    font-size: 18px;
+    opacity: 0.4;
+    margin: 5px 0 10px 0;
+}
+
+.line:hover {
+    opacity: 0.95;
+}
+
+.sandwich {
+    display: inline-block;
+    margin-top: 2px;
+    height: 16px;
+    width: 18px;
+}
+
+.layer {
+    width: 100%;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    background-color: white;
+    height: 2px;
 }

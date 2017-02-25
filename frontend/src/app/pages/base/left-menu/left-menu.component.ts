@@ -11,12 +11,16 @@ export class LeftMenuComponent implements OnInit {
     private isHiddenLeftMenu;
 
     constructor(private eventListener: EventListenerService) {
-        this.isHiddenLeftMenu = false;
+        this.isHiddenLeftMenu = true;
         this.eventListener.changedToggleLeftMenu.subscribe(() =>{
             this.isHiddenLeftMenu = !this.isHiddenLeftMenu;
         });
     }
 
     ngOnInit() {
+    }
+
+    toggle(){
+        this.eventListener.toggleLeftMenu();
     }
 }

@@ -15,3 +15,18 @@
 .toggle-menu-center {
     padding-top: 7px;
 }
+
+.navbar-text {
+    margin: 0 15px 0 15px;
+    padding: 15px;
+}
+
+@media (max-width: 768px) {
+    .navbar-text{
+        padding-left: 0;
+    }
+}
+
+.navbar-text:hover {
+    color: white;
+}

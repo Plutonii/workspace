@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Project} from "../../models/project";
 import {Task} from "../../models/task";
+import {UserAccessService} from "../../services/user-access.service";
 
 @Component({
     selector: 'ws-tasks',
@@ -9,19 +10,21 @@ import {Task} from "../../models/task";
 })
 export class TasksComponent implements OnInit {
 
+    private authUserId:number;
     private project: Project;
     private tasks: Task[];
-    private selectTask:Task;
+    private selectTask: Task;
     private isViewInput: boolean;
-    private isOpenDetails:boolean;
+    private isOpenDetails: boolean;
     private newTask: Task;
     @ViewChild("inputOfAddNewTask")
     input: ElementRef;
 
-    constructor() {
+    constructor(private userAccess:UserAccessService) {
         this.isViewInput = false;
         this.isOpenDetails = false;
         this.project = new Project;
+        this.project.userId = 222;
         this.project.id = 2;
         this.project.numberOfUsers = 3;
         this.project.title = "Мой новый проект №2";
@@ -44,27 +47,29 @@ export class TasksComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.authUserId = this.userAccess.getUserId();
     }
 
     setTrueIsViewInput() {
         this.newTask = new Task();
         this.isViewInput = true;
         this.isOpenDetails = false;
-        setTimeout(()=>console.dir(this.input.nativeElement.focus(), 5));
     }
 
     addNewTask() {
         this.tasks.push(this.newTask);
+        this.selectTask = this.newTask;
+        this.newTask = null;
+        this.isViewInput = false;
+        this.isOpenDetails = true;
+    }
+
+    cancelAddNewTask() {
         this.newTask = null;
         this.isViewInput = false;
     }
 
-    cancelAddNewTask(){
-        this.newTask = null;
-        this.isViewInput = false;
-    }
-
-    openDetailWindow(task:Task) {
+    openDetailWindow(task: Task) {
         this.isOpenDetails = true;
         this.selectTask = task;
     }

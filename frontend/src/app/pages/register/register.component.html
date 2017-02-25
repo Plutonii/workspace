@@ -7,10 +7,6 @@
                 <form [formGroup]="regForm" novalidate (ngSubmit)="registration()">
                     <div class="form-group has-feedback">
                         <label for="email">E-Mail</label>
-                        <!--<div class="alert alert-danger"
-                             *ngIf="regForm.controls['emailControl'].invalid && regForm.controls['emailControl'].touched">
-                            Email указан в неверном формате!
-                        </div>-->
                         <input type="text" id="email" name="email" [(ngModel)]="user.email"
                                class="form-control" placeholder="example@gmail.com" formControlName="emailControl">
                         <span *ngIf="!regForm.controls['emailControl'].invalid && regForm.controls['emailControl'].touched"
@@ -35,7 +31,8 @@
                         <div class="form-group has-feedback">
                             <label for="password">Пароль</label>
                             <input type="password" id="password" name="password" [(ngModel)]="user.password"
-                                   placeholder="minimum 5 characters" class="form-control" formControlName="passwordControl">
+                                   placeholder="minimum 5 characters" class="form-control"
+                                   formControlName="passwordControl">
                             <span *ngIf="!regForm.controls['passwords'].controls['passwordControl'].invalid &&
                             regForm.controls['passwords'].controls['passwordControl'].touched"
                                   class="glyphicon glyphicon-ok form-control-feedback"></span>

@@ -7,9 +7,10 @@ import {AuthGuardService} from "../services/auth-guard.service";
 import { RegisterComponent } from './register/register.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { TasksComponent } from './tasks/tasks.component';
+import {CommonModule} from "@angular/common";
 
 @NgModule({
-    imports:[routing],
+    imports:[routing, CommonModule],
     declarations:[PagesComponent, HeaderComponent, LeftMenuComponent],
     providers: [AuthGuardService]
 })

@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit(): void {
         this.accessService.init();
-        this.accessService._isAuthorized=true;//убрать
     }
 
 }

@@ -1,16 +1,17 @@
 <div class="container-fluid">
     <div class="rows">
-        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"
-             [ngClass]="{'col-sm-offset-3 col-md-offset-3 col-lg-offset-3': !isOpenDetails&& !isViewInput}">
+        <div class="col-xs-12 col-md-6 col-lg-6"
+             [ngClass]="{'col-sm-8 col-sm-offset-2 col-md-offset-3 col-lg-offset-3': !isOpenDetails&& !isViewInput,
+             'col-sm-6':isViewInput||isOpenDetails}">
             <div class="all-tasks">
                 <div class="head-tasks">
                     <h3>{{project.title}}</h3>
                 </div>
                 <ul>
-                    <li *ngIf="!isViewInput" (click)="setTrueIsViewInput();">
+                    <li *ngIf="!isViewInput&&project.userId==authUserId" (click)="setTrueIsViewInput();">
                         <span class="glyphicon glyphicon-plus"></span> Добавить новую задачу...
                     </li>
-                    <li *ngIf="isViewInput">
+                    <li *ngIf="isViewInput&&project.userId==authUserId">
                         <form (ngSubmit)="addNewTask()">
                             <input type="text" name="titleOfNewTask" id="titleOfNewTask"
                                    [(ngModel)]="newTask.title" autofocus #inputOfAddNewTask>
@@ -24,16 +25,25 @@
                         </form>
                     </li>
                     <li *ngFor="let task of tasks">
-                        <div class="single-task" (click)="openDetailWindow(task)">
-                            <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
-                                <div></div>
+                        <div class="single-task">
+                            <div class="task" (click)="openDetailWindow(task)">
+                                <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
+                                    <div></div>
+                                </div>
+                                <div class="title">
+                                    {{task.title}}
+                                </div>
                             </div>
-                            {{task.title}}
                             <div *ngIf="task.makerId" class="user-maker">
                                 @userMakerId
                             </div>
                             <div *ngIf="!task.makerId" class="user-maker">
-                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                <span class="dropdown-toggle glyphicon glyphicon-plus-sign"
+                                      data-toggle="dropdown"></span>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#">Закрепиться</a></li>
+                                    <li *ngIf="project.userId==authUserId"><a href="#">Закрепить пользователя</a></li>
+                                </ul>
                             </div>
                         </div>
                     </li>
@@ -45,10 +55,20 @@
                 <div class="head-details">
                     <h3>
                         <span>{{selectTask.title}}</span>
-                        <div class="buttons"><span class="glyphicon glyphicon-ok-circle"></span>
+                        <div class="buttons">
+                            <span *ngIf="selectTask.makerId==authUserId" class="glyphicon glyphicon-ok-circle"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="glyphicon glyphicon-cog"></span>
-                            <span id="close-open" class="glyphicon glyphicon-remove"
+                            <span *ngIf="selectTask.makerId==authUserId" data-toggle="dropdown"
+                                  class="dropdown-toggle glyphicon glyphicon-cog"></span>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a href="#">Пометить как выполненную</a></li>
+                                <li><a href="#">Редактировать</a></li>
+                                <li><a href="#">Отказаться от выполнения</a></li>
+                                <li class="divider"></li>
+                                <li *ngIf="project.userId==authUserId"><a href="#">Удалить</a></li>
+                                <li *ngIf="project.userId!=authUserId"><a href="#">Пожаловаться</a></li>
+                            </ul>
+                            <span class="glyphicon glyphicon-remove"
                                   (click)="closeDetailWindow()"></span>
                         </div>
                     </h3>
@@ -65,7 +85,7 @@
                     <h3>
                         <span>{{newTask.title}}</span>
                         <div class="buttons">
-                            <span id="close-open" class="glyphicon glyphicon-remove" (click)="cancelAddNewTask()">
+                            <span class="glyphicon glyphicon-remove" (click)="cancelAddNewTask()">
                             </span>
                         </div>
                     </h3>

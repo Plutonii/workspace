@@ -11,7 +11,7 @@ export class PagesComponent implements OnInit {
     private isHiddenLeftMenu: boolean;
 
     constructor(private eventListener: EventListenerService) {
-        this.isHiddenLeftMenu = false;
+        this.isHiddenLeftMenu = true;
         this.eventListener.changedToggleLeftMenu.subscribe(() => {
             this.isHiddenLeftMenu = !this.isHiddenLeftMenu;
         });

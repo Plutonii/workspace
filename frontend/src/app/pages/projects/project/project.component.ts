@@ -41,7 +41,6 @@ export class ProjectComponent implements OnInit {
     }
 
     open(){
-        console.log("213");
         this.router.navigate(['/pages/project', 2]);
     }
 

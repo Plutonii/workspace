@@ -3,23 +3,30 @@
     padding-bottom: 20px;
     padding-left: 0;
     transition-property: padding-left;
-    transition-duration: 1s;
-    height:auto !important;
+    transition-duration: 300ms;
+    height: auto !important;
     min-height: 100%;
 
 }
 
-.increase-width-animation{
+.increase-width-animation {
     padding-left: 50px !important;
 }
 
+@media (min-width: 1px) and (max-width: 768px) {
+    .increase-width-animation {
+        padding-left: 0 !important;
+    }
+
+}
+
 @media (min-width: 768px) {
-    .main-content{
-        padding-left: 200px;
+    .main-content {
+        padding-left: 160px;
     }
 }
 
-.content{
+.content {
     background-color: rgba(153, 216, 118, 0.7);
     padding: 15px;
     margin: 5px;

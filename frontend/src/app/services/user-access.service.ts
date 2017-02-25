@@ -6,7 +6,7 @@ import {Observable, Subject} from "rxjs";
 @Injectable()
 export class UserAccessService {
 
-    /*private*/ _isAuthorized: boolean;
+    private _isAuthorized: boolean;
     private changeAccess = new Subject<boolean>();
     changedAccess = this.changeAccess.asObservable();
     private user: User;
@@ -50,8 +50,7 @@ export class UserAccessService {
             this.saveInfoAboutUser(token);
             return resp.status;
         }).catch((error: any) => {
-            console.log("inServiceErrReg" + error);
-            return Observable.throw(error);
+            return Observable.throw(JSON.parse(error._body).msg);
         })
     }
 
@@ -66,22 +65,17 @@ export class UserAccessService {
             this.saveInfoAboutUser(token);
             return resp.status;
         }).catch((error: any) => {
-            console.log("inServiceErrLogin" + error);
-            return Observable.throw(error);
+            return Observable.throw(JSON.parse(error._body).msg);
         })
     }
 
     logout() {
-        console.log("click");
-        console.dir(this.user);
         return this.http.post('http://plutonii.ru:8888/workspace/access/logout', JSON.stringify(this.user),
             {headers: this._headers}).map((resp: Response) => {
-            console.log("inServiceOkReg" + resp);
             localStorage.clear();
             this._isAuthorized = false;
             this.changeAccess.next(false);
         }).catch((error: any) => {
-            console.log("inServiceErrReg" + error);
             return Observable.throw(error);
         })
     }
@@ -92,4 +86,9 @@ export class UserAccessService {
         localStorage.setItem("ws-user", JSON.stringify(this.user));
     }
 
+    getUserId():number{
+        this.user = new User();
+        this.user.id = 222;//УДАЛИТЬ
+        return this.user.id;
+    }
 }

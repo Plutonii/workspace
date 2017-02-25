@@ -14,7 +14,6 @@ export class ProjectsComponent implements OnInit {
         project.description="23";
         project.numberOfTasks = 10;
         project.numberOfUsers = 15;
-        console.dir(project);
     }
 
     ngOnInit() {
