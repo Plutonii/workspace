@@ -37,7 +37,6 @@ public class TokenDAOImpl implements TokenDAO {
     }
 
     public void delete(Token token) {
-        System.out.println(token);
         getCurrentSession().delete(token);
     }
 

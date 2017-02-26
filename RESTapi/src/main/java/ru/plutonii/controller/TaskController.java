@@ -44,7 +44,6 @@ public class TaskController {
     @PostMapping(path = "/task", consumes = "application/json", produces = "application/json")
     @ResponseBody
     Task addTask(@RequestBody Task task){
-        System.out.println(task.getMakerId());
         return taskService.insert(task);
     }
 
