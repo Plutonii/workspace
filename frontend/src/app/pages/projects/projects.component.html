@@ -1,12 +1,5 @@
 <div class="container-fluid">
     <div class="rows">
-        <ws-project></ws-project>
-        <ws-project></ws-project>
-        <ws-project></ws-project>
-        <ws-project></ws-project>
-        <ws-project></ws-project>
-        <ws-project></ws-project>
-        <ws-project></ws-project>
-        <ws-project></ws-project>
+        <ws-project *ngFor="let projectSingle of projects" [project]="projectSingle"></ws-project>
     </div>
 </div>

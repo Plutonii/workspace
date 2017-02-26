@@ -1,14 +1,17 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
 import {Project} from "../../models/project";
 import {Task} from "../../models/task";
 import {UserAccessService} from "../../services/user-access.service";
+import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
+import {DataService} from "../../services/data.service";
 
 @Component({
     selector: 'ws-tasks',
     templateUrl: './tasks.component.html',
     styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit, OnDestroy {
 
     private authUserId:number;
     private project: Project;
@@ -19,35 +22,32 @@ export class TasksComponent implements OnInit {
     private newTask: Task;
     @ViewChild("inputOfAddNewTask")
     input: ElementRef;
+    private subscriptionOnParams:Subscription;
 
-    constructor(private userAccess:UserAccessService) {
+    constructor(private userAccess:UserAccessService,
+                private activateRoute: ActivatedRoute,
+                private dataLoader: DataService) {
         this.isViewInput = false;
         this.isOpenDetails = false;
-        this.project = new Project;
-        this.project.userId = 222;
-        this.project.id = 2;
-        this.project.numberOfUsers = 3;
-        this.project.title = "Мой новый проект №2";
         this.tasks = [];
-        let task = new Task();
-        task.title = "Available task";
-        task.description = "This is description of task by name 'Available task'";
-        task.completed = false;
-        task.id = 1;
-        task.makerId = 222;
-        task.projectId = 2;
-        this.tasks.push(task);
-        let task1 = new Task();
-        task1.title = "Taken task";
-        task1.description = "This is description of task by name 'Taken task'";
-        task1.id = 2;
-        task1.completed = true;
-        task1.projectId = 2;
-        this.tasks.push(task1);
+        this.project = new Project();
     }
 
     ngOnInit() {
         this.authUserId = this.userAccess.getUserId();
+        let id:number;
+        this.subscriptionOnParams = this.activateRoute.params.subscribe((params) => {
+            this.dataLoader.loadTasksByProjectId(params['id']).subscribe((tasks) => {
+                this.project = this.dataLoader.openProject;
+                this.tasks = tasks;
+                console.dir(this.tasks);
+                console.dir(this.project);
+            });
+        });
+    }
+
+    ngOnDestroy(){
+        this.subscriptionOnParams.unsubscribe();
     }
 
     setTrueIsViewInput() {

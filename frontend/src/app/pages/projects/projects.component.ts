@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from "../../models/project";
+import {DataService} from "../../services/data.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'ws-projects',
@@ -8,15 +10,20 @@ import {Project} from "../../models/project";
 })
 export class ProjectsComponent implements OnInit {
 
-    constructor() {
-        let project:Project = new Project();
-        project.id = 10;
-        project.description="23";
-        project.numberOfTasks = 10;
-        project.numberOfUsers = 15;
+    private projects:Project[];
+
+    constructor(private dataLoader:DataService,
+    private router:Router) {
     }
 
     ngOnInit() {
+        this.dataLoader.loadProjectsByUserId().subscribe((projects:Project[])=>{
+            this.projects = projects;
+            console.dir(this.projects);
+        }, (error:any) => {
+            /*localStorage.clear();
+            this.router.navigate(['/login']);*/
+        });
     }
 
 }

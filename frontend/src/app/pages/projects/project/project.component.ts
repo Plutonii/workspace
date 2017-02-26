@@ -1,6 +1,7 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
 import {Project} from "../../../models/project";
 import {Router} from "@angular/router";
+import {DataService} from "../../../services/data.service";
 
 @Component({
     selector: 'ws-project',
@@ -12,20 +13,11 @@ export class ProjectComponent implements OnInit {
     @ViewChild("progressBar")
     progressBar: ElementRef;
 
-    /*private _numberOfAllTasks: number;
-    private _numberOfCompletedTasks: number;
-    private _numberOf*/
-
+    @Input()
     project:Project;
 
-    constructor(private router:Router) {
-        this.project = new Project();
-        this.project.numberOfCompletedTasks = 75;
-        this.project.numberOfTasks = 100;
-        this.project.numberOfUsers = 3;
-        this.project.id = 2;
-/*        this._numberOfAllTasks = 100;
-        this._numberOfCompletedTasks = 75;*/
+    constructor(private router:Router,
+                private dataLoader:DataService) {
     }
 
     controlProgressBar() {
@@ -41,19 +33,12 @@ export class ProjectComponent implements OnInit {
     }
 
     open(){
-        this.router.navigate(['/pages/project', 2]);
+        this.dataLoader.openProject = this.project;
+        this.router.navigate(['/pages/project', this.project.id]);
     }
 
     ngOnInit() {
         this.controlProgressBar();
-    }
-
-    plus() {
-        this.numberOfCompletedTasks += 5;
-    }
-
-    minus() {
-        this.numberOfCompletedTasks -= 5;
     }
 
     get numberOfAllTasks(): number {

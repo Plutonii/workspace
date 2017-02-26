@@ -8,12 +8,7 @@ import {UserAccessService} from "./services/user-access.service";
 })
 export class AppComponent implements OnInit {
 
-    // private _isAuthorized: boolean;
-
     constructor(private accessService: UserAccessService) {
-        /*this.accessService.changedAccess.subscribe((newValueIsAuthorized) => {
-            this._isAuthorized = newValueIsAuthorized;
-        })*/
     }
 
     ngOnInit(): void {

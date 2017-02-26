@@ -29,4 +29,5 @@
 
 .navbar-text:hover {
     color: white;
+    cursor: pointer;
 }
