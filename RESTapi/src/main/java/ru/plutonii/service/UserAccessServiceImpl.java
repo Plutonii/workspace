@@ -20,20 +20,33 @@ public class UserAccessServiceImpl implements UserAccessService {
 
     private UserDAO userDAO;
     private TokenDAO tokenDAO;
+    private FirstProjectAndTaskForNewUserService firstProjectAndTaskForNewUserService;
 
     @Autowired
-    public UserAccessServiceImpl(UserDAO userDAO, TokenDAO tokenDAO) {
+    public UserAccessServiceImpl(UserDAO userDAO, TokenDAO tokenDAO, FirstProjectAndTaskForNewUserService firstProjectAndTaskForNewUserService) {
         this.userDAO = userDAO;
         this.tokenDAO = tokenDAO;
+        this.firstProjectAndTaskForNewUserService = firstProjectAndTaskForNewUserService;
     }
 
-    public String registerUser(User user) {//change (return token if user registered)
+    public String registerUser(User user) {
+        System.out.println("User before insert");
+        System.out.println(user);
         userDAO.insertOrUpdate(user);
+        System.out.println("user after insert");
+        System.out.println(user);
         Token token = new Token();
         token.setUserId(user.getId());
-        token.setLifetime(new Timestamp(System.currentTimeMillis() + 10000));
+        token.setLifetime(new Timestamp(System.currentTimeMillis()));
         token.setToken(GeneratorService.generateStrToken());
+        System.out.println("Token before insert");
+        System.out.println(token);
         tokenDAO.insert(token);
+        System.out.println("token after insert");
+        System.out.println(token);
+        this.firstProjectAndTaskForNewUserService
+                .addFirstTaskForProject(this.firstProjectAndTaskForNewUserService
+                        .addFirstProjectForUser(user));
         return token.getUserId() + "|" + token.getToken();
     }
 
