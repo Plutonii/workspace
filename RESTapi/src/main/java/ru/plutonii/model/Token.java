@@ -80,6 +80,7 @@ public class Token {
 
     @Override
     public String toString() {
-        return this.getId() + " | " + this.getUserId() + " | " + this.getToken();
+        return "Token. Id = " + this.id +
+                ". User_id = " + this.userId;
     }
 }

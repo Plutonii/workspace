@@ -1,9 +1,6 @@
 package ru.plutonii.model;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by plutonii on 25.02.17.
@@ -19,6 +16,7 @@ public class Task {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -103,5 +101,12 @@ public class Task {
         result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
         result = 31 * result + (completed ? 1 : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Task. Id = " + this.id +
+                ". Maker_id = " + this.makerId + ". Project_id = " + this.projectId +
+                "\n" + "Title = " + this.title;
     }
 }

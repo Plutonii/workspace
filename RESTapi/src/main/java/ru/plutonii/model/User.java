@@ -93,6 +93,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User: " + id + "|" + username + "|" + password;
+        return "User. Id = " + this.id +
+                ". User_name = " + this.username;
     }
 }

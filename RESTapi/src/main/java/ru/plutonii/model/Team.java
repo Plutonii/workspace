@@ -63,4 +63,10 @@ public class Team {
         result = 31 * result + userId;
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Team. Id = " + this.id +
+                ". User_id = " + this.userId + ". Project_id = " + this.projectId;
+    }
 }
