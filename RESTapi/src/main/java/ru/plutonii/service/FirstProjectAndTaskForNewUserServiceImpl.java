@@ -24,7 +24,8 @@ public class FirstProjectAndTaskForNewUserServiceImpl implements FirstProjectAnd
         Project project = new Project();
         project.setTitle("Первый проект");
         project.setDescription("Это ваш первый проект. Он содержит одну задачу и одного пользователя (вас). В этом проекте вы администратор. Создан автоматически.");
-        project.setUserId(user.getId());
+        project.setUser(user);
+        project.setUser(user);
         projectService.insert(project);
         return project;
     }
@@ -35,7 +36,7 @@ public class FirstProjectAndTaskForNewUserServiceImpl implements FirstProjectAnd
         task.setDescription("Сделайте задачу \"завершенной\".");
         task.setCompleted(false);
         task.setProjectId(project.getId());
-        task.setMakerId(project.getUserId());
+        task.setUser(project.getUser());
         taskService.insert(task);
         return task;
     }

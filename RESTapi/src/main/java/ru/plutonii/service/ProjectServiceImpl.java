@@ -33,7 +33,7 @@ public class ProjectServiceImpl implements ProjectService{
         System.out.println(project);
         Team team = new Team();
         team.setProjectId(project.getId());
-        team.setUserId(project.getUserId());
+        team.setUser(project.getUser());
         System.out.println("Team before insert");
         System.out.println(team);
         teamDAO.insert(team);

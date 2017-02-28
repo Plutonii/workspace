@@ -18,21 +18,15 @@ export class DataService {
     }
 
     public loadProjectsByUserId(): Observable<Project[]> {
-        this._headers.set('token', this.userAccess.getToken());
-        let projectList;
+        this.setCurrentTokenInHeader();
         return this.http.get(this.url + 'project/userid/' + this.userAccess.getUserId(),
             {headers: this._headers}).map((resp) => {
-            projectList = resp.json();
-            let projects:Project[] = [];
+            const projectList = resp.json();
+            const projects:Project[] = [];
             for (let index in projectList) {
-                let project:Project = new Project();
-                project.id = projectList[index].id;
-                project.title = projectList[index].title;
-                project.description = projectList[index].description;
-                project.numberOfTasks = projectList[index].numberOfTasks;
-                project.numberOfCompletedTasks = projectList[index].numberOfCompletedTasks;
-                project.numberOfUsers = projectList[index].numberOfUsers;
-                project.userId = projectList[index].userId;
+                if (!projectList.hasOwnProperty(index)) continue;
+                const project:Project = new Project();
+                project.cloneOfObjectToProject(projectList[index]);
                 projects.push(project);
             }
             return projects;
@@ -42,20 +36,15 @@ export class DataService {
     }
 
     public loadTasksByProjectId(projectId:number): Observable<Task[]> {
-        this._headers.set('token', this.userAccess.getToken());
-        let taskList;
+        this.setCurrentTokenInHeader();
         return this.http.get(this.url + 'task/project/' + projectId,
             {headers: this._headers}).map((resp) => {
-            taskList = resp.json();
-            let tasks:Task[] = [];
+            const taskList = resp.json();
+            const tasks:Task[] = [];
             for (let index in taskList) {
-                let task:Task = new Task();
-                task.id = taskList[index].id;
-                task.title = taskList[index].title;
-                task.description = taskList[index].description;
-                task.completed = taskList[index].completed;
-                task.makerId = taskList[index].makerId;
-                task.projectId = taskList[index].projectId;
+                if (!taskList.hasOwnProperty(index)) continue;
+                const task:Task = new Task();
+                task.cloneOfObjectToTask(taskList[index]);
                 tasks.push(task);
             }
             return tasks;
@@ -70,5 +59,22 @@ export class DataService {
 
     set openProject(value: Project) {
         this._openProject = value;
+    }
+
+    public loadProjectById(projectId:Number): Observable<Project>{
+        this.setCurrentTokenInHeader();
+        return this.http.get(this.url + 'project/' + projectId,
+            {headers: this._headers}).map((resp) => {
+            const projectObject = resp.json();
+            const project:Project = new Project();
+            project.cloneOfObjectToProject(projectObject);
+            return project;
+        }).catch((error:any) =>{
+           return Observable.throw(error);
+        });
+    }
+
+    private setCurrentTokenInHeader(){
+        this._headers.set('token', this.userAccess.getToken());
     }
 }

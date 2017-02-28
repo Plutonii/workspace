@@ -10,7 +10,7 @@ public class Task {
     private int id;
     private String title;
     private String description;
-    private int makerId;
+    private User user;
     private Integer projectId;
     private boolean completed;
 
@@ -45,14 +45,14 @@ public class Task {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "maker_id", nullable = false)
-    public int getMakerId() {
-        return makerId;
+    @ManyToOne
+    @JoinColumn(name = "maker_id")
+    public User getUser() {
+        return user;
     }
 
-    public void setMakerId(int makerId) {
-        this.makerId = makerId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Basic
@@ -83,7 +83,7 @@ public class Task {
         Task task = (Task) o;
 
         if (id != task.id) return false;
-        if (makerId != task.makerId) return false;
+        if (!user.equals(task.user)) return false;
         if (completed != task.completed) return false;
         if (title != null ? !title.equals(task.title) : task.title != null) return false;
         if (description != null ? !description.equals(task.description) : task.description != null) return false;
@@ -97,7 +97,7 @@ public class Task {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + makerId;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (projectId != null ? projectId.hashCode() : 0);
         result = 31 * result + (completed ? 1 : 0);
         return result;
@@ -106,7 +106,7 @@ public class Task {
     @Override
     public String toString() {
         return "Task. Id = " + this.id +
-                ". Maker_id = " + this.makerId + ". Project_id = " + this.projectId +
+                ". Maker = " + this.user + ". Project_id = " + this.projectId +
                 "\n" + "Title = " + this.title;
     }
 }

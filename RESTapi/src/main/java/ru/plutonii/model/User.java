@@ -14,6 +14,13 @@ public class User {
     private String email;
     private byte[] avatar;
 
+    public User() {
+    }
+
+    public User(int id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

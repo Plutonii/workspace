@@ -10,7 +10,7 @@ public class Project {
     private int id;
     private String title;
     private String description;
-    private int userId;
+    private User user;
     private Integer numberOfTasks;
     private Integer numberOfCompletedTasks;
     private Integer numberOfUsers;
@@ -46,15 +46,16 @@ public class Project {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "user_id", nullable = false)
-    public int getUserId() {
-        return userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
+
 
     @Basic
     @Column(name = "number_of_tasks", nullable = true)
@@ -94,7 +95,7 @@ public class Project {
         Project project = (Project) o;
 
         if (id != project.id) return false;
-        if (userId != project.userId) return false;
+        if (!user.equals(project.user)) return false;
         if (title != null ? !title.equals(project.title) : project.title != null) return false;
         if (description != null ? !description.equals(project.description) : project.description != null) return false;
         if (numberOfTasks != null ? !numberOfTasks.equals(project.numberOfTasks) : project.numberOfTasks != null)
@@ -112,7 +113,7 @@ public class Project {
         int result = id;
         result = 31 * result + (title != null ? title.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + userId;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (numberOfTasks != null ? numberOfTasks.hashCode() : 0);
         result = 31 * result + (numberOfCompletedTasks != null ? numberOfCompletedTasks.hashCode() : 0);
         result = 31 * result + (numberOfUsers != null ? numberOfUsers.hashCode() : 0);
@@ -122,6 +123,6 @@ public class Project {
     @Override
     public String toString() {
         return "Project. Id = " + this.id +
-                ". User_id = " + this.userId + "\n" + "Title = " + this.title;
+                ". User = " + this.user + "\n" + "Title = " + this.title;
     }
 }

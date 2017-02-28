@@ -19,7 +19,6 @@ export class ProjectsComponent implements OnInit {
     ngOnInit() {
         this.dataLoader.loadProjectsByUserId().subscribe((projects:Project[])=>{
             this.projects = projects;
-            console.dir(this.projects);
         }, (error:any) => {
             /*localStorage.clear();
             this.router.navigate(['/login']);*/

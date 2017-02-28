@@ -20,7 +20,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     public boolean authentication(String token) {
-        System.out.println(token);
         int indexSeparator = token.indexOf('|');
         if (indexSeparator == -1) return false;
         try {

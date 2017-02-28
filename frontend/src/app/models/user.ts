@@ -5,5 +5,11 @@ export class User {
     username:string;
     email:string;
     password:string;
-    config;
+
+    cloneOfObjectToUser(o:any): void {
+        this.id = o.id;
+        this.email = o.email;
+        this.username = o.username;
+        this.password = o.password;
+    }
 }

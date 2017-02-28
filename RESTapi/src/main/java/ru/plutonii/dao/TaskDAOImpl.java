@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.plutonii.model.Task;
+import ru.plutonii.model.User;
 
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Transactional(readOnly = true)
     public List<Task> findByMakerId(int id) {
-        return getCurrentSession().createQuery("from task t where t.makerId = :id")
-                .setParameter("id", id).list();
+        return getCurrentSession().createQuery("from task t where t.user = :user")
+                .setParameter("user", new User(id)).list();
     }
 
     @Transactional(readOnly = true)

@@ -13,7 +13,7 @@ import {DataService} from "../../services/data.service";
 })
 export class TasksComponent implements OnInit, OnDestroy {
 
-    private authUserId:number;
+    private authUserId: number;
     private project: Project;
     private tasks: Task[];
     private selectTask: Task;
@@ -22,9 +22,9 @@ export class TasksComponent implements OnInit, OnDestroy {
     private newTask: Task;
     @ViewChild("inputOfAddNewTask")
     input: ElementRef;
-    private subscriptionOnParams:Subscription;
+    private subscriptionOnParams: Subscription;
 
-    constructor(private userAccess:UserAccessService,
+    constructor(private userAccess: UserAccessService,
                 private activateRoute: ActivatedRoute,
                 private dataLoader: DataService) {
         this.isViewInput = false;
@@ -35,18 +35,21 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.authUserId = this.userAccess.getUserId();
-        let id:number;
+        let id: number;
         this.subscriptionOnParams = this.activateRoute.params.subscribe((params) => {
             this.dataLoader.loadTasksByProjectId(params['id']).subscribe((tasks) => {
                 this.project = this.dataLoader.openProject;
+                if (!this.project) {
+                    this.dataLoader.loadProjectById(params['id']).subscribe((project) => {
+                        this.project = project;
+                    });
+                }
                 this.tasks = tasks;
-                console.dir(this.tasks);
-                console.dir(this.project);
             });
         });
     }
 
-    ngOnDestroy(){
+    ngOnDestroy() {
         this.subscriptionOnParams.unsubscribe();
     }
 

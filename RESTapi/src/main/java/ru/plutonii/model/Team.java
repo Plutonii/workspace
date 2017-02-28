@@ -9,7 +9,8 @@ import javax.persistence.*;
 public class Team {
     private int id;
     private int projectId;
-    private int userId;
+    private User user;
+
 
     @Id
     @Column(name = "id", nullable = false)
@@ -32,14 +33,14 @@ public class Team {
         this.projectId = projectId;
     }
 
-    @Basic
-    @Column(name = "user_id", nullable = false)
-    public int getUserId() {
-        return userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Team {
 
         if (id != team.id) return false;
         if (projectId != team.projectId) return false;
-        if (userId != team.userId) return false;
+        if (!user.equals(team.user)) return false;
 
         return true;
     }
@@ -60,13 +61,13 @@ public class Team {
     public int hashCode() {
         int result = id;
         result = 31 * result + projectId;
-        result = 31 * result + userId;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
         return "Team. Id = " + this.id +
-                ". User_id = " + this.userId + ". Project_id = " + this.projectId;
+                ". User = " + this.user + ". Project_id = " + this.projectId;
     }
 }

@@ -5,7 +5,11 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.plutonii.exception.UserNotFound;
 import ru.plutonii.model.Team;
+import ru.plutonii.model.User;
+
+import java.util.List;
 
 /**
  * Created by plutonii on 25.02.17.
@@ -32,5 +36,14 @@ public class TeamDAOImpl implements TeamDAO {
 
     public void delete(Team team) {
         getCurrentSession().delete(team);
+    }
+
+    public List<User> findUserByProjectId(int id) {
+        List<User> userList = getCurrentSession().createQuery("from team t where t.projectId = :id")
+                .setParameter("id", id).list();
+        if (userList == null){
+            throw new UserNotFound("User does not have a projects");
+        }
+        return userList;
     }
 }

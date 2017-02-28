@@ -29,6 +29,13 @@ public class GlobalExceptionHandlerController {
         return e.getError();
     }
 
+    @ExceptionHandler(UserNotFound.class)
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    @ResponseBody
+    public CustomError handleUserNotFound(UserNotFound e) {
+        System.err.println(e.getMessage());
+        return new CustomError(e.getClass().toString(), e.getMessage());
+    }
     @ResponseStatus(value = HttpStatus.NO_CONTENT, reason = "project not found")
     @ExceptionHandler(ProjectNotFound.class)
     void handleProjectNotFoundException(ProjectNotFound e) {

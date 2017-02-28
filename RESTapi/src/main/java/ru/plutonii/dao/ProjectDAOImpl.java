@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.plutonii.exception.ProjectNotFound;
 import ru.plutonii.model.Project;
+import ru.plutonii.model.User;
 
 import java.util.List;
 
@@ -50,8 +51,8 @@ public class ProjectDAOImpl implements ProjectDAO{
 
     @Transactional(readOnly = true)
     public List<Project> findByUserId(int id) {
-        List<Project> projectList = getCurrentSession().createQuery("from project p where p.userId = :userId")
-                .setParameter("userId", id).list();
+        List<Project> projectList = getCurrentSession().createQuery("from project p where p.user = :user")
+                .setParameter("user", new User(id)).list();
         if (projectList == null){
             throw new ProjectNotFound("User does not have a projects");
         }
