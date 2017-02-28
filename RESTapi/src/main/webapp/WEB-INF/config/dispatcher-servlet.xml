@@ -23,4 +23,11 @@
             <bean class="ru.plutonii.interceptor.AccessChecksInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+    
+    <mvc:cors>
+        <mvc:mapping path="/**"
+                     allowed-origins="http://plutonii.ru, http://localhost"
+                     exposed-headers="token"
+                     max-age="3600"/>
+    </mvc:cors>
 </beans>
