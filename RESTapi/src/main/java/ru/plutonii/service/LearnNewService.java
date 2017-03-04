@@ -7,9 +7,7 @@ import ru.plutonii.model.User;
 /**
  * Created by plutonii on 26.02.17.
  */
-public interface FirstProjectAndTaskForNewUserService {
+public interface LearnNewService {
 
-    public Project addFirstProjectForUser(User user);
-
-    public Task addFirstTaskForProject(Project project);
+    public void learn(User user);
 }

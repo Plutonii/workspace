@@ -7,6 +7,7 @@ export class User {
     password:string;
 
     cloneOfObjectToUser(o:any): void {
+        if (!o) return;
         this.id = o.id;
         this.email = o.email;
         this.username = o.username;

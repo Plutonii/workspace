@@ -20,13 +20,13 @@ public class UserAccessServiceImpl implements UserAccessService {
 
     private UserDAO userDAO;
     private TokenDAO tokenDAO;
-    private FirstProjectAndTaskForNewUserService firstProjectAndTaskForNewUserService;
+    private LearnNewService learnNewService;
 
     @Autowired
-    public UserAccessServiceImpl(UserDAO userDAO, TokenDAO tokenDAO, FirstProjectAndTaskForNewUserService firstProjectAndTaskForNewUserService) {
+    public UserAccessServiceImpl(UserDAO userDAO, TokenDAO tokenDAO, LearnNewService learnNewService) {
         this.userDAO = userDAO;
         this.tokenDAO = tokenDAO;
-        this.firstProjectAndTaskForNewUserService = firstProjectAndTaskForNewUserService;
+        this.learnNewService = learnNewService;
     }
 
     public String registerUser(User user) {
@@ -44,9 +44,7 @@ public class UserAccessServiceImpl implements UserAccessService {
         tokenDAO.insert(token);
         System.out.println("token after insert");
         System.out.println(token);
-        this.firstProjectAndTaskForNewUserService
-                .addFirstTaskForProject(this.firstProjectAndTaskForNewUserService
-                        .addFirstProjectForUser(user));
+        this.learnNewService.learn(user);
         return token.getUserId() + "|" + token.getToken();
     }
 

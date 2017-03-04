@@ -46,7 +46,7 @@ public class Task {
     }
 
     @ManyToOne
-    @JoinColumn(name = "maker_id")
+    @JoinColumn(name = "maker_id", nullable = true)
     public User getUser() {
         return user;
     }
