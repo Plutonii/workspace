@@ -16,10 +16,10 @@
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li><a routerLink="/pages/welcome">Welcome</a></li>
-                <li routerLinkActive="active"><a routerLink="/edit-task">EditTodo</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right" (click)="logout()">
-                <li class="navbar-text">Выйти</li>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">@{{userName}}</li>
+                <li class="navbar-text" (click)="logout()">Выйти</li>
             </ul>
         </div>
     </div>

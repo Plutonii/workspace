@@ -32,6 +32,8 @@ public class UserAccessController {
 
     @PostMapping(path = "/login", consumes = "application/json")
     void login(@RequestBody User user, HttpServletResponse response) {
+        System.out.println(user);
+        System.out.println(user.getPassword());
         String token = userAccess.login(user);
         response.setHeader("token", token);
     }

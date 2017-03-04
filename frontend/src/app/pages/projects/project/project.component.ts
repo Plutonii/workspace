@@ -14,10 +14,10 @@ export class ProjectComponent implements OnInit {
     progressBar: ElementRef;
 
     @Input()
-    project:Project;
+    project: Project;
 
-    constructor(private router:Router,
-                private dataLoader:DataService) {
+    constructor(private router: Router,
+                private dataLoader: DataService) {
     }
 
     controlProgressBar() {
@@ -32,7 +32,7 @@ export class ProjectComponent implements OnInit {
         }
     }
 
-    open(){
+    open() {
         this.dataLoader.openProject = this.project;
         this.router.navigate(['/pages/project', this.project.id]);
     }
@@ -45,17 +45,18 @@ export class ProjectComponent implements OnInit {
         return this.project.numberOfTasks;
     }
 
-    set numberOfAllTasks(value: number) {
-        this.project.numberOfTasks = value;
-        this.controlProgressBar();
-    }
-
     get numberOfCompletedTasks(): number {
         return this.project.numberOfCompletedTasks;
     }
 
-    set numberOfCompletedTasks(value: number) {
-        this.project.numberOfCompletedTasks = value;
-        this.controlProgressBar();
+    public deleteProject() {
+        this.dataLoader.removeProject(this.project).subscribe(() => {
+            const alert = document.getElementById("delete-project");
+            alert.classList.add("show-alert");
+            setTimeout(function () {
+                alert.classList.remove("show-alert")
+            }, 3100);
+        });
     }
+
 }

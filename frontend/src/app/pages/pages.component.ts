@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {EventListenerService} from "../services/event-listener.service";
 
 @Component({
-    selector: 'app-pages',
+    selector: 'ws-pages',
     templateUrl: './pages.component.html',
     styleUrls: ['./pages.component.css']
 })
-export class PagesComponent implements OnInit {
+export class PagesComponent implements OnInit{
 
     private isHiddenLeftMenu: boolean;
 
@@ -18,6 +18,7 @@ export class PagesComponent implements OnInit {
     }
 
     ngOnInit() {
+
     }
 
 }

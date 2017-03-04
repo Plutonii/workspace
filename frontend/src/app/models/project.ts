@@ -8,6 +8,10 @@ export class Project {
     numberOfTasks: number;
     numberOfCompletedTasks: number;
 
+    public constructor(){
+        this.user = new User();
+    }
+
     cloneOfObjectToProject(o:any): void {
         this.id = o.id;
         this.title = o.title;

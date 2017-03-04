@@ -30,7 +30,6 @@ export class UserAccessService {
             let userStr = localStorage.getItem("ws-user");
             if (userStr !==null && userStr !== undefined && userStr !== ''){
                 this.user = JSON.parse(userStr);
-                console.dir(this.user);
             }
         } else {
             this._isAuthorized = false;
@@ -98,5 +97,9 @@ export class UserAccessService {
 
     public getToken():string {
         return this.token;
+    }
+
+    public getUserName():string {
+        return this.user.username;
     }
 }

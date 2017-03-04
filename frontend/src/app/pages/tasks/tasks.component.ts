@@ -26,7 +26,8 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     constructor(private userAccess: UserAccessService,
                 private activateRoute: ActivatedRoute,
-                private dataLoader: DataService) {
+                private dataLoader: DataService,
+               /* private eventListener:EventListenerService*/) {
         this.isViewInput = false;
         this.isOpenDetails = false;
         this.tasks = [];
@@ -37,10 +38,10 @@ export class TasksComponent implements OnInit, OnDestroy {
         this.authUserId = this.userAccess.getUserId();
         let id: number;
         this.subscriptionOnParams = this.activateRoute.params.subscribe((params) => {
-            this.dataLoader.loadTasksByProjectId(params['id']).subscribe((tasks) => {
+            this.dataLoader.getTasksByProjectId(params['id']).subscribe((tasks) => {
                 this.project = this.dataLoader.openProject;
                 if (!this.project) {
-                    this.dataLoader.loadProjectById(params['id']).subscribe((project) => {
+                    this.dataLoader.getProjectById(params['id']).subscribe((project) => {
                         this.project = project;
                     });
                 }

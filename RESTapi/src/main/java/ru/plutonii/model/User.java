@@ -1,5 +1,8 @@
 package ru.plutonii.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Arrays;
 
@@ -44,6 +47,8 @@ public class User {
 
     @Basic
     @Column(name = "password", nullable = false, length = 255)
+    @JsonIgnore
+    @JsonProperty(value = "password")
     public String getPassword() {
         return password;
     }

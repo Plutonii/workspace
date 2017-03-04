@@ -3,11 +3,12 @@
     border-radius: 7px;
     cursor: default;
     user-select: none;
+    margin-bottom: 5px;
 }
 
 .project h2 {
     font-size: 18px;
-    margin: 3px 15px 8px 0;
+    margin: 3px 30px 8px 20px;
     text-align: center;
 }
 
@@ -17,14 +18,21 @@
 
 .favourites {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 7px;
+    right: 20px;
     opacity: 0.35;
+    font-size: 20px;
 }
 
 .favourites:hover {
     opacity: 0.9;
     color: azure;
+    background-color: #6496de;
+    border-radius: 4px;
+}
+
+.favourites:before {
+    content: "\b7\b7\b7";
 }
 
 .head-project {
@@ -33,7 +41,7 @@
 }
 
 .modification {
-    height: 7px;
+    height: 8px;
     margin-bottom: 1px;
 }
 
@@ -44,7 +52,7 @@
 
 .users-info {
     font-size: 16px;
-    padding: 3px 10px 0px 10px;
+    padding: 3px 10px 0 10px;
 }
 
 .users-info:after {
@@ -57,6 +65,7 @@
 
 .maker-user {
     text-align: right;
+    margin-bottom: 0;
 }
 
 .maker-user i {
@@ -70,4 +79,20 @@
 .changed-col {
     padding-left: 5px;
     padding-right: 5px;
+}
+
+.description {
+    margin: 3px 5px 3px 5px;
+    padding: 2px 5px 2px 5px;
+    background-color: #71bfde;
+    border-radius: 3px;
+    font-size: 13px;
+    max-height: 60px;
+    overflow: auto;
+    min-height: 58px;
+}
+
+.show-alert {
+    display: block !important;
+    background-color: red;
 }

@@ -39,7 +39,7 @@ public class ProjectController {
         return projectService.insert(project);
     }
 
-    @DeleteMapping("/{id}/project")
+    @DeleteMapping("/project/{id}")
     void deleteProject(@PathVariable(name = "id") int id){
         projectService.delete(id);
     }

@@ -1,7 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Project} from "../../models/project";
 import {DataService} from "../../services/data.service";
 import {Router} from "@angular/router";
+import {UserAccessService} from "../../services/user-access.service";
+import {EventListenerService} from "../../services/event-listener.service";
 
 @Component({
     selector: 'ws-projects',
@@ -10,18 +12,44 @@ import {Router} from "@angular/router";
 })
 export class ProjectsComponent implements OnInit {
 
-    private projects:Project[];
+    private projects: Project[];
+    private newProject: Project;
+    @ViewChild("closeModal")
+    closeModal: ElementRef;
 
-    constructor(private dataLoader:DataService,
-    private router:Router) {
+    constructor(private dataLoader: DataService,
+                private router: Router,
+                private userAccess: UserAccessService,
+                private eventListener: EventListenerService) {
+        this.projects = [];
+        this.newProject = new Project();
     }
 
     ngOnInit() {
-        this.dataLoader.loadProjectsByUserId().subscribe((projects:Project[])=>{
+        this.loadProjects();
+        this.eventListener.subscribeReloadProject.subscribe(() => {
+            this.loadProjects();//Можно передавать удаляемый объект и извелать из массива, дабы лишний раз не обращаться к серву
+        });
+    }
+
+    private loadProjects(){
+        this.dataLoader.getProjectsByUserId().subscribe((projects: Project[]) => {
             this.projects = projects;
-        }, (error:any) => {
+        }, (error: any) => {
             /*localStorage.clear();
-            this.router.navigate(['/login']);*/
+             this.router.navigate(['/login']);*/
+        });
+    }
+
+    private createProject() {
+        this.newProject.user.id = this.userAccess.getUserId();
+        console.dir(this.newProject);
+        this.dataLoader.addProject(this.newProject).subscribe((project: Project) => {
+            this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
+            this.newProject = new Project();
+            this.dataLoader.getProjectById(project.id).subscribe((project1: Project) => {
+                this.projects.push(project1);
+            });
         });
     }
 
