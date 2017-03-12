@@ -1,0 +1,56 @@
+.body-details {
+    padding: 0 10px 5px 10px;
+    font-size: 14px;
+}
+
+.description {
+    max-height: 144px;
+    overflow: auto;
+    margin: 5px;
+}
+
+.maker {
+    border-top: 1px solid #dddddd;
+    margin: 5px;
+    padding-top: 5px;
+}
+
+.maker > span {
+    opacity: 0.7;
+}
+
+.maker > span:hover {
+    opacity: 1;
+    cursor: default;
+}
+
+.details {
+    position: relative;
+    background-color: white;
+    border: 1px solid #6edd5e;
+}
+
+.buttons {
+    display: inline-block;
+    position: absolute;
+    right: 5%;
+}
+
+.head-details {
+    border-bottom: 1px solid #6edd5e;
+}
+
+.head-details > h3 {
+    padding: 10px;
+    margin: 0 10% 0 20px;
+    min-height: 47px;
+}
+
+
+.buttons > span {
+    opacity: 0.4;
+}
+
+.buttons > span:hover {
+    opacity: 0.95;
+}

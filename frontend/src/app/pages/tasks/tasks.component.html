@@ -1,48 +1,57 @@
+<div class="header-content">
+    <span (click)="toggleView();">
+        Переключить
+    </span>
+</div>
 <div class="container-fluid">
     <div class="rows">
-        <div class="col-xs-12 col-md-10 col-lg-8"
-             [ngClass]="{'col-sm-10 col-sm-offset-1 col-md-offset-1 col-lg-offset-2': !isOpenDetails&& !isViewInput,
-             'col-sm-6':isViewInput||isOpenDetails}">
+        <ws-first-view *ngIf="isViewOne" [tasks]="tasks" [project]="project"></ws-first-view>
+        <ws-second-view *ngIf="!isViewOne"></ws-second-view>
+    </div>
+</div>
+<!--
+<div class="container-fluid">
+    <div class="rows">
+        <div [ngClass]="{'col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2': !isOpenDetails,
+             'col-xs-12 col-sm-12 col-md-6 col-lg-6':isOpenDetails}">
             <div class="all-tasks">
                 <div class="head-tasks">
+                    <span class="glyphicon glyphicon-arrow-left" data-toggle="tooltip"
+                          data-placement="left" title="Назад" routerLink="/pages/projects"></span>
                     <h3>{{project&&project.title||"Загрузка..."}}</h3>
                 </div>
                 <ul>
-                    <li *ngIf="!isViewInput&&project&&project.user&&project.user.id==authUserId" (click)="setTrueIsViewInput();">
+                    <li *ngIf="project&&project.user&&project.user.id==authUserId"
+                        data-toggle="modal" data-target="#modalOfFormNewTask" (click)="openAddNewTask()">
                         <span class="glyphicon glyphicon-plus"></span> Добавить новую задачу...
                     </li>
-                    <li *ngIf="isViewInput&&project&&project.user&&project.user.id==authUserId">
-                        <form (ngSubmit)="addNewTask()">
-                            <input type="text" name="titleOfNewTask" id="titleOfNewTask"
-                                   [(ngModel)]="newTask.title" autofocus #inputOfAddNewTask>
-                            <button type="submit" class="btn btn-success btn-sm"
-                                    [disabled]="inputOfAddNewTask.value==''">
-                                ОК
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm" (click)="cancelAddNewTask();">
-                                <span class="glyphicon glyphicon-remove"></span>
-                            </button>
-                        </form>
-                    </li>
-                    <li *ngFor="let task of tasks">
+                    <li *ngFor="let task of tasks" [ngClass]="{'selected': selectTask&&task.id===selectTask.id}">
                         <div class="single-task">
-                            <div class="task" (click)="openDetailWindow(task)">
-                                <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
-                                    <div></div>
-                                </div>
-                                <div class="title">
-                                    {{task.title}}
-                                </div>
+                            <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
+                                <div></div>
                             </div>
-                            <div *ngIf="task.user.id" class="user-maker">
-                                @{{task.user.username}}
+                            <div class="title" (click)="openDetailWindow(task)" data-toggle="tooltip"
+                                 data-placement="left" title="Показать детали">
+                                {{task.title}}
                             </div>
-                            <div *ngIf="!task.user.id" class="user-maker">
+
+                            <div *ngIf="task.user.id" class="user-maker"
+                                 [ngClass]="{'my-task':task.user.id===authUserId}">
+                                @<b>{{task.user.username}}</b>
+                            </div>
+                            <div *ngIf="!task.user.id" class="user-maker" data-toggle="tooltip"
+                                 data-placement="left" title="Закрепиться">
+                                <span class="glyphicon glyphicon-plus-sign" (click)="assignUser(task)"
+                                      *ngIf="project&&project.user&&project.user.id!==authUserId"></span>
                                 <span class="dropdown-toggle glyphicon glyphicon-plus-sign"
-                                      data-toggle="dropdown"></span>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#">Закрепиться</a></li>
-                                    <li *ngIf="project&&project.user&&project.user.id==authUserId"><a href="#">Закрепить пользователя</a></li>
+                                      data-toggle="dropdown"
+                                      *ngIf="project&&project.user&&project.user.id===authUserId">
+                                </span>
+                                <ul *ngIf="project&&project.user&&project.user.id===authUserId"
+                                    class="dropdown-menu dropdown-menu-right">
+                                    <li><a (click)="assignUser(task)">Закрепиться</a></li>
+                                    <li><a href="#">Закрепить
+                                        пользователя</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -50,19 +59,24 @@
                 </ul>
             </div>
         </div>
-        <div *ngIf="isOpenDetails" [ngClass]="{'col-xs-12 col-sm-6 col-md-6 col-lg-6': isOpenDetails}">
+        <div *ngIf="isOpenDetails" [ngClass]="{'col-xs-12 col-sm-12 col-md-6 col-lg-6': isOpenDetails}">
             <div class="details">
                 <div class="head-details">
                     <h3>
-                        <span>{{selectTask.title}}</span>
+                        <span *ngIf="!isOpenEditTask">{{selectTask.title}}</span>
+                        <input *ngIf="isOpenEditTask" [(ngModel)]="selectTask.title"/>
                         <div class="buttons">
-                            <span *ngIf="selectTask.user.id==authUserId" class="glyphicon glyphicon-ok-circle"></span>
+                            <span *ngIf="selectTask.user.id==authUserId&&!selectTask.completed" (click)="completeTask()"
+                                  class="glyphicon glyphicon-ok-circle"></span>
+                            <span *ngIf="selectTask.user.id==authUserId&&selectTask.completed" (click)="notCompleteTask()"
+                                  class="glyphicon glyphicon-remove-circle"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
                             <span *ngIf="selectTask.user.id==authUserId" data-toggle="dropdown"
                                   class="dropdown-toggle glyphicon glyphicon-cog"></span>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="#">Пометить как выполненную</a></li>
-                                <li><a href="#">Редактировать</a></li>
+                                <li *ngIf="!selectTask.completed" (click)="completeTask()"><a>Пометить как выполненную</a></li>
+                                <li *ngIf="selectTask.completed" (click)="notCompleteTask()"><a>Отменить выполнение</a></li>
+                                <li><a (click)="openEditTask()">Редактировать</a></li>
                                 <li><a href="#">Отказаться от выполнения</a></li>
                                 <li class="divider"></li>
                                 <li *ngIf="project.user.id==authUserId"><a href="#">Удалить</a></li>
@@ -74,36 +88,16 @@
                     </h3>
                 </div>
                 <div class="body-details">
-                    <p class="maker">Ответственный: @{{selectTask.user.username}}</p>
-                    <p>Описание: {{selectTask.description}}</p>
+                    <div class="description">{{selectTask.description}}</div>
+                    <p class="maker">Ответственный
+                        <span>@{{selectTask.user.username}}</span>
+                        , назначен 21.02.2017 17:53</p>&lt;!&ndash;тут будет инфа с сервера&ndash;&gt;
                 </div>
             </div>
         </div>
-        <div *ngIf="isViewInput" [ngClass]="{'col-xs-12 col-sm-6 col-md-6 col-lg-6': isViewInput}">
-            <div class="details">
-                <div class="head-details">
-                    <h3>
-                        <span>{{newTask.title}}</span>
-                        <div class="buttons">
-                            <span class="glyphicon glyphicon-remove" (click)="cancelAddNewTask()">
-                            </span>
-                        </div>
-                    </h3>
-                </div>
-                <div class="body-details">
-                    <form>
-                        <div class="form-group">
-                            <label for="newTaskMakerId">Ответственный</label>
-                            <input id="newTaskMakerId" type="text" [(ngModel)]="newTask.user.username" name="newTaskMakerId">
-                        </div>
-                        <div class="form-group">
-                            <label for="newTaskDescription">Описание</label><br>
-                            <textarea id="newTaskDescription" [(ngModel)]="newTask.description"
-                                      name="newTaskDescription"></textarea>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
+
+&lt;!&ndash; Modal &ndash;&gt;
+-->

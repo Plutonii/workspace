@@ -1,0 +1,91 @@
+<div [ngClass]="{'col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2': !isOpenDetails,
+             'col-xs-12 col-sm-12 col-md-6 col-lg-6':isOpenDetails}">
+    <div class="all-tasks">
+        <div class="head-tasks">
+            <span class="glyphicon glyphicon-arrow-left" data-toggle="tooltip"
+                  data-placement="left" title="Назад" routerLink="/pages/projects"></span>
+            <h3>{{project&&project.title||"Загрузка..."}}</h3>
+        </div>
+        <ul>
+            <li *ngIf="project&&project.user&&project.user.id==authUserId"
+                data-toggle="modal" data-target="#modalOfFormNewTask" (click)="openAddNewTask()">
+                <span class="glyphicon glyphicon-plus"></span> Добавить новую задачу...
+            </li>
+            <li *ngFor="let task of tasks" [ngClass]="{'selected': selectTask&&task.id===selectTask.id}">
+                <div class="single-task">
+                    <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
+                        <div></div>
+                    </div>
+                    <div class="title" (click)="openDetailWindow(task)" data-toggle="tooltip"
+                         data-placement="left" title="Показать детали">
+                        {{task.title}}
+                    </div>
+
+                    <div *ngIf="task.user&&task.user.id" class="user-maker"
+                         [ngClass]="{'my-task':task.user.id===authUserId}">
+                        <b>{{task.user.username}}</b>
+                    </div>
+                    <div *ngIf="task.user&&!task.user.id" class="user-maker" data-toggle="tooltip"
+                         data-placement="left" title="Закрепиться">
+                        <span class="glyphicon glyphicon-plus-sign" (click)="assignUser(task)"
+                              *ngIf="project&&project.user&&project.user.id!==authUserId"></span>
+                        <span class="dropdown-toggle glyphicon glyphicon-plus-sign"
+                              data-toggle="dropdown"
+                              *ngIf="project&&project.user&&project.user.id===authUserId">
+                                </span>
+                        <ul *ngIf="project&&project.user&&project.user.id===authUserId"
+                            class="dropdown-menu dropdown-menu-right">
+                            <li><a (click)="assignUser(task)">Закрепиться</a></li>
+                            <li><a href="#">Закрепить
+                                пользователя</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ws-view-details-of-task *ngIf="isOpenDetails" [selectTask]="selectTask" [authUserId]="authUserId"
+                         [makerProjectId]="project.user.id" (onClose)="closeDetailWindow()"
+(onDelete)="deleteTask()">
+</ws-view-details-of-task>
+
+
+<!-- Modal window for add new task-->
+<div class="modal fade" id="modalOfFormNewTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                        #closeModal>&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Создание новой задачи</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form" class="form-horizontal" (ngSubmit)="addNewTask()">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="title-of-project">Название задачи</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="title-of-project"
+                                   name="title-of-project" required [(ngModel)]="newTask.title" #newTitle>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3" for="description-of-project">Описание</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="description-of-project"
+                                      name="title-of-project" [(ngModel)]="newTask.description"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+                <button type="submit" class="btn btn-success" (click)="addNewTask()"
+                        [disabled]="newTitle.value===''">Создать
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

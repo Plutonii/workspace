@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
 import {Project} from "../../../models/project";
 import {Router} from "@angular/router";
 import {DataService} from "../../../services/data.service";
+import {UserAccessService} from "../../../services/user-access.service";
 
 @Component({
     selector: 'ws-project',
@@ -13,11 +14,15 @@ export class ProjectComponent implements OnInit {
     @ViewChild("progressBar")
     progressBar: ElementRef;
 
+    private authUserId: number;
+
     @Input()
     project: Project;
 
     constructor(private router: Router,
-                private dataLoader: DataService) {
+                private dataLoader: DataService,
+                private userAccess: UserAccessService) {
+        this.authUserId = this.userAccess.getUserId();
     }
 
     controlProgressBar() {
@@ -32,13 +37,13 @@ export class ProjectComponent implements OnInit {
         }
     }
 
+    ngOnInit() {
+        this.controlProgressBar();
+    }
+
     open() {
         this.dataLoader.openProject = this.project;
         this.router.navigate(['/pages/project', this.project.id]);
-    }
-
-    ngOnInit() {
-        this.controlProgressBar();
     }
 
     get numberOfAllTasks(): number {

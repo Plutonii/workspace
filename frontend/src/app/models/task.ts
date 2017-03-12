@@ -5,9 +5,9 @@ export class Task {
     description: string;
     user: User;
     projectId: number;
-    completed:boolean;
+    completed: boolean;
 
-    cloneOfObjectToTask(o:any): void {
+    cloneOfObjectToTask(o: any): void {
         this.id = o.id;
         this.title = o.title;
         this.description = o.description;
@@ -15,5 +15,14 @@ export class Task {
         this.completed = o.completed;
         this.user = new User();
         this.user.cloneOfObjectToUser(o.user);
+    }
+
+    deleteInArray(array: Array<Task>) {
+        const index:number = array.findIndex((value) => {
+            if (value.id === this.id) return true;
+        });
+        if (index !== -1){
+            array.splice(index, 1);
+        }
     }
 }

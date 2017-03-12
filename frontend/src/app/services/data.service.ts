@@ -13,7 +13,7 @@ export class DataService {
     private _openProject: Project;
 
     constructor(private http: Http, private userAccess: UserAccessService,
-                private eventListener:EventListenerService) {
+                private eventListener: EventListenerService) {
         this.requestArgs = new RequestOptions();
         this.requestArgs.headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
         this.url = 'http://plutonii.ru:8888/workspace/api/';
@@ -82,14 +82,50 @@ export class DataService {
         });
     }
 
-    public removeProject(project: Project){
+    public removeProject(project: Project) {
         this.setCurrentTokenInHeader();
         return this.http.delete(this.url + 'project/' + project.id,
             this.requestArgs).map((resp: Response) => {
-            if (resp.status === 200){
+            if (resp.status === 200) {
                 this.eventListener.emitRemoveProject();
             }
             return resp.status;
+        });
+    }
+
+    public addTask(task: Task): Observable<Task> {
+        this.setCurrentTokenInHeader();
+        return this.http.post(this.url + 'task/', JSON.stringify(task),
+            this.requestArgs).map((resp) => {
+            const taskObject = resp.json();
+            const task: Task = new Task();
+            task.cloneOfObjectToTask(taskObject);
+            return task;
+        }).catch((error: any) => {
+            return Observable.throw(error);
+        });
+    }
+
+    public  getTaskById(id: number):Observable<Task>{
+        this.setCurrentTokenInHeader();
+        return this.http.get(this.url + 'task/' + id,
+            this.requestArgs).map((resp) => {
+            const taskObject = resp.json();
+            const task: Task = new Task();
+            task.cloneOfObjectToTask(taskObject);
+            return task;
+        }).catch((error: any) => {
+            return Observable.throw(error);
+        });
+    }
+
+    public removeTask(task: Task): Observable<Task> {
+        this.setCurrentTokenInHeader();
+        return this.http.delete(this.url + 'task/'+ task.id,
+            this.requestArgs).map((resp) => {
+            return task;
+        }).catch((error: any) => {
+            return Observable.throw(error);
         });
     }
 

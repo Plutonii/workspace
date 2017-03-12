@@ -1,0 +1,135 @@
+.all-tasks {
+    background-color: white;
+    border: 1px solid #6edd5e;
+}
+
+.all-tasks ul {
+    list-style-type: none;
+    padding: 1px 1px 1px 1px;
+    margin: 1px
+}
+
+.all-tasks > ul > li {
+    border-bottom: 1px solid #296424;
+    opacity: 0.8;
+    padding: 5px 10px 5px 10px;
+    font-size: 17px;
+}
+
+.all-tasks > ul > li:last-child,
+.all-tasks > ul > li:last-child:hover {
+    border-bottom: none;
+}
+
+.all-tasks > ul > li:hover {
+    border-bottom: 1px solid #296424;
+    opacity: 1;
+    background-color: #95ccff;
+}
+
+.head-tasks {
+    position: relative;
+}
+
+.head-tasks > span {
+    position: absolute;
+    left: 13px;
+    top: 17px;
+    font-size: 17px;
+    opacity: 0.6;
+}
+
+.head-tasks > span:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.head-tasks > h3 {
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    border-bottom: 1px solid #6edd5e;
+}
+
+.all-tasks > ul > li:first-child,
+.all-tasks > ul > li:first-child:hover {
+    background-color: white;
+    cursor: default;
+}
+
+.single-task {
+    position: relative;
+}
+
+.not-completed, .completed {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    display: inline-block;
+}
+
+.not-completed > div {
+    background-color: red;
+    width: 15px;
+    height: 15px;
+    margin: 4px 5px 0 0;
+    border-radius: 9px;
+}
+
+.completed > div {
+    width: 15px;
+    height: 15px;
+    margin: 4px 5px 0 0;
+    background-color: limegreen;
+    border-radius: 9px;
+}
+
+.user-maker {
+    top: 0;
+    display: inline-block;
+    position: absolute;
+    left: 83%;
+    font-size: 13px;
+    padding-top: 5px;
+    max-width: 17%;
+    opacity: 0.6;
+}
+
+.user-maker:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.user-maker > span {
+    opacity: 0.4;
+    font-size: 17px;
+}
+
+.user-maker > span:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+
+.title {
+    margin: 0 17% 0 20px;
+    display: block;
+}
+
+.title:hover {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #95ccff;
+}
+
+.my-task {
+    font-size: 14px;
+    padding: 2px;
+}
+
+.dropdown-menu > li:hover {
+    cursor: pointer;
+}
