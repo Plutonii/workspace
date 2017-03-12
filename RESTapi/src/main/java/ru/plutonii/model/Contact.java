@@ -5,8 +5,8 @@ import javax.persistence.*;
 /**
  * Created by plutonii on 12.03.17.
  */
-@Entity(name = "contacts")
-public class Contacts {
+@Entity(name = "contact")
+public class Contact {
     private int id;
     private int userId;
     private User contact;
@@ -47,7 +47,7 @@ public class Contacts {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Contacts contacts = (Contacts) o;
+        Contact contacts = (Contact) o;
 
         if (id != contacts.id) return false;
         if (userId != contacts.userId) return false;
@@ -64,7 +64,7 @@ public class Contacts {
 
     @Override
     public String toString() {
-        return "Contacts{" +
+        return "Contact{" +
                 "id=" + id +
                 ", userId=" + userId +
                 ", contact=" + contact +
