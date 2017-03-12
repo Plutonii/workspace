@@ -25,8 +25,8 @@ public class TaskServiceImpl implements TaskService {
         return taskDAO.insert(task);
     }
 
-    public void delete(Task task) {
-        taskDAO.delete(task);
+    public void delete(int taskId) {
+        taskDAO.delete(findById(taskId));
     }
 
     public Task findById(int id) {

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface TaskService {
     Task insert(Task task);
-    void delete(Task task);
+    void delete(int taskId);
     Task findById(int id);
     List<Task> findByMakerId(int id);
     List<Task> findByProjectId(int id);

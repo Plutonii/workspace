@@ -46,8 +46,8 @@ public class TaskController {
         return taskService.insert(task);
     }
 
-    @DeleteMapping(path = "/task", consumes = "application/json")
-    void deleteTask(@RequestBody Task task){
-        taskService.delete(task);
+    @DeleteMapping(path = "/task/{id}", consumes = "application/json")
+    void deleteTask(@PathVariable(name = "id") int id){
+        taskService.delete(id);
     }
 }
