@@ -15,7 +15,6 @@ public class User {
     private String username;
     private String password;
     private String email;
-    private byte[] avatar;
 
     public User() {
     }
@@ -67,16 +66,6 @@ public class User {
         this.email = email;
     }
 
-    @Basic
-    @Column(name = "avatar", nullable = true)
-    public byte[] getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(byte[] avatar) {
-        this.avatar = avatar;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -88,7 +77,6 @@ public class User {
         if (username != null ? !username.equals(user.username) : user.username != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
-        if (!Arrays.equals(avatar, user.avatar)) return false;
 
         return true;
     }
@@ -99,13 +87,15 @@ public class User {
         result = 31 * result + (username != null ? username.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(avatar);
         return result;
     }
 
     @Override
     public String toString() {
-        return "User. Id = " + this.id +
-                ". User_name = " + this.username;
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }

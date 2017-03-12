@@ -80,7 +80,10 @@ public class Token {
 
     @Override
     public String toString() {
-        return "Token. Id = " + this.id +
-                ". User_id = " + this.userId;
+        return "Token{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", token='" + token + '\'' +
+                '}';
     }
 }

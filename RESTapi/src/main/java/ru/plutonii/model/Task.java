@@ -105,8 +105,13 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task. Id = " + this.id +
-                ". Maker = " + this.user + ". Project_id = " + this.projectId +
-                "\n" + "Title = " + this.title;
+        return "Task{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", user=" + user +
+                ", projectId=" + projectId +
+                ", completed=" + completed +
+                '}';
     }
 }

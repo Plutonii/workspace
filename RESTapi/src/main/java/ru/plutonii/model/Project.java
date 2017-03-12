@@ -122,7 +122,13 @@ public class Project {
 
     @Override
     public String toString() {
-        return "Project. Id = " + this.id +
-                ". User = " + this.user + "\n" + "Title = " + this.title;
+        return "Project{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", user=" + user +
+                ", numberOfTasks=" + numberOfTasks +
+                ", numberOfCompletedTasks=" + numberOfCompletedTasks +
+                ", numberOfUsers=" + numberOfUsers +
+                '}';
     }
 }

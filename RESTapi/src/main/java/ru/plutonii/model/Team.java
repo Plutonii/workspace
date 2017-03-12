@@ -67,7 +67,10 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team. Id = " + this.id +
-                ". User = " + this.user + ". Project_id = " + this.projectId;
+        return "Team{" +
+                "id=" + id +
+                ", projectId=" + projectId +
+                ", user=" + user +
+                '}';
     }
 }
