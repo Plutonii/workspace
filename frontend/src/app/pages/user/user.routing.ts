@@ -1,11 +1,10 @@
 import {Routes, RouterModule} from "@angular/router";
 import {ModuleWithProviders} from "@angular/core";
-import {ProjectsComponent} from "./projects.component";
+import {UserComponent} from "./user.component";
 export const routes: Routes = [
     {
         path: '',
-        component: ProjectsComponent,
-        pathMatch: 'full'
+        component: UserComponent
     }
 ];
 

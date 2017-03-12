@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
+            <section class="user">
+                <div class="user-head">
+                    <div class="avatar"></div>
+                    <h3 class="username">{{user.username}}</h3>
+                    <button type="button" *ngIf="authUserId===user.id">Редактировать</button>
+                    <button type="button" *ngIf="authUserId!==user.id">Добавить в контакты</button>
+                    <div class="last-activity">Последняя активность 17:26 2017-01-21</div>
+
+                </div>
+                <div class="user-body">
+                    <span class="counters"></span>
+                </div>
+
+            </section>
+        </div>
+    </div>
+</div>

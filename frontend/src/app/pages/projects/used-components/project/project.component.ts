@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
-import {Project} from "../../../models/project";
+import {Project} from "../../../../models/project";
 import {Router} from "@angular/router";
-import {DataService} from "../../../services/data.service";
-import {UserAccessService} from "../../../services/user-access.service";
+import {DataService} from "../../../../services/data.service";
+import {UserAccessService} from "../../../../services/user-access.service";
 
 @Component({
     selector: 'ws-project',

@@ -1,11 +1,10 @@
 import {NgModule} from "@angular/core";
-import {ProjectsComponent} from "./projects.component";
-import {routing} from "./projects.routing";
-import { ProjectComponent } from './used-components/project/project.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {UserComponent} from "./user.component";
+import {routing} from "./user.routing";
 @NgModule({
     imports:[routing, CommonModule, FormsModule],
-    declarations:[ProjectsComponent, ProjectComponent]
+    declarations:[UserComponent]
 })
-export class ProjectsModule{}
+export class UserModule{}

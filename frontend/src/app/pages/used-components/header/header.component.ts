@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {UserAccessService} from "../../../services/user-access.service";
 import {Router} from "@angular/router";
 import {EventListenerService} from "../../../services/event-listener.service";
-import {User} from "../../../models/user";
 
 @Component({
     selector: 'ws-header',

@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {ProjectsComponent} from "./projects.component";
 import {routing} from "./projects.routing";
-import { ProjectComponent } from './project/project.component';
+import { ProjectComponent } from './used-components/project/project.component';
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 @NgModule({
