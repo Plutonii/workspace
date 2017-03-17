@@ -18,7 +18,7 @@ public class LearnNewUserServiceImpl implements LearnNewUserService {
     private TaskService taskService;
     private UserDAO userDAO;
     private TeamDAO teamDAO;
-    private final int ID_BOT = 777;
+    private final int ID_BOT = 3;
 
     @Autowired
     public LearnNewUserServiceImpl(ProjectService projectService,
