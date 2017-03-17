@@ -80,7 +80,7 @@ public class UserDAOTest {
         user1.setUsername("username");
         user1.setPassword("pass");
         userDAO.insertOrUpdate(user1);
-        assertEquals(userDAO.findAll().size(), 2);
+        assertEquals(userDAO.findAll().size(), 3);//+bot
     }
 
     @Test

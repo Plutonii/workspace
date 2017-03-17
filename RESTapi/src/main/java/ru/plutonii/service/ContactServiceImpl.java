@@ -27,7 +27,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     public List<User> getContactsByUserId(int id) {
-        return contactDAO.findByUserId(id).stream().map(a -> a.getContact()).collect(Collectors.toList());
+        return contactDAO.findByUserId(id).stream().map(Contact::getContact).collect(Collectors.toList());
     }
 
     public Contact getContactByBindId(int id) {
