@@ -20,30 +20,22 @@ public class UserAccessServiceImpl implements UserAccessService {
 
     private UserDAO userDAO;
     private TokenDAO tokenDAO;
-    private LearnNewService learnNewService;
+    private LearnNewUserService learnNewService;
 
     @Autowired
-    public UserAccessServiceImpl(UserDAO userDAO, TokenDAO tokenDAO, LearnNewService learnNewService) {
+    public UserAccessServiceImpl(UserDAO userDAO, TokenDAO tokenDAO, LearnNewUserService learnNewService) {
         this.userDAO = userDAO;
         this.tokenDAO = tokenDAO;
         this.learnNewService = learnNewService;
     }
 
     public String registerUser(User user) {
-        System.out.println("User before insert");
-        System.out.println(user);
         userDAO.insertOrUpdate(user);
-        System.out.println("user after insert");
-        System.out.println(user);
         Token token = new Token();
         token.setUserId(user.getId());
         token.setLifetime(new Timestamp(System.currentTimeMillis()));
         token.setToken(GeneratorService.generateStrToken());
-        System.out.println("Token before insert");
-        System.out.println(token);
         tokenDAO.insert(token);
-        System.out.println("token after insert");
-        System.out.println(token);
         this.learnNewService.learn(user);
         return token.getUserId() + "|" + token.getToken();
     }

@@ -8,7 +8,7 @@ import java.util.List;
  * Created by plutonii on 05.02.17.
  */
 public interface ProjectService {
-    Project insert(Project project);
+    Project addNewProject(Project project);
     Project update(Project project);
     void delete(int id);
     Project findById(int id);

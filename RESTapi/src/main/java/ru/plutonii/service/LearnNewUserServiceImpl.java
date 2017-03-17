@@ -13,7 +13,7 @@ import ru.plutonii.model.User;
  * Created by plutonii on 26.02.17.
  */
 @Service
-public class LearnNewUserServiceImpl implements LearnNewService {
+public class LearnNewUserServiceImpl implements LearnNewUserService {
     private ProjectService projectService;
     private TaskService taskService;
     private UserDAO userDAO;
@@ -42,7 +42,7 @@ public class LearnNewUserServiceImpl implements LearnNewService {
         project.setDescription("Это ваш первый проект, в котором вы являетесь " +
                 "администратором. Для открытия проекта щелкните по его названию");
         project.setUser(user);
-        projectService.insert(project);
+        projectService.addNewProject(project);
         this.addUserBotToProject(project);
         return project;
     }

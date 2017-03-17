@@ -31,11 +31,6 @@ public class TokenDAOImpl implements TokenDAO {
         return token;
     }
 
-    public Token update(Token token) {
-        getCurrentSession().saveOrUpdate(token);
-        return token;
-    }
-
     public void delete(Token token) {
         getCurrentSession().delete(token);
     }

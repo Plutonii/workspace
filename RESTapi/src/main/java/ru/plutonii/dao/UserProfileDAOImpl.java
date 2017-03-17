@@ -26,7 +26,7 @@ public class UserProfileDAOImpl implements UserProfileDAO {
     }
 
 
-    public UserProfile insert(UserProfile userProfile) {
+    public UserProfile update(UserProfile userProfile) {
         getCurrentSession().saveOrUpdate(userProfile);
         return userProfile;
     }

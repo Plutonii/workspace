@@ -7,7 +7,6 @@ import ru.plutonii.model.Token;
  */
 public interface TokenDAO {
     Token insert(Token token);
-    Token update(Token token);
     void delete(Token token);
     Token findById(int id);
     Token findByUserId(int id);

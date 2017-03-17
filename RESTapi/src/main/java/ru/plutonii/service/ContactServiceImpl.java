@@ -34,7 +34,7 @@ public class ContactServiceImpl implements ContactService {
         return contactDAO.findById(id);
     }
 
-    public void deleteContact(Contact contact) {
-        contactDAO.delete(contact);
+    public void deleteContact(int id) {
+        contactDAO.delete(contactDAO.findById(id));
     }
 }

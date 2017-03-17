@@ -36,7 +36,7 @@ public class ProjectController {
 
     @PostMapping("/project")
     Project addProject(@RequestBody Project project){
-        return projectService.insert(project);
+        return projectService.addNewProject(project);
     }
 
     @DeleteMapping("/project/{id}")

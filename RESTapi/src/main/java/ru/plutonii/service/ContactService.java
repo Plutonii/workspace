@@ -12,6 +12,6 @@ public interface ContactService {
     Contact addContact(Contact contact);
     List<User> getContactsByUserId(int id);
     Contact getContactByBindId(int id);
-    void deleteContact(Contact contact);
+    void deleteContact(int id);
 
 }

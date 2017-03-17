@@ -25,20 +25,12 @@ public class ProjectServiceImpl implements ProjectService{
     }
 
 
-    public Project insert(Project project) {
-        System.out.println("Project before insert");
-        System.out.println(project);
+    public Project addNewProject(Project project) {
         projectDAO.insert(project);
-        System.out.println("Project after insert");
-        System.out.println(project);
         Team team = new Team();
         team.setProjectId(project.getId());
         team.setUser(project.getUser());
-        System.out.println("Team before insert");
-        System.out.println(team);
         teamDAO.insert(team);
-        System.out.println("Team after insert");
-        System.out.println(team);
         return project;
     }
 

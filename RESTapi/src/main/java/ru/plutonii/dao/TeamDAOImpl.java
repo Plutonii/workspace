@@ -41,9 +41,6 @@ public class TeamDAOImpl implements TeamDAO {
     public List<User> findUserByProjectId(int id) {
         List<User> userList = getCurrentSession().createQuery("from team t where t.projectId = :id")
                 .setParameter("id", id).list();
-        if (userList == null){
-            throw new UserNotFound("User does not have a projects");
-        }
         return userList;
     }
 }

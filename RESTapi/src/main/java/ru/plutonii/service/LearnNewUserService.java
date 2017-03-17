@@ -7,7 +7,7 @@ import ru.plutonii.model.User;
 /**
  * Created by plutonii on 26.02.17.
  */
-public interface LearnNewService {
+public interface LearnNewUserService {
 
     public void learn(User user);
 }

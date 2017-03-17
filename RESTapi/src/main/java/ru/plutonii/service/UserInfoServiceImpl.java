@@ -23,7 +23,7 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     public UserProfile insert(UserProfile userProfile) {
-        userProfileDAO.insert(userProfile);
+        userProfileDAO.update(userProfile);
         return userProfile;
     }
 
