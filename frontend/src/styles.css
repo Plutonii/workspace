@@ -28,3 +28,8 @@ div::-webkit-scrollbar-thumb {
 div::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(241, 255, 78, 0.4);
 }
+
+.show-alert {
+    display: block !important;
+    background-color: red;
+}

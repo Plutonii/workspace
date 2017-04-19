@@ -15,10 +15,11 @@
         <!-- Collection of nav links and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a routerLink="/pages/user/777">Test user page</a></li>
+                <li><a routerLink="{{tempUrl}}">Test my profile page</a></li>
+                <li><a routerLink="/pages/user/3">Test bot profile page</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li class="navbar-text">@{{userName}}</li>
+                <li class="navbar-text">{{userName}}(*)</li>
                 <li class="navbar-text" (click)="logout()">Выйти</li>
             </ul>
         </div>

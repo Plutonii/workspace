@@ -30,30 +30,6 @@ div.container-fluid {
     }
 }
 
-#delete-project {
-    width: 25%;
-    height: auto;
-    position: absolute;
-    bottom: 20px;
-    right: 10px;
-    display: none;
-    margin: 10px;
-    padding: 5px;
-    background-color: #ff8793;
-    border: 1px solid #aaff2d;
-    border-radius: 5px;
-    color: #12136b;
-}
-
-#delete-project:hover {
-    opacity: 1;
-}
-
-#delete-project.show-alert {
-    display: block;
-    animation: fadeOut 3s linear forwards;
-}
-
 .header-content {
     height: 26px;
     border-radius: 3px;

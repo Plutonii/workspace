@@ -28,16 +28,17 @@ export class ProjectsComponent implements OnInit {
     ngOnInit() {
         this.loadProjects();
         this.eventListener.subscribeReloadProject.subscribe(() => {
-            this.loadProjects();//Можно передавать удаляемый объект и извелать из массива, дабы лишний раз не обращаться к серву
+            this.loadProjects();
         });
     }
 
     private loadProjects(){
         this.dataLoader.getProjectsByUserId().subscribe((projects: Project[]) => {
             this.projects = projects;
-        }, (error: any) => {
-            /*localStorage.clear();
-             this.router.navigate(['/login']);*/
+        }, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
         });
     }
 
@@ -50,6 +51,10 @@ export class ProjectsComponent implements OnInit {
             this.dataLoader.getProjectById(project.id).subscribe((project1: Project) => {
                 this.projects.push(project1);
             });
+        }, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
         });
     }
 

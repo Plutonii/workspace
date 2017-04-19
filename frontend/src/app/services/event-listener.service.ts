@@ -10,7 +10,11 @@ export class EventListenerService {
     private reloadProjects = new Subject<any>();
     subscribeReloadProject = this.reloadProjects.asObservable();
 
+    private alertMsg = new Subject<string>();
+    subscribeAlertMsg = this.alertMsg.asObservable();
+
     constructor() {
+
     }
 
     public toggleLeftMenu() {
@@ -19,6 +23,11 @@ export class EventListenerService {
 
     public emitRemoveProject() {
         this.reloadProjects.next();
+    }
+
+    public showAlert(msg: string) {
+        console.log(msg);
+        this.alertMsg.next(msg);
     }
 
 }

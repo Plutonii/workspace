@@ -3,6 +3,7 @@ import {Project} from "../../../../models/project";
 import {Router} from "@angular/router";
 import {DataService} from "../../../../services/data.service";
 import {UserAccessService} from "../../../../services/user-access.service";
+import {EventListenerService} from "../../../../services/event-listener.service";
 
 @Component({
     selector: 'ws-project',
@@ -21,7 +22,8 @@ export class ProjectComponent implements OnInit {
 
     constructor(private router: Router,
                 private dataLoader: DataService,
-                private userAccess: UserAccessService) {
+                private userAccess: UserAccessService,
+                private eventListener: EventListenerService) {
         this.authUserId = this.userAccess.getUserId();
     }
 
@@ -56,11 +58,11 @@ export class ProjectComponent implements OnInit {
 
     public deleteProject() {
         this.dataLoader.removeProject(this.project).subscribe(() => {
-            const alert = document.getElementById("delete-project");
-            alert.classList.add("show-alert");
-            setTimeout(function () {
-                alert.classList.remove("show-alert")
-            }, 3100);
+            this.eventListener.showAlert("Проект был перемещён в корзину.");
+        }, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
         });
     }
 

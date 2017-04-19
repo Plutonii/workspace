@@ -1,6 +1,7 @@
 import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {Task} from "../../../../models/task";
 import {DataService} from "../../../../services/data.service";
+import {UserAccessService} from "../../../../services/user-access.service";
 
 @Component({
     selector: 'ws-view-details-of-task',
@@ -15,7 +16,8 @@ export class ViewDetailsOfTaskComponent implements OnInit {
     @Input() authUserId: number;
     @Input() makerProjectId: number;
 
-    constructor(private dataLoader: DataService) {
+    constructor(private dataLoader: DataService,
+                private userAccess: UserAccessService) {
     }
 
     ngOnInit() {
@@ -23,12 +25,20 @@ export class ViewDetailsOfTaskComponent implements OnInit {
 
     completeTask() {
         this.selectTask.completed = true;
-        this.dataLoader.addTask(this.selectTask).subscribe();
+        this.dataLoader.addTask(this.selectTask).subscribe(() =>{}, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
+        });
     }
 
     notCompleteTask() {
         this.selectTask.completed = false;
-        this.dataLoader.addTask(this.selectTask).subscribe();
+        this.dataLoader.addTask(this.selectTask).subscribe(() =>{}, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
+        });
     }
 
     closeDetailWindow() {
@@ -40,7 +50,11 @@ export class ViewDetailsOfTaskComponent implements OnInit {
         const taskWithoutUser:Task = new Task();
         taskWithoutUser.cloneOfObjectToTask(this.selectTask);
         taskWithoutUser.user = null;
-        this.dataLoader.addTask(taskWithoutUser).subscribe();
+        this.dataLoader.addTask(taskWithoutUser).subscribe(() =>{}, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
+        });
     }
 
     deleteTask() {

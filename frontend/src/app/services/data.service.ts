@@ -33,8 +33,8 @@ export class DataService {
                 projects.push(project);
             }
             return projects;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -51,8 +51,8 @@ export class DataService {
                 tasks.push(task);
             }
             return tasks;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -64,8 +64,8 @@ export class DataService {
             const project: Project = new Project();
             project.cloneOfObjectToProject(projectObject);
             return project;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -77,8 +77,8 @@ export class DataService {
             const project: Project = new Project();
             project.cloneOfObjectToProject(projectObject);
             return project;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -90,6 +90,8 @@ export class DataService {
                 this.eventListener.emitRemoveProject();
             }
             return resp.status;
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -101,8 +103,8 @@ export class DataService {
             const task: Task = new Task();
             task.cloneOfObjectToTask(taskObject);
             return task;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -114,8 +116,8 @@ export class DataService {
             const task: Task = new Task();
             task.cloneOfObjectToTask(taskObject);
             return task;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 
@@ -124,8 +126,8 @@ export class DataService {
         return this.http.delete(this.url + 'task/'+ task.id,
             this.requestArgs).map((resp) => {
             return task;
-        }).catch((error: any) => {
-            return Observable.throw(error);
+        }).catch((error: Response) => {
+            return Observable.throw(error.status);
         });
     }
 

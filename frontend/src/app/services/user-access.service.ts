@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {User} from "../models/user";
 import {Headers, Http, Response} from "@angular/http";
 import {Observable, Subject} from "rxjs";
+import {EventListenerService} from "./event-listener.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class UserAccessService {
@@ -15,7 +17,9 @@ export class UserAccessService {
     public redirectUrl:string;
     private url:string;
 
-    constructor(private http: Http) {
+    constructor(private http: Http,
+                private eventListener: EventListenerService,
+                private router:Router) {
         this._headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
         this.url = 'http://plutonii.ru:8888/workspace/access/';
         /*this.url = 'http://localhost:8080/access/';*/
@@ -48,10 +52,10 @@ export class UserAccessService {
             {headers: this._headers}).map((resp: Response) => {
             let token: string = resp.headers.get("token");
             this.user.id = parseInt(token);
-            this._isAuthorized = true;
-            this.changeAccess.next(true);
             this.saveInfoAboutUser(token);
             this.token = token;
+            this._isAuthorized = this.init();
+            this.changeAccess.next(this._isAuthorized);
             return resp.status;
         }).catch((error: any) => {
             return Observable.throw(JSON.parse(error._body).msg);
@@ -64,10 +68,10 @@ export class UserAccessService {
             {headers: this._headers}).map((resp: Response) => {
             let token: string = resp.headers.get("token");
             this.user.id = parseInt(token);
-            this._isAuthorized = true;
-            this.changeAccess.next(true);
             this.saveInfoAboutUser(token);
             this.token = token;
+            this._isAuthorized = this.init();
+            this.changeAccess.next(this._isAuthorized);
             return resp.status;
         }).catch((error: any) => {
             return Observable.throw(JSON.parse(error._body).msg);
@@ -91,6 +95,13 @@ export class UserAccessService {
         localStorage.setItem("ws-user", JSON.stringify(this.user));
     }
 
+    public accessDenied(){
+        localStorage.clear();
+        this.eventListener.showAlert("Сессия закончена. Авторизуйтесь заново.");
+        this.router.navigate(["/login"]);
+    }
+
+
     public getUserId():number{
         return this.user.id;
     }
@@ -101,5 +112,13 @@ export class UserAccessService {
 
     public getUserName():string {
         return this.user.username;
+    }
+
+    public addContactId(id:number) {
+        this.user.contactsId.push(id);
+    }
+
+    public isFriend(id:number):boolean {
+        return this.user.contactsId.findIndex((value)=>value===id) !== -1;
     }
 }

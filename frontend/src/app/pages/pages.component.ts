@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {EventListenerService} from "../services/event-listener.service";
+import {UserDataService} from "../services/user-data.service";
 
 @Component({
     selector: 'ws-pages',
@@ -10,7 +11,8 @@ export class PagesComponent implements OnInit{
 
     private isHiddenLeftMenu: boolean;
 
-    constructor(private eventListener: EventListenerService) {
+    constructor(private eventListener: EventListenerService,
+                private userDataLoader:UserDataService) {
         this.isHiddenLeftMenu = true;
         this.eventListener.changedToggleLeftMenu.subscribe(() => {
             this.isHiddenLeftMenu = !this.isHiddenLeftMenu;
@@ -18,7 +20,7 @@ export class PagesComponent implements OnInit{
     }
 
     ngOnInit() {
-
+        this.userDataLoader.updateContactsIdByUser();
     }
 
 }

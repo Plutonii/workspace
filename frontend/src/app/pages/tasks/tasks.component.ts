@@ -18,11 +18,12 @@ export class TasksComponent implements OnInit, OnDestroy {
     private tasks: Task[];
 
     private isViewOne: boolean;
-    /*    */
+
     private subscriptionOnParamsUrl: Subscription;
 
     constructor(private activateRoute: ActivatedRoute,
-                private dataLoader: DataService) {
+                private dataLoader: DataService,
+                private userAccess: UserAccessService) {
         this.isViewOne = true;
         this.tasks = [];
         this.project = new Project();
@@ -35,10 +36,18 @@ export class TasksComponent implements OnInit, OnDestroy {
                 if (!this.project) {
                     this.dataLoader.getProjectById(params['id']).subscribe((project) => {
                         this.project = project;
+                    }, (errorStatusCode: number) => {
+                        if (errorStatusCode === 401){
+                            this.userAccess.accessDenied();
+                        }
                     });
                 }
                 this.tasks = tasks;
                 console.dir(this.tasks);
+            }, (errorStatusCode: number) => {
+                if (errorStatusCode === 401){
+                    this.userAccess.accessDenied();
+                }
             });
         });
     }
@@ -46,38 +55,6 @@ export class TasksComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         this.subscriptionOnParamsUrl.unsubscribe();
     }
-
-    /*    */
-
-    /*   */
-
-    /*    closeDetailWindow() {
-     this.isOpenDetails = false;
-     this.selectTask = null;
-     }*/
-
-    /*    */
-
-    /*    completeTask() {
-     this.selectTask.completed = true;
-     this.dataLoader.addTask(this.selectTask).subscribe();
-     }*/
-
-    /*    notCompleteTask() {
-     this.selectTask.completed = false;
-     this.dataLoader.addTask(this.selectTask).subscribe();
-     }*/
-
-    /*    openEditTask() {
-     this.isOpenEditTask = true;
-     }*/
-
-    /*    saveEditTask() {
-     this.dataLoader.addTask(this.newTask).subscribe((task: Task) => {
-     this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
-     this.newTask = new Task();
-     });
-     }*/
 
     toggleView() {
         this.isViewOne = !this.isViewOne;

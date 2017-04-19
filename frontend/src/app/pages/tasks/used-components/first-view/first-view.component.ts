@@ -48,12 +48,20 @@ export class FirstViewComponent implements OnInit {
             this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
             this.newTask = new Task();
             this.tasks.push(task);
+        }, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
         });
     }
 
     deleteTask() {
         this.dataLoader.removeTask(this.selectTask).subscribe(() =>{
             this.selectTask.deleteInArray(this.tasks);
+        }, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
         });
     }
 
@@ -73,6 +81,10 @@ export class FirstViewComponent implements OnInit {
             this.dataLoader.getTaskById(newTask.id).subscribe((task1) => {
                 task.user = task1.user;
             });
+        }, (errorStatusCode: number) => {
+            if (errorStatusCode === 401){
+                this.userAccess.accessDenied();
+            }
         });
     }
 

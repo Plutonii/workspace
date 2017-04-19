@@ -14,11 +14,11 @@
                     <ul *ngIf="selectTask.user.id==authUserId" class="dropdown-menu dropdown-menu-right">
                         <li *ngIf="!selectTask.completed" (click)="completeTask()"><a>Пометить как выполненную</a></li>
                         <li *ngIf="selectTask.completed" (click)="notCompleteTask()"><a>Отменить выполнение</a></li>
-                        <li><a (click)="openEditTask()">Редактировать</a></li>
+                        <li><a (click)="openEditTask()">Редактировать(*)</a></li>
                         <li><a (click)="dismissUser()">Отказаться от выполнения</a></li>
                         <li class="divider"></li>
                         <li *ngIf="makerProjectId==authUserId"><a (click)="deleteTask()">Удалить</a></li>
-                        <li *ngIf="makerProjectId!=authUserId"><a href="#">Пожаловаться</a></li>
+                        <li *ngIf="makerProjectId!=authUserId"><a href="#">Пожаловаться(*)</a></li>
                     </ul>
                     <span class="glyphicon glyphicon-remove"
                           (click)="closeDetailWindow()" data-toggle="tooltip"

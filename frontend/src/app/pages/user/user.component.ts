@@ -1,31 +1,58 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {UserProfile} from "../../models/user-profile";
 import {UserAccessService} from "../../services/user-access.service";
+import {Subscription} from "rxjs";
+import {UserDataService} from "../../services/user-data.service";
+import {ActivatedRoute} from "@angular/router";
+import {Contact} from "../../models/contact";
+import {User} from "../../models/user";
 
 @Component({
     selector: 'ws-user',
     templateUrl: './user.component.html',
     styleUrls: ['./user.component.css']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
 
-    private user:UserProfile;
+    private user: UserProfile;
+    private authUserId: number;
+    private subscriptionOnParamsUrl: Subscription;
+    private isFriend: boolean;
 
-    private authUserId:number;
-
-    constructor(private userAccess:UserAccessService) {
-        this.user= new UserProfile();
-        this.user.id = 777;
-        this.user.username = "bot";
-        this.user.email = "email@mail.ru"
-        this.user.numberOfCompletedTasks = 75;
-        this.user.numberOfTasks = 100;
-        this.user.numberOfProjects = 10;
-        this.user.numberOfContacts = 25;
+    constructor(private userAccess: UserAccessService,
+                private userDataLoader: UserDataService,
+                private activateRoute: ActivatedRoute) {
     }
 
     ngOnInit() {
         this.authUserId = this.userAccess.getUserId();
+        this.subscriptionOnParamsUrl = this.activateRoute.params.subscribe((params) => {
+            this.userDataLoader.getUserProfileById(params['id']).subscribe((userProfile: UserProfile) => {
+                this.user = userProfile;
+                this.isFriend = this.userAccess.isFriend(this.user.id);
+            }, (error) => {
+                console.log(false);
+                if (error === 401) {
+                    this.userAccess.accessDenied();
+                }
+                console.dir(error);
+            });
+        });
     }
 
+    ngOnDestroy() {
+        this.subscriptionOnParamsUrl.unsubscribe();
+    }
+
+    friends() {
+        const contact = new Contact();
+        contact.userId = this.userAccess.getUserId();
+        const user = new User();
+        user.id = this.user.id;
+        contact.contact = user;
+        this.userDataLoader.addContact(contact).subscribe(() => {
+            this.userAccess.addContactId(this.user.id);
+            this.isFriend = this.userAccess.isFriend(this.user.id);
+        });
+    }
 }

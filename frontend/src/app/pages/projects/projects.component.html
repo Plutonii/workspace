@@ -2,18 +2,11 @@
     <span class="new-project-button" data-toggle="modal" data-target="#modalOfFormNewProject">
         Создать новый проект...
     </span>
-    <div class="filter">Фильтр</div>
+    <div class="filter">Фильтр(*)</div>
 </div>
 <div class="container-fluid">
     <div class="rows">
         <ws-project *ngFor="let projectSingle of projects" [project]="projectSingle"></ws-project>
-    </div>
-
-    <!-- Alert delete -->
-    <div class="parent-delete-project">
-        <div id="delete-project">
-            <p>Проект был помещён в корзину. Вы можете восстановить его в будущем.</p>
-        </div>
     </div>
 
     <!-- Modal -->

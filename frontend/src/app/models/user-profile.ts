@@ -10,8 +10,11 @@ export class UserProfile {
 
     cloneOfObjectToUser(o:any): void {
         if (!o) return;
-        this.id = o.id;
-        this.email = o.email;
-        this.username = o.username;
+        this.id = o.user.id;
+        this.email = o.user.email;
+        this.username = o.user.username;
+        this.numberOfTasks = o.userProfile.numberOfTasks;
+        this.numberOfCompletedTasks = o.userProfile.numberOfCompletedTasks;
+        this.numberOfProjects = o.userProfile.numberOfProjects;
     }
 }

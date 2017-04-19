@@ -11,15 +11,16 @@ import {EventListenerService} from "../../../services/event-listener.service";
 export class HeaderComponent implements OnInit{
 
     private userName:string;
+    private tempUrl:string;
 
     constructor(
         private accessService: UserAccessService,
-        private router:Router,
-        private eventListenerService:EventListenerService) {
+        private router:Router) {
         this.userName = accessService.getUserName();
     }
 
     ngOnInit(): void {
+        this.tempUrl = "/pages/user/" + this.accessService.getUserId();
     }
 
     logout():void {

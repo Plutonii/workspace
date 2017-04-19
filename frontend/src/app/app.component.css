@@ -1,0 +1,23 @@
+#my-alert-message {
+    width: 39%;
+    height: auto;
+    position: absolute;
+    bottom: 20px;
+    right: 10px;
+    display: none;
+    margin: 10px;
+    padding: 5px;
+    background-color: #ff8793;
+    border: 1px solid #aaff2d;
+    border-radius: 5px;
+    color: #12136b;
+}
+
+#my-alert-message:hover {
+    opacity: 1;
+}
+
+#my-alert-message.show-alert {
+    display: block;
+    animation: fadeOut 3s linear forwards;
+}
