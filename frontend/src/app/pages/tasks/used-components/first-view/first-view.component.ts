@@ -2,7 +2,7 @@ import {Component, OnInit, Input, ViewChild, ElementRef} from '@angular/core';
 import {Task} from "../../../../models/task";
 import {UserAccessService} from "../../../../services/user-access.service";
 import {Project} from "../../../../models/project";
-import {DataService} from "../../../../services/data.service";
+import {TaskService} from "../../../../services/task.service";
 
 @Component({
     selector: 'ws-first-view',
@@ -29,7 +29,7 @@ export class FirstViewComponent implements OnInit {
     private project: Project;
 
     constructor(private userAccess: UserAccessService,
-                private dataLoader: DataService) {
+                private taskService: TaskService) {
         this.isOpenDetails = false;
         this.newTask = new Task();
     }
@@ -44,7 +44,7 @@ export class FirstViewComponent implements OnInit {
 
     addNewTask() {
         this.newTask.projectId = this.project.id;
-        this.dataLoader.addTask(this.newTask).subscribe((task: Task) => {
+        this.taskService.addTask(this.newTask).subscribe((task: Task) => {
             this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
             this.newTask = new Task();
             this.tasks.push(task);
@@ -56,7 +56,7 @@ export class FirstViewComponent implements OnInit {
     }
 
     deleteTask() {
-        this.dataLoader.removeTask(this.selectTask).subscribe(() =>{
+        this.taskService.removeTask(this.selectTask).subscribe(() =>{
             this.selectTask.deleteInArray(this.tasks);
         }, (errorStatusCode: number) => {
             if (errorStatusCode === 401){
@@ -77,8 +77,8 @@ export class FirstViewComponent implements OnInit {
 
     assignUser(task: Task) {
         task.user.id = this.authUserId;
-        this.dataLoader.addTask(task).subscribe((newTask: Task) => {
-            this.dataLoader.getTaskById(newTask.id).subscribe((task1) => {
+        this.taskService.addTask(task).subscribe((newTask: Task) => {
+            this.taskService.getTaskById(newTask.id).subscribe((task1) => {
                 task.user = task1.user;
             });
         }, (errorStatusCode: number) => {

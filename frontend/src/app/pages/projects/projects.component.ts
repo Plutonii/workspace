@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {Project} from "../../models/project";
-import {DataService} from "../../services/data.service";
+import {ProjectService} from "../../services/project.service";
 import {Router} from "@angular/router";
 import {UserAccessService} from "../../services/user-access.service";
 import {EventListenerService} from "../../services/event-listener.service";
@@ -17,7 +17,7 @@ export class ProjectsComponent implements OnInit {
     @ViewChild("closeModal")
     closeModal: ElementRef;
 
-    constructor(private dataLoader: DataService,
+    constructor(private dataLoader: ProjectService,
                 private router: Router,
                 private userAccess: UserAccessService,
                 private eventListener: EventListenerService) {

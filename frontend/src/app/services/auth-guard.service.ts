@@ -6,22 +6,22 @@ import {UserAccessService} from "./user-access.service";
 @Injectable()
 export class AuthGuardService implements CanActivate {
 
-    constructor(private accessService: UserAccessService, private router:Router) {
+  constructor(private accessService: UserAccessService, private router: Router) {
+  }
+
+  private checkLogin(url: string) {
+    if (this.accessService.isAuthorized()) {
+      return true;
     }
 
-    private checkLogin(url: string){
-        if (this.accessService.isAuthorized()){
-            return true;
-        }
+    this.accessService.redirectUrl = url;
 
-        this.accessService.redirectUrl = url;
+    this.router.navigate(['/login']);
+    return false;
+  }
 
-        this.router.navigate(['/login']);
-        return false;
-    }
-
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
-        return this.checkLogin(state.url);
-    }
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    return this.checkLogin(state.url);
+  }
 
 }

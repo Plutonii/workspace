@@ -4,31 +4,30 @@ import {Subject} from "rxjs";
 @Injectable()
 export class EventListenerService {
 
-    private changeToggleLeftMenu = new Subject<any>();
-    changedToggleLeftMenu = this.changeToggleLeftMenu.asObservable();
+  private changeToggleLeftMenu = new Subject<any>();
+  changedToggleLeftMenu = this.changeToggleLeftMenu.asObservable();
 
-    private reloadProjects = new Subject<any>();
-    subscribeReloadProject = this.reloadProjects.asObservable();
+  private reloadProjects = new Subject<any>();
+  subscribeReloadProject = this.reloadProjects.asObservable();
 
-    private alertMsg = new Subject<string>();
-    subscribeAlertMsg = this.alertMsg.asObservable();
+  private alertMsg = new Subject<string>();
+  subscribeAlertMsg = this.alertMsg.asObservable();
 
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    public toggleLeftMenu() {
-        this.changeToggleLeftMenu.next();
-    }
+  public toggleLeftMenu() {
+    this.changeToggleLeftMenu.next();
+  }
 
-    public emitRemoveProject() {
-        this.reloadProjects.next();
-    }
+  public emitRemoveProject() {
+    this.reloadProjects.next();
+  }
 
-    public showAlert(msg: string) {
-        console.log(msg);
-        this.alertMsg.next(msg);
-    }
+  public showAlert(msg: string) {
+    this.alertMsg.next(msg);
+  }
 
 }
 

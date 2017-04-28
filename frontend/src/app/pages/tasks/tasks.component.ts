@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild, ElementRef, OnDestroy} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Project} from "../../models/project";
 import {Task} from "../../models/task";
 import {UserAccessService} from "../../services/user-access.service";
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
-import {DataService} from "../../services/data.service";
+import {TaskService} from "app/services/task.service";
+import {ProjectService} from "../../services/project.service";
 
 @Component({
     selector: 'ws-tasks',
@@ -22,7 +23,8 @@ export class TasksComponent implements OnInit, OnDestroy {
     private subscriptionOnParamsUrl: Subscription;
 
     constructor(private activateRoute: ActivatedRoute,
-                private dataLoader: DataService,
+                private taskService: TaskService,
+                private projectService: ProjectService,
                 private userAccess: UserAccessService) {
         this.isViewOne = true;
         this.tasks = [];
@@ -31,10 +33,10 @@ export class TasksComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.subscriptionOnParamsUrl = this.activateRoute.params.subscribe((params) => {
-            this.dataLoader.getTasksByProjectId(params['id']).subscribe((tasks) => {
-                this.project = this.dataLoader.openProject;
+            this.taskService.getTasksByProjectId(params['id']).subscribe((tasks) => {
+                this.project = this.projectService.openProject;
                 if (!this.project) {
-                    this.dataLoader.getProjectById(params['id']).subscribe((project) => {
+                    this.projectService.getProjectById(params['id']).subscribe((project) => {
                         this.project = project;
                     }, (errorStatusCode: number) => {
                         if (errorStatusCode === 401){

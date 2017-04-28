@@ -8,7 +8,7 @@ import {UserAccessService} from "./services/user-access.service";
 import {routing} from "./app.routing";
 import {PagesModule} from "./pages/pages.module";
 import {EventListenerService} from "./services/event-listener.service";
-import {DataService} from "./services/data.service";
+import {ProjectService} from "./services/project.service";
 
 @NgModule({
     declarations: [
@@ -22,7 +22,7 @@ import {DataService} from "./services/data.service";
         routing,
         PagesModule
     ],
-    providers: [UserAccessService, EventListenerService, DataService],
+    providers: [UserAccessService, EventListenerService, ProjectService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

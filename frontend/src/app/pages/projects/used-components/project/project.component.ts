@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
 import {Project} from "../../../../models/project";
 import {Router} from "@angular/router";
-import {DataService} from "../../../../services/data.service";
+import {ProjectService} from "../../../../services/project.service";
 import {UserAccessService} from "../../../../services/user-access.service";
 import {EventListenerService} from "../../../../services/event-listener.service";
 
@@ -21,7 +21,7 @@ export class ProjectComponent implements OnInit {
     project: Project;
 
     constructor(private router: Router,
-                private dataLoader: DataService,
+                private dataLoader: ProjectService,
                 private userAccess: UserAccessService,
                 private eventListener: EventListenerService) {
         this.authUserId = this.userAccess.getUserId();
