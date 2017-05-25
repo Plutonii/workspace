@@ -47,19 +47,6 @@ export class ViewDetailsOfTaskComponent implements OnInit {
     this.onClose.emit();
   }
 
-  dismissUser() {
-    this.selectTask.user.id = null;
-    const taskWithoutUser: Task = new Task();
-    taskWithoutUser.cloneOfObjectToTask(this.selectTask);
-    taskWithoutUser.user = null;
-    this.taskService.addTask(taskWithoutUser).subscribe(() => {
-    }, (errorStatusCode: number) => {
-      if (errorStatusCode === 401) {
-        this.userAccess.accessDenied();
-      }
-    });
-  }
-
   deleteTask() {
     this.onDelete.emit();
   }

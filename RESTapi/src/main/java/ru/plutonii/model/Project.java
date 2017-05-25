@@ -1,11 +1,14 @@
 package ru.plutonii.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by plutonii on 26.02.17.
  */
 @Entity(name = "project")
+@Table(name = "project")
 public class Project {
     private int id;
     private String title;
@@ -14,6 +17,7 @@ public class Project {
     private Integer numberOfTasks;
     private Integer numberOfCompletedTasks;
     private Integer numberOfUsers;
+    private Set<Label> labels = new HashSet<>(0);
 
     @Id
     @Column(name = "id", nullable = false)
@@ -85,6 +89,16 @@ public class Project {
 
     public void setNumberOfUsers(Integer numberOfUsers) {
         this.numberOfUsers = numberOfUsers;
+    }
+
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
+    public Set<Label> getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Set<Label> labels) {
+        this.labels = labels;
     }
 
     @Override

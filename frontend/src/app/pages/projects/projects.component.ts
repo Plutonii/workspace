@@ -44,7 +44,6 @@ export class ProjectsComponent implements OnInit {
 
     private createProject() {
         this.newProject.user.id = this.userAccess.getUserId();
-        console.dir(this.newProject);
         this.dataLoader.addProject(this.newProject).subscribe((project: Project) => {
             this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
             this.newProject = new Project();

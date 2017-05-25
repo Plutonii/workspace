@@ -1,0 +1,174 @@
+.task-header {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.task-header h4 {
+  margin-right: 15px;
+}
+
+.task-edit {
+  position: absolute;
+  top: 18px;
+  right: 36px;
+  opacity: 0.7;
+}
+
+.task-edit:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.task-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  opacity: 0.7;
+}
+
+.task-close:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.right-column {
+  border-left: 1px solid #e5e5e5;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body {
+  padding: 0 15px 0 15px;
+  border-top: 1px solid #e5e5e5;
+}
+
+.description {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.block-title {
+  padding-top: 2px;
+}
+
+.block-title,
+.block-body {
+  padding-left: 5px;
+}
+
+.edit-anything {
+  opacity: 0.5;
+}
+
+.edit-anything:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.right-column .block-title .edit-anything {
+  float: right !important;
+}
+
+.assignee {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.assignee .block-body span:hover {
+  color: #2588ff;
+  cursor: pointer;
+}
+
+.assignee .block-body {
+  margin-left: 10px;
+}
+
+.assignee .block-body .glyphicon-plus-sign {
+  font-size: 12px;
+}
+
+.avatar {
+  padding-top: 2px;
+  height: 35px;
+  width: 35px;
+  display: inline-block;
+}
+
+.user {
+  height: 39px;
+  margin-bottom: 5px;
+}
+
+.user:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.username {
+  display: inline-block;
+}
+
+.not-user {
+  margin-bottom: 3px;
+  font-size: 13px;
+}
+
+/*1-red,2-black,3-green,4-blue,5-yellow*/
+
+ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.task-label {
+  list-style-type: none;
+  color: white;
+  margin-bottom: 5px;
+  padding: 2px;
+}
+
+.task-label span{
+  border-radius: 10px;
+  padding: 2px 5px;
+}
+
+.task-label-red {
+  background-color: red;
+}
+
+.task-label-black {
+  background-color: black;
+}
+
+.task-label-green {
+  background-color: green;
+}
+
+.task-label-blue {
+  background-color: blue;
+}
+
+.task-label-yellow {
+  background-color: orange;
+}
+
+.label-in-popover {
+  border-radius: 10px;
+  padding: 2px 5px;
+  color: white;
+  margin-bottom: 1px;
+  min-height: 20px;
+}
+
+.label-not-choose{
+  opacity: 0.6;
+  color: aliceblue;
+}
+
+.label-in-popover:hover {
+  border: 1px solid brown;
+  cursor: pointer;
+}

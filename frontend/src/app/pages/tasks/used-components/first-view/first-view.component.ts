@@ -3,90 +3,89 @@ import {Task} from "../../../../models/task";
 import {UserAccessService} from "../../../../services/user-access.service";
 import {Project} from "../../../../models/project";
 import {TaskService} from "../../../../services/task.service";
+declare let $:any;
+
 
 @Component({
-    selector: 'ws-first-view',
-    templateUrl: './first-view.component.html',
-    styleUrls: ['./first-view.component.css']
+  selector: 'ws-first-view',
+  templateUrl: './first-view.component.html',
+  styleUrls: ['./first-view.component.css']
 })
 export class FirstViewComponent implements OnInit {
 
+  private selectTask: Task;
+  private newTask: Task;
 
-    private selectTask: Task;
-    private newTask: Task;
+  @ViewChild("closeModal")
+  closeModal: ElementRef;
 
-    @ViewChild("closeModal")
-    closeModal: ElementRef;
+  private authUserId: number;
 
-    private authUserId: number;
+  @Input()
+  private tasks: Task[];
 
-    private isOpenDetails: boolean;
+  @Input()
+  private project: Project;
 
-    @Input()
-    private tasks: Task[];
+  constructor(private userAccess: UserAccessService,
+              private taskService: TaskService) {
+    this.newTask = new Task();
+  }
 
-    @Input()
-    private project: Project;
+  ngOnInit() {
+    this.authUserId = this.userAccess.getUserId();
+  }
 
-    constructor(private userAccess: UserAccessService,
-                private taskService: TaskService) {
-        this.isOpenDetails = false;
-        this.newTask = new Task();
-    }
+  openAddNewTask() {
+    this.newTask = new Task();
+  }
 
-    ngOnInit() {
-        this.authUserId = this.userAccess.getUserId();
-    }
+  addNewTask() {
+    this.newTask.projectId = this.project.id;
+    this.taskService.addTask(this.newTask).subscribe((task: Task) => {
+      this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
+      this.newTask = new Task();
+      this.tasks.push(task);
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
+  }
 
-    openAddNewTask() {
-        this.newTask = new Task();
-    }
+  deleteTask() {
+    this.taskService.removeTask(this.selectTask).subscribe(() => {
+      this.selectTask.deleteInArray(this.tasks);
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
+  }
 
-    addNewTask() {
-        this.newTask.projectId = this.project.id;
-        this.taskService.addTask(this.newTask).subscribe((task: Task) => {
-            this.closeModal.nativeElement.dispatchEvent(new Event('click', {bubbles: true}));
-            this.newTask = new Task();
-            this.tasks.push(task);
-        }, (errorStatusCode: number) => {
-            if (errorStatusCode === 401){
-                this.userAccess.accessDenied();
-            }
-        });
-    }
+  openDetailWindow(task: Task) {
+    this.selectTask = task;
+    console.dir(this.selectTask);
+    $('#taskWithDetails').modal('show');
 
-    deleteTask() {
-        this.taskService.removeTask(this.selectTask).subscribe(() =>{
-            this.selectTask.deleteInArray(this.tasks);
-        }, (errorStatusCode: number) => {
-            if (errorStatusCode === 401){
-                this.userAccess.accessDenied();
-            }
-        });
-    }
+  }
 
-    openDetailWindow(task: Task) {
-        this.isOpenDetails = true;
-        this.selectTask = task;
-    }
+  closeDetailWindow() {
+    this.selectTask = null;
+  }
 
-    closeDetailWindow() {
-        this.isOpenDetails = false;
-        this.selectTask = null;
-    }
-
-    assignUser(task: Task) {
-        task.user.id = this.authUserId;
-        this.taskService.addTask(task).subscribe((newTask: Task) => {
-            this.taskService.getTaskById(newTask.id).subscribe((task1) => {
-                task.user = task1.user;
-            });
-        }, (errorStatusCode: number) => {
-            if (errorStatusCode === 401){
-                this.userAccess.accessDenied();
-            }
-        });
-    }
+  assignUser(task: Task) {
+    task.user.id = this.authUserId;
+    this.taskService.addTask(task).subscribe((newTask: Task) => {
+      this.taskService.getTaskById(newTask.id).subscribe((task1) => {
+        task.user = task1.user;
+      });
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
+  }
 
 
 }

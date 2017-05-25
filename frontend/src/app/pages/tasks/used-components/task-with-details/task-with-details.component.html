@@ -1,0 +1,96 @@
+<!-- Modal -->
+<div class="modal fade bs-example-modal-lg" id="taskWithDetails" tabindex="-1" role="dialog"
+     aria-labelledby="recordLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content" *ngIf="selectTask">
+      <div class="modal-header task-header">
+        <h4 class="modal-title">
+          <span *ngIf="!selectTask.user.id&&!selectTask.completed" class="label label-success">Открытая</span>
+          <span *ngIf="selectTask.user.id&&!selectTask.completed" class="label label-warning">В процессе</span>
+          <span *ngIf="selectTask.completed" class="label label-danger">Закрытая</span>
+          {{selectTask.title}}</h4>
+        <span class="glyphicon glyphicon-pencil task-edit"></span>
+        <span class="glyphicon glyphicon-remove task-close" data-dismiss="modal" data-toggle="tooltip"
+              data-placement="left" title="Закрыть окно"></span>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-sm-9 left-column">
+              <div class="description">
+                {{selectTask.description}}
+              </div>
+            </div>
+            <div class="col-sm-3 right-column">
+              <div class="assignee">
+                <div class="block-title dropdown">
+                  <span>Ответственный</span>
+                  <span class="glyphicon glyphicon-pencil edit-anything dropdown-toggle dropdown"
+                        data-toggle="dropdown"></span>
+                  <!--Добавить самого пользователя. Если нет закреплённых, отображать себя.
+                  Список из участников проекта получать и выводить.-->
+                  <ul class="dropdown-menu dropdown-menu-right">
+                    <li *ngIf="!selectTask.completed&&selectTask.user.id"><a (click)="dismissUser()">Снять
+                      ответственность</a></li>
+                    <li *ngIf="!selectTask.completed&&selectTask.user.id" role="presentation"
+                        class="divider"></li>
+                    <li *ngIf="makerProjectId===authUserId"><a>юзер 1(*)</a></li>
+                  </ul>
+                </div>
+                <div class="block-body">
+                  <div *ngIf="selectTask.user.id; else assign_yourself" class="user" data-toggle="tooltip"
+                       title="@{{selectTask.user.username}}">
+                    <div class="avatar">
+                      <img src="https://pp.userapi.com/c637728/v637728858/156b3/v4yQ7O8VWgg.jpg"
+                           class="img-responsive img-circle">
+                    </div>
+                    <div class="username">
+                      <div>Имя</div>
+                      <div>@{{selectTask.user.username}}</div>
+                    </div>
+                  </div>
+                  <ng-template #assign_yourself>
+                    <div class="not-user">
+                      <span (click)="assignUser(authUserId)">Закрепиться</span>
+                    </div>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="labels">
+                <div class="block-title">
+                  <span>Метки</span>
+                  <span id="editLabels" class="glyphicon glyphicon-pencil edit-anything"
+                        data-toggle="popover" > </span>
+
+                </div>
+                <div class="block-body">
+                  <ul>
+                    <li *ngFor="let label of selectTask.labels" class="task-label">
+                      <ng-container [ngSwitch]="label.colorId">
+                        <span class="task-label-red" *ngSwitchCase="1">{{label.title}}</span>
+                        <span class="task-label-black" *ngSwitchCase="2">{{label.title}}</span>
+                        <span class="task-label-green" *ngSwitchCase="3">{{label.title}}</span>
+                        <span class="task-label-blue" *ngSwitchCase="4">{{label.title}}</span>
+                        <span class="task-label-yellow" *ngSwitchCase="5">{{label.title}}</span>
+                      </ng-container>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button *ngIf="selectTask.user.id&&!selectTask.completed" type="button" class="btn btn-danger"
+                data-toggle="tooltip" data-placement="left" title="Задача будет считаться выполненной"
+                (click)="completeTask()">Закрыть задачу
+        </button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" data-toggle="tooltip" data-placement="left"
+                title="Закрыть окно">Назад
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

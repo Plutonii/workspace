@@ -26,7 +26,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "title", nullable = false, length = 45)
+    @Column(name = "title", nullable = false, length = 255)
     public String getTitle() {
         return title;
     }
@@ -36,7 +36,7 @@ public class Task {
     }
 
     @Basic
-    @Column(name = "description", nullable = true, length = 255)
+    @Column(name = "description", nullable = true, length = 3000)
     public String getDescription() {
         return description;
     }

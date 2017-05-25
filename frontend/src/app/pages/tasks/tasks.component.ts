@@ -6,6 +6,7 @@ import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {TaskService} from "app/services/task.service";
 import {ProjectService} from "../../services/project.service";
+import {User} from "../../models/user";
 
 @Component({
     selector: 'ws-tasks',
@@ -45,7 +46,6 @@ export class TasksComponent implements OnInit, OnDestroy {
                     });
                 }
                 this.tasks = tasks;
-                console.dir(this.tasks);
             }, (errorStatusCode: number) => {
                 if (errorStatusCode === 401){
                     this.userAccess.accessDenied();

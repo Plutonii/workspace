@@ -16,7 +16,7 @@ export class ProjectService {
     this.requestArgs = new RequestOptions();
     this.requestArgs.headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
     this.url = 'http://plutonii.ru:8888/workspace/api/';
-    /*this.url = 'http://localhost:8080/api/'*/
+    /*this.url = 'http://localhost:8080/api/';*/
   }
 
   public getProjectsByUserId(): Observable<Project[]> {

@@ -11,19 +11,19 @@ import {EventListenerService} from "./services/event-listener.service";
 import {ProjectService} from "./services/project.service";
 
 @NgModule({
-    declarations: [
-        AppComponent
-    ],
-    imports: [
-        BrowserModule,
-        ReactiveFormsModule,
-        FormsModule,
-        HttpModule,
-        routing,
-        PagesModule
-    ],
-    providers: [UserAccessService, EventListenerService, ProjectService],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpModule,
+    routing,
+    PagesModule
+  ],
+  providers: [UserAccessService, EventListenerService, ProjectService],
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 

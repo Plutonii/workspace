@@ -16,9 +16,9 @@ import static org.junit.Assert.*;
 /**
  * Created by plutonii on 17.03.17.
  */
-@RunWith(SpringRunner.class)
-@ContextConfiguration(locations = "classpath:applicationContextForTest.xml")
-@Transactional
+//@RunWith(SpringRunner.class)
+//@ContextConfiguration(locations = "classpath:applicationContextForTest.xml")
+//@Transactional
 public class ContactDAOTest {
 
     @Autowired

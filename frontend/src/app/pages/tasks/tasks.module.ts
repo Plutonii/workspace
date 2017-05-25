@@ -5,13 +5,15 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {FirstViewComponent} from './used-components/first-view/first-view.component';
 import {SecondViewComponent} from './used-components/second-view/second-view.component';
-import { ViewDetailsOfTaskComponent } from './used-components/view-details-of-task/view-details-of-task.component';
+import {ViewDetailsOfTaskComponent} from './used-components/view-details-of-task/view-details-of-task.component';
 import {TaskService} from "../../services/task.service";
+import {TaskWithDetailsComponent} from "./used-components/task-with-details/task-with-details.component";
 
 @NgModule({
-    imports: [routing, CommonModule, FormsModule],
-    declarations: [TasksComponent, FirstViewComponent, SecondViewComponent, ViewDetailsOfTaskComponent],
-    providers: [TaskService]
+  imports: [routing, CommonModule, FormsModule],
+  declarations: [TasksComponent, FirstViewComponent, SecondViewComponent,
+    ViewDetailsOfTaskComponent, TaskWithDetailsComponent],
+  providers: [TaskService]
 })
 export class TasksModule {
 }
