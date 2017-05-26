@@ -4,6 +4,8 @@ import {UserAccessService} from "../../../../services/user-access.service";
 import {TaskService} from "../../../../services/task.service";
 import {User} from "../../../../models/user";
 import {Label} from "../../../../models/label";
+import {LabelService} from "../../../../services/label.service";
+import {main} from "@angular/compiler-cli/src/main";
 declare let $: any;
 
 @Component({
@@ -17,15 +19,22 @@ export class TaskWithDetailsComponent implements OnInit {
   @Input() selectTask: Task;
   @Input() makerProjectId: number;
 
+  private labels: Label[];
+  private selectedIdforLabels: Number[];
+
   private authUserId: number;
 
   constructor(private taskService: TaskService,
-              private userAccess: UserAccessService) {
-    console.log("constructor wast-with-details");
+              private userAccess: UserAccessService,
+              private labelService: LabelService) {
+    this.labels = [];
+    this.selectedIdforLabels = [];
+    setInterval(()=>{
+      console.dir(this.labels);
+    }, 500);
   }
 
   ngOnInit() {
-    console.log("ngOnInit");
     function getColourById(id: number): string {
       switch (id) {
         case 1:
@@ -42,56 +51,73 @@ export class TaskWithDetailsComponent implements OnInit {
           return '';
       }
     }
-/*$(\"#editLabels\")[0].dispatchEvent(new Event(\"clickByLabel\", {bubbles: true}))*/
+
+    /*$(\"#editLabels\")[0].dispatchEvent(new Event(\"clickByLabel\", {bubbles: true}))*/
+
     this.authUserId = this.userAccess.getUserId();
     $('#taskWithDetails').on('hidden.bs.modal', () => this.onClose.emit());
     $('#taskWithDetails').on('shown.bs.modal', () => {
-      window.addEventListener('clickByLabel', this.clickByLabel);
-      const l1 = new Label(1, "Баг", 1);
-      const l2 = new Label(1, "Не работает", 2);
-      const l3 = new Label(1, "Завершено", 3);
       this.selectTask.labels = [];
-      this.selectTask.labels.push(l1);
-      this.selectTask.labels.push(l2);
-      this.selectTask.labels.push(l3);
+      window.addEventListener('clickByLabel', this.clickByLabel);
       let content: string = '';
-      for (let i: number = 1; i < 6; i++) {
-        const existentLabel = this.selectTask.labels.find((value) => {
-          if (value.colorId === i) return true;
-          return false;
+
+      this.labelService.getLabelsByProjectId(this.selectTask.projectId).subscribe((labels) => {
+        this.labels = labels;
+        this.labelService.getLabelIdsByTaskId(this.selectTask.id).subscribe((ids) => {
+          this.selectedIdforLabels = ids;
+          this.labels.forEach((mainValue) => {
+            let existentLabel = false;
+            this.selectedIdforLabels.forEach((id) => {
+              if (mainValue.id === id) existentLabel = true;
+            });
+            if (existentLabel) {
+              this.selectTask.labels.push(mainValue);
+              content += "<div _ngcontent-c7='' data-label-index='" + mainValue.id + "' class='label-in-popover " + getColourById(mainValue.colourId) +
+                "' onclick=\"event.target.dispatchEvent(new Event('clickByLabel', {bubbles: true}));\">" +
+                mainValue.title + "</div>";
+            } else {
+              content += "<div _ngcontent-c7='' data-label-index='" + mainValue.id + "' class='label-in-popover label-not-choose " + getColourById(mainValue.colourId) +
+                "' onclick=\"event.target.dispatchEvent(new Event('clickByLabel', {bubbles: true}));\">" + mainValue.title + "</div>";
+            }
+          });
+          $('#editLabels').popover({
+            title: 'Метки задачи <span class="glyphicon glyphicon-remove task-close"' +
+            'onclick="$(\'#editLabels\')[0].dispatchEvent(new Event(\'click\', {bubbles: true}));" data-toggle="tooltip" data-placement="left"' +
+            ' title="Закрыть окно"> </span>',
+            html: true,
+            placement: 'left',
+            content: content
+          });
+          console.dir(this.labels);
+        }, (errorStatusCode: number) => {
+          if (errorStatusCode === 401) {
+            this.userAccess.accessDenied();
+          }
         });
-        if (existentLabel) {
-          content += "<div _ngcontent-c7='' data-label-index='"+i+"' class='label-in-popover " + getColourById(i) +
-            "' onclick=\"event.target.dispatchEvent(new Event('clickByLabel', {bubbles: true}));\">" +
-            existentLabel.title + "</div>";
-        } else {
-          content += "<div _ngcontent-c7='' data-label-index='"+i+"' class='label-in-popover label-not-choose " + getColourById(i) +
-            "' onclick=\"event.target.dispatchEvent(new Event('clickByLabel', {bubbles: true}));\"> </div>";
+      }, (errorStatusCode: number) => {
+        if (errorStatusCode === 401) {
+          this.userAccess.accessDenied();
         }
-      }
-      $('#editLabels').popover({
-        title: 'Метки задачи <span class="glyphicon glyphicon-remove task-close"' +
-        'onclick="$(\'#editLabels\')[0].dispatchEvent(new Event(\'click\', {bubbles: true}));" data-toggle="tooltip" data-placement="left"' +
-        ' title="Закрыть окно"> </span>',
-        html: true,
-        placement: 'left',
-        content: content
       });
     });
   }
 
   clickByLabel(e) {
-    let ifFound:boolean = false;
-    e.target.classList.forEach((value)=>{
-      if(value==='label-not-choose') ifFound = true;
+    console.dir(this.labels);
+    let ifFound: boolean = false;
+    e.target.classList.forEach((value) => {
+      if (value === 'label-not-choose') ifFound = true;
     });
-    if(!ifFound) {
+    if (!ifFound) {
       e.target.classList.add('label-not-choose');
     } else {
-      console.log('remove');
+      const onLabel = this.labels.find((value) => {
+        return value.id == e.target.dataset.lastIndex;
+      });
+      console.dir(onLabel);
+      this.selectTask.labels.push(onLabel);
       e.target.classList.remove('label-not-choose');
     }
-    console.dir(e.target);
   }
 
   completeTask() {

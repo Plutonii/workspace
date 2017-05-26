@@ -1,12 +1,10 @@
 export class Label {
   id: number;
   title: string;
-  colorId: number;
+  colourId: number;
+  projectId: number;
 
-  constructor(id, title, colorId) {
-    this.id = id;
-    this.title = title;
-    this.colorId = colorId;
+  constructor() {
   }
 
   deleteInArray(array: Array<Label>) {
@@ -16,5 +14,12 @@ export class Label {
     if (index !== -1) {
       array.splice(index, 1);
     }
+  }
+
+  cloneOfObjectToLabel(o: any): void {
+    this.id = o.id;
+    this.title = o.title;
+    this.colourId = o.colourId;
+    this.projectId = o.projectId;
   }
 }

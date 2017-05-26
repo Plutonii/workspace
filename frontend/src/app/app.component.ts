@@ -19,7 +19,6 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         this.accessService.init();
         this.eventListenerService.subscribeAlertMsg.subscribe((msg:string) => {
-            console.dir(this.myAlert);
             this.myAlert.nativeElement.innerText = msg;
             this.myAlert.nativeElement.classList.add("show-alert");
             let that = this;

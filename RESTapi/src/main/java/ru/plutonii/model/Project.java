@@ -17,7 +17,6 @@ public class Project {
     private Integer numberOfTasks;
     private Integer numberOfCompletedTasks;
     private Integer numberOfUsers;
-    private Set<Label> labels = new HashSet<>(0);
 
     @Id
     @Column(name = "id", nullable = false)
@@ -91,16 +90,6 @@ public class Project {
         this.numberOfUsers = numberOfUsers;
     }
 
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "project")
-    public Set<Label> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(Set<Label> labels) {
-        this.labels = labels;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -109,17 +98,14 @@ public class Project {
         Project project = (Project) o;
 
         if (id != project.id) return false;
-        if (!user.equals(project.user)) return false;
         if (title != null ? !title.equals(project.title) : project.title != null) return false;
         if (description != null ? !description.equals(project.description) : project.description != null) return false;
+        if (user != null ? !user.equals(project.user) : project.user != null) return false;
         if (numberOfTasks != null ? !numberOfTasks.equals(project.numberOfTasks) : project.numberOfTasks != null)
             return false;
         if (numberOfCompletedTasks != null ? !numberOfCompletedTasks.equals(project.numberOfCompletedTasks) : project.numberOfCompletedTasks != null)
             return false;
-        if (numberOfUsers != null ? !numberOfUsers.equals(project.numberOfUsers) : project.numberOfUsers != null)
-            return false;
-
-        return true;
+        return numberOfUsers != null ? numberOfUsers.equals(project.numberOfUsers) : project.numberOfUsers == null;
     }
 
     @Override
@@ -139,6 +125,7 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
                 ", user=" + user +
                 ", numberOfTasks=" + numberOfTasks +
                 ", numberOfCompletedTasks=" + numberOfCompletedTasks +

@@ -10,7 +10,7 @@ public class Label {
     private int id;
     private String title;
     private Integer colourId;
-    private Project project;
+    private int projectId;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -43,14 +43,14 @@ public class Label {
         this.colourId = colourId;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "projectId", nullable = false)
-    public Project getProject() {
-        return project;
+    @Basic
+    @Column(name = "projectId", nullable = false)
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProject(Project project) {
-        this.project = project;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
     }
 }
 

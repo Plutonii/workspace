@@ -8,12 +8,13 @@ import {SecondViewComponent} from './used-components/second-view/second-view.com
 import {ViewDetailsOfTaskComponent} from './used-components/view-details-of-task/view-details-of-task.component';
 import {TaskService} from "../../services/task.service";
 import {TaskWithDetailsComponent} from "./used-components/task-with-details/task-with-details.component";
+import {LabelService} from "../../services/label.service";
 
 @NgModule({
   imports: [routing, CommonModule, FormsModule],
   declarations: [TasksComponent, FirstViewComponent, SecondViewComponent,
     ViewDetailsOfTaskComponent, TaskWithDetailsComponent],
-  providers: [TaskService]
+  providers: [TaskService, LabelService]
 })
 export class TasksModule {
 }

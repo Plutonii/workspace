@@ -172,3 +172,11 @@ ul {
   border: 1px solid brown;
   cursor: pointer;
 }
+
+.create-label {
+  list-style-type: none;
+}
+
+.create-label:hover {
+  cursor: pointer;
+}

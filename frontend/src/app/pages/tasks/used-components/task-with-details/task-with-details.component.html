@@ -66,7 +66,7 @@
                 <div class="block-body">
                   <ul>
                     <li *ngFor="let label of selectTask.labels" class="task-label">
-                      <ng-container [ngSwitch]="label.colorId">
+                      <ng-container [ngSwitch]="label.colourId">
                         <span class="task-label-red" *ngSwitchCase="1">{{label.title}}</span>
                         <span class="task-label-black" *ngSwitchCase="2">{{label.title}}</span>
                         <span class="task-label-green" *ngSwitchCase="3">{{label.title}}</span>
@@ -74,6 +74,7 @@
                         <span class="task-label-yellow" *ngSwitchCase="5">{{label.title}}</span>
                       </ng-container>
                     </li>
+                    <li class="create-label">Создать метку</li>
                   </ul>
                 </div>
               </div>

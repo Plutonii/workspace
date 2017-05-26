@@ -31,11 +31,9 @@ export class UserComponent implements OnInit, OnDestroy {
                 this.user = userProfile;
                 this.isFriend = this.userAccess.isFriend(this.user.id);
             }, (error) => {
-                console.log(false);
                 if (error === 401) {
                     this.userAccess.accessDenied();
                 }
-                console.dir(error);
             });
         });
     }

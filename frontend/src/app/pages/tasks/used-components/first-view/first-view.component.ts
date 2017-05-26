@@ -65,7 +65,6 @@ export class FirstViewComponent implements OnInit {
 
   openDetailWindow(task: Task) {
     this.selectTask = task;
-    console.dir(this.selectTask);
     $('#taskWithDetails').modal('show');
 
   }

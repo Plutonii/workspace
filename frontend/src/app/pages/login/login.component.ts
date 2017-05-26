@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.accessService.login(this.user).subscribe((data) => {
-          console.dir(this.accessService.redirectUrl);
           if (this.accessService.redirectUrl){
             this.router.navigate([this.accessService.redirectUrl]);
           } else {

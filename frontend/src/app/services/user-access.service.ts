@@ -21,8 +21,8 @@ export class UserAccessService {
               private eventListener: EventListenerService,
               private router: Router) {
     this._headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
-    this.url = 'http://plutonii.ru:8888/workspace/access/';
-    /*this.url = 'http://localhost:8080/access/';*/
+    /*this.url = 'http://plutonii.ru:8888/workspace/access/';*/
+    this.url = 'http://localhost:8080/access/';
   }
 
   public init(): boolean {

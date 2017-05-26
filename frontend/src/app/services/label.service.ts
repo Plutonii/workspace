@@ -1,15 +1,16 @@
+///<reference path="../models/label.ts"/>
 import {Injectable} from '@angular/core';
 import {Headers, Http, RequestOptions, Response} from "@angular/http";
 import {Project} from "../models/project";
 import {UserAccessService} from "./user-access.service";
 import {Observable} from "rxjs";
 import {EventListenerService} from "./event-listener.service";
+import {Label} from "../models/label";
 
 @Injectable()
-export class ProjectService {
+export class LabelService {
   private requestArgs: RequestOptions;
   private url: string;
-  private _openProject: Project;
 
   constructor(private http: Http, private userAccess: UserAccessService,
               private eventListener: EventListenerService) {
@@ -19,57 +20,64 @@ export class ProjectService {
     this.url = 'http://localhost:8080/api/';
   }
 
-  public getProjectsByUserId(): Observable<Project[]> {
+  public getLabelsByProjectId(projectId: Number): Observable<Label[]> {
     this.setCurrentTokenInHeader();
-    return this.http.get(this.url + 'project/userid/' + this.userAccess.getUserId(),
+    return this.http.get(this.url + 'label/projectid/' + projectId,
       this.requestArgs).map((resp) => {
-      const projectList = resp.json();
-      const projects: Project[] = [];
-      for (let index in projectList) {
-        if (!projectList.hasOwnProperty(index)) continue;
-        const project: Project = new Project();
-        project.cloneOfObjectToProject(projectList[index]);
-        projects.push(project);
+      const labelList = resp.json();
+      const labels: Label[] = [];
+      for (const index in labelList) {
+        if (!labelList.hasOwnProperty(index)) continue;
+        const label: Label = new Label();
+        label.cloneOfObjectToLabel(labelList[index]);
+        labels.push(label);
       }
-      return projects;
+      return labels;
     }).catch((error: Response) => {
       return Observable.throw(error.status);
     });
   }
 
-  public getProjectById(projectId: Number): Observable<Project> {
+  public getLabelIdsByTaskId(taskId: Number): Observable<Number[]> {
     this.setCurrentTokenInHeader();
-    return this.http.get(this.url + 'project/' + projectId,
+    return this.http.get(this.url + 'labeltasks/taskid/' + taskId,
       this.requestArgs).map((resp) => {
-      const projectObject = resp.json();
-      const project: Project = new Project();
-      project.cloneOfObjectToProject(projectObject);
-      return project;
+      return resp.json();
     }).catch((error: Response) => {
       return Observable.throw(error.status);
     });
   }
 
-  public addProject(project: Project): Observable<Project> {
+  public getLabelById(id: Number): Observable<Label> {
     this.setCurrentTokenInHeader();
-    return this.http.post(this.url + 'project/', JSON.stringify(project),
+    return this.http.get(this.url + 'label/' + id,
       this.requestArgs).map((resp) => {
-      const projectObject = resp.json();
-      const project: Project = new Project();
-      project.cloneOfObjectToProject(projectObject);
-      return project;
+      const labelObject = resp.json();
+      const label: Label = new Label();
+      label.cloneOfObjectToLabel(labelObject);
+      return label;
     }).catch((error: Response) => {
       return Observable.throw(error.status);
     });
   }
 
-  public removeProject(project: Project) {
+  public addLabel(label: Label): Observable<Label> {
     this.setCurrentTokenInHeader();
-    return this.http.delete(this.url + 'project/' + project.id,
+    return this.http.post(this.url + 'label/', JSON.stringify(label),
+      this.requestArgs).map((resp) => {
+      const labelObject = resp.json();
+      const label: Label = new Label();
+      label.cloneOfObjectToLabel(labelObject);
+      return label;
+    }).catch((error: Response) => {
+      return Observable.throw(error.status);
+    });
+  }
+
+  public removeProject(label: Label) {
+    this.setCurrentTokenInHeader();
+    return this.http.delete(this.url + 'project/' + label.id,
       this.requestArgs).map((resp: Response) => {
-      if (resp.status === 200) {
-        this.eventListener.emitRemoveProject();
-      }
       return resp.status;
     }).catch((error: Response) => {
       return Observable.throw(error.status);
@@ -78,13 +86,5 @@ export class ProjectService {
 
   private setCurrentTokenInHeader() {
     this.requestArgs.headers.set('token', this.userAccess.getToken());
-  }
-
-  get openProject(): Project {
-    return this._openProject;
-  }
-
-  set openProject(value: Project) {
-    this._openProject = value;
   }
 }
