@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.23, for Win64 (x86)
 --
 -- Host: localhost    Database: workspace
 -- ------------------------------------------------------
--- Server version	5.7.17-0ubuntu0.16.04.1
+-- Server version	5.5.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -22,9 +22,6 @@
 DROP TABLE IF EXISTS `contact`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-
-
-
 CREATE TABLE `contact` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -36,6 +33,72 @@ CREATE TABLE `contact` (
   CONSTRAINT `fk_contacts_2` FOREIGN KEY (`contact_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `contact`
+--
+
+LOCK TABLES `contact` WRITE;
+/*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+/*!40000 ALTER TABLE `contact` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `label`
+--
+
+DROP TABLE IF EXISTS `label`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `label` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(45) DEFAULT NULL,
+  `colourId` int(11) NOT NULL,
+  `projectId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `project_idx` (`projectId`),
+  CONSTRAINT `project` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `label`
+--
+
+LOCK TABLES `label` WRITE;
+/*!40000 ALTER TABLE `label` DISABLE KEYS */;
+INSERT INTO `label` VALUES (2,'rdh3333grdh',2,60),(3,'rdh3333grdh',2,60),(4,'rdh3333grdh',2,60),(5,'rdh3333grdh',2,60),(6,'rdh3333grdh',2,60),(7,'333',2,60),(8,'rdh3333grdh',2,60),(9,'rdh3333grdh',2,60),(10,'rdh3333grdh',2,60),(11,'rdh3333grdh',2,60),(12,'rdh3333grdh',2,60);
+/*!40000 ALTER TABLE `label` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `labeltasks`
+--
+
+DROP TABLE IF EXISTS `labeltasks`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `labeltasks` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `labelId` int(11) NOT NULL,
+  `taskId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `label_idx` (`labelId`),
+  KEY `task_idx` (`taskId`),
+  CONSTRAINT `label` FOREIGN KEY (`labelId`) REFERENCES `label` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `task` FOREIGN KEY (`taskId`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `labeltasks`
+--
+
+LOCK TABLES `labeltasks` WRITE;
+/*!40000 ALTER TABLE `labeltasks` DISABLE KEYS */;
+INSERT INTO `labeltasks` VALUES (1,2,18);
+/*!40000 ALTER TABLE `labeltasks` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `project`
@@ -56,8 +119,18 @@ CREATE TABLE `project` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_project_1_idx` (`user_id`),
   CONSTRAINT `fk_project_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `project`
+--
+
+LOCK TABLES `project` WRITE;
+/*!40000 ALTER TABLE `project` DISABLE KEYS */;
+INSERT INTO `project` VALUES (60,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',792,3,1,2),(62,'erg','ghvgh',792,1,0,1);
+/*!40000 ALTER TABLE `project` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `task`
@@ -78,8 +151,18 @@ CREATE TABLE `task` (
   KEY `project` (`project_id`),
   CONSTRAINT `fk_task_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_task_user` FOREIGN KEY (`maker_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `task`
+--
+
+LOCK TABLES `task` WRITE;
+/*!40000 ALTER TABLE `task` DISABLE KEYS */;
+INSERT INTO `task` VALUES (18,'Задача номер Раз','Чужая выполненная задача',3,60,1),(19,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',792,60,0),(20,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,60,0),(22,'eefsf','efxfexf',NULL,62,0);
+/*!40000 ALTER TABLE `task` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -102,7 +185,7 @@ SET @count_completed =
 	update user_profile set number_of_tasks = @count_user_tasks where user_profile.user_id = new.maker_id;
 	SET @count_user_completed_tasks =
 	(select count('id') from task where completed = 1 AND maker_id = NEW.maker_id);
-	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;	
+	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -131,7 +214,7 @@ BEGIN
 	update user_profile set number_of_tasks = @count_user_tasks where user_profile.user_id = new.maker_id;
 	SET @count_user_completed_tasks =
 	(select count('id') from task where  completed = 1 AND maker_id = NEW.maker_id);
-	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;	
+	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -160,7 +243,7 @@ SET @count_completed =
 	update user_profile set number_of_tasks = @count_user_tasks where user_profile.user_id = old.maker_id;
 	SET @count_user_completed_tasks =
 	(select count('id') from task where  completed = 1 AND maker_id = OLD.maker_id);
-	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = old.maker_id;	
+	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = old.maker_id;
 
 END */;;
 DELIMITER ;
@@ -186,8 +269,18 @@ CREATE TABLE `team` (
   KEY `fk_team_user_idx` (`user_id`),
   CONSTRAINT `fk_team_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_team_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `team`
+--
+
+LOCK TABLES `team` WRITE;
+/*!40000 ALTER TABLE `team` DISABLE KEYS */;
+INSERT INTO `team` VALUES (53,60,792),(54,60,3),(56,62,792);
+/*!40000 ALTER TABLE `team` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -199,7 +292,7 @@ CREATE TABLE `team` (
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `workspace`.`team_AFTER_INSERT` AFTER INSERT ON `team` FOR EACH ROW
 BEGIN
-	UPDATE `project` SET number_of_users = 
+	UPDATE `project` SET number_of_users =
     (select count(id) from team where project_id = NEW.project_id)
     where id = NEW.project_id;
 	SET @count_user_project =
@@ -222,7 +315,7 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `workspace`.`team_AFTER_DELETE` AFTER DELETE ON `team` FOR EACH ROW
 BEGIN
-	UPDATE `project` SET number_of_users = 
+	UPDATE `project` SET number_of_users =
     (select count(id) from team where project_id = OLD.project_id)
     where id = OLD.project_id;
 END */;;
@@ -247,8 +340,18 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   CONSTRAINT `fk_token_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `token`
+--
+
+LOCK TABLES `token` WRITE;
+/*!40000 ALTER TABLE `token` DISABLE KEYS */;
+INSERT INTO `token` VALUES (23,792,'UzWwL2uunVcYnzufQTdlPU0be0EQK5u65R9Aq','2017-05-26 13:29:28');
+/*!40000 ALTER TABLE `token` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -265,8 +368,18 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=791 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=793 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (3,'bot','bot',NULL),(792,'plutonii','12345','roman1.kreidich@yandex.ru');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -304,6 +417,16 @@ CREATE TABLE `user_profile` (
   CONSTRAINT `fk_user_profile_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_profile`
+--
+
+LOCK TABLES `user_profile` WRITE;
+/*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
+INSERT INTO `user_profile` VALUES (3,NULL,1,1,1,NULL),(792,NULL,2,0,2,NULL);
+/*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -314,4 +437,4 @@ CREATE TABLE `user_profile` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-16 19:11:25
+-- Dump completed on 2017-05-26 17:04:01
