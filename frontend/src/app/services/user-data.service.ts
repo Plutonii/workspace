@@ -39,18 +39,26 @@ export class UserDataService {
       this.requestArgs);
   }
 
-  public updateContactsIdByUser(): void {
+  public removeContactByUserId(myId: number, contactId: number) {
     this.setCurrentTokenInHeader();
-    this.http.get(this.url + '/contact/userid/' + this.userAccess.getUserId(), this.requestArgs).map((resp: Response) => {
+    return this.http.delete(this.url + 'contact/' + myId + "/" + contactId,
+      this.requestArgs);
+  }
+
+  public updateContactsIdByUser() {
+    this.setCurrentTokenInHeader();
+    return this.http.get(this.url + 'contact/userid/' + this.userAccess.getUserId(), this.requestArgs).map((resp: Response) => {
+      this.userAccess.setContacts([]);
       const usersList: Array<User> = resp.json();
+      this.userAccess.setContacts(usersList);
+      this.userAccess.setContactsId([]);
       usersList.forEach((val: User) => {
         this.userAccess.addContactId(val.id);
       })
-    }).subscribe();
+    });
   }
 
   private setCurrentTokenInHeader() {
     this.requestArgs.headers.set('token', this.userAccess.getToken());
   }
-
 }

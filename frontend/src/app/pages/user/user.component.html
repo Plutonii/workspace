@@ -7,7 +7,7 @@
                     <h3 class="username">{{user.username}}</h3>
                     <button type="button" *ngIf="authUserId===user.id">Редактировать(*)</button>
                     <button type="button" *ngIf="authUserId!==user.id&&!isFriend" (click)="friends()">Добавить в контакты</button>
-                    <button type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">Удалить из друзей(*)</button>
+                    <button type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">Удалить из друзей</button>
                     <div class="last-activity">Последняя активность 17:26 2017-01-21</div>
                 </div>
                 <div class="user-body">

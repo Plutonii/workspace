@@ -10,7 +10,7 @@ import {UserDataService} from "../services/user-data.service";
 
 @NgModule({
     imports:[routing, CommonModule],
-    declarations:[PagesComponent, HeaderComponent, LeftMenuComponent, ContactsComponent],
+    declarations:[PagesComponent, HeaderComponent, LeftMenuComponent],
     providers: [AuthGuardService, UserDataService]
 })
 export class PagesModule{}

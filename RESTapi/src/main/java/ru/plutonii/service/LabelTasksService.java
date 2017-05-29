@@ -10,6 +10,7 @@ import java.util.List;
 public interface LabelTasksService {
     LabelTasks addLabelTasks(LabelTasks labelTasks);
     void deleteLabelTasks(int id);
+    void deleteLabelTasks(int labelId, int taskId);
     List<LabelTasks> getLabelTasksListByTaskId(int taskId);
     List<Integer> getLabelIdsListByTaskId(int taskId);
 }

@@ -40,6 +40,14 @@ public class LabelTasksDAOImpl implements LabelTasksDAO {
     }
 
     @Override
+    public void removeByLabelIdAndTaskId(int labelId, int taskId) {
+        getCurrentSession().createQuery("delete labeltasks lt where lt.taskId = :taskId and lt.labelId = :labelId")
+                .setParameter("labelId", labelId)
+                .setParameter("taskId", taskId)
+                .executeUpdate();
+    }
+
+    @Override
     public List<LabelTasks> getLabelTasksByTaskId(int id) {
         List<LabelTasks> labelTasks = getCurrentSession().createQuery("from labeltasks lt where lt.taskId = :id")
                 .setParameter("id", id).list();

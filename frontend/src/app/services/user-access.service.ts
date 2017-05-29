@@ -12,6 +12,7 @@ export class UserAccessService {
   private changeAccess = new Subject<boolean>();
   changedAccess = this.changeAccess.asObservable();
   private user: User;
+  private contacts: Array<User>;
   private token: string = null;
   private _headers: Headers;
   public redirectUrl: string;
@@ -23,6 +24,13 @@ export class UserAccessService {
     this._headers = new Headers({'Content-Type': 'application/json;charset=utf-8'});
     /*this.url = 'http://plutonii.ru:8888/workspace/access/';*/
     this.url = 'http://localhost:8080/access/';
+    this.contacts = [];
+    setInterval(() => {
+      console.log("this.user.contactsId");
+      console.dir(this.user.contactsId);
+      console.log("this.contacts");
+      console.dir(this.contacts);
+    }, 5000);
   }
 
   public init(): boolean {
@@ -116,6 +124,40 @@ export class UserAccessService {
 
   public addContactId(id: number) {
     this.user.contactsId.push(id);
+  }
+
+  public addContact(user: User) {
+    this.contacts.push(user)
+  }
+
+  public setContacts(contacts: Array<User>) {
+    this.contacts = contacts;
+  }
+
+  public setContactsId(ids: Array<number>) {
+    this.user.contactsId = ids;
+  }
+
+  public getContacts() {
+    return this.contacts;
+  }
+
+  public removeContactId(id: number) {
+    const index: number = this.user.contactsId.findIndex((value) => {
+      if (value === id) return true;
+    });
+    if (index !== -1) {
+      this.user.contactsId.splice(index, 1);
+    }
+  }
+
+  public removeContactById(userId: number) {
+    const index: number = this.contacts.findIndex((value) => {
+      if (value.id === userId) return true;
+    });
+    if (index !== -1) {
+      this.contacts.splice(index, 1);
+    }
   }
 
   public isFriend(id: number): boolean {

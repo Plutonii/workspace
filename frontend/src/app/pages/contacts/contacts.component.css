@@ -1,0 +1,31 @@
+li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  background-color: white;
+  padding: 10px;
+  margin: 10px;
+  min-height: 50px;
+}
+
+.item:hover {
+  background-color: #ececec;
+  cursor: pointer;
+}
+
+.del-contact{
+  opacity: 0.3;
+  float: right;
+}
+
+.item:hover .del-contact{
+  opacity: 0.9;
+}

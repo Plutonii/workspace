@@ -6,6 +6,7 @@ import {UserAccessService} from "./user-access.service";
 import {Observable} from "rxjs";
 import {EventListenerService} from "./event-listener.service";
 import {Label} from "../models/label";
+import {LabelTasks} from "../models/labeltasks";
 
 @Injectable()
 export class LabelService {
@@ -56,6 +57,29 @@ export class LabelService {
       const label: Label = new Label();
       label.cloneOfObjectToLabel(labelObject);
       return label;
+    }).catch((error: Response) => {
+      return Observable.throw(error.status);
+    });
+  }
+
+  public addLabelTasks(label: LabelTasks): Observable<LabelTasks> {
+    this.setCurrentTokenInHeader();
+    return this.http.post(this.url + 'labeltasks/', JSON.stringify(label),
+      this.requestArgs).map((resp) => {
+      const labelObject = resp.json();
+      const label: LabelTasks = new LabelTasks();
+      label.cloneOfObjectToLabelTasks(labelObject);
+      return label;
+    }).catch((error: Response) => {
+      return Observable.throw(error.status);
+    });
+  }
+
+  public removeLabelTasks(label: LabelTasks) {
+    this.setCurrentTokenInHeader();
+    return this.http.delete(this.url + 'labeltasks/' + label.labelId + "/" + label.taskId,
+      this.requestArgs).map((resp: Response) => {
+      return resp.status;
     }).catch((error: Response) => {
       return Observable.throw(error.status);
     });

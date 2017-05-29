@@ -57,13 +57,13 @@
                 </div>
               </div>
               <div class="labels">
-                <div class="block-title">
+                <form class="block-title">
                   <span>Метки</span>
                   <span id="editLabels" class="glyphicon glyphicon-pencil edit-anything"
-                        data-toggle="popover" > </span>
+                        data-toggle="popover"> </span>
 
-                </div>
-                <div class="block-body">
+                </form>
+                <form class="block-body">
                   <ul>
                     <li *ngFor="let label of selectTask.labels" class="task-label">
                       <ng-container [ngSwitch]="label.colourId">
@@ -74,9 +74,35 @@
                         <span class="task-label-yellow" *ngSwitchCase="5">{{label.title}}</span>
                       </ng-container>
                     </li>
-                    <li class="create-label">Создать метку</li>
+                    <li *ngIf="!showNewLabel && authUserId===makerProjectId" class="create-label" (click)="showForm()">Создать
+                      метку
+                    </li>
+                    <li *ngIf="showNewLabel" class="form-for-new-label">
+                      <form class="block-new-label">
+                        <label for="titleLabel">Название метки</label>
+                        <input type="text" name="titleLabel" id="titleLabel" [(ngModel)]="newLabel.title"/>
+                        <form>
+                          <label>Цвет метки</label><br>
+                          <label for="colour-red">r</label>
+                          <input name="colour" id="colour-red" type="radio" value="1" [(ngModel)]="newLabel.colourId"/>
+                          <label for="colour-black">bla</label>
+                          <input name="colour" id="colour-black" type="radio" value="2"
+                                 [(ngModel)]="newLabel.colourId"/>
+                          <label for="colour-green">g</label>
+                          <input name="colour" id="colour-green" type="radio" value="3"
+                                 [(ngModel)]="newLabel.colourId"/>
+                          <label for="colour-blue">blu</label>
+                          <input name="colour" id="colour-blue" type="radio" value="4" [(ngModel)]="newLabel.colourId"/>
+                          <label for="colour-yellow">y</label>
+                          <input name="colour" id="colour-yellow" type="radio" value="5"
+                                 [(ngModel)]="newLabel.colourId"/>
+                        </form>
+                        <button class="btn btn-success" (click)="submitForm()">Создать</button>
+                        <button class="btn btn-danger" (click)="cancelForm()">Отмена</button>
+                      </form>
+                    </li>
                   </ul>
-                </div>
+                </form>
               </div>
             </div>
           </div>

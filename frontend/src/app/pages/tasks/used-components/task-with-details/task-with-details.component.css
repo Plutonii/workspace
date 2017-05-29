@@ -180,3 +180,7 @@ ul {
 .create-label:hover {
   cursor: pointer;
 }
+
+.form-for-new-label {
+  list-style-type: none;
+}

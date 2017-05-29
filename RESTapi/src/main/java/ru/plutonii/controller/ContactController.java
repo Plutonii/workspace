@@ -33,12 +33,12 @@ public class ContactController {
     }
 
     @PostMapping("/contact")
-    Contact addContact(@RequestBody Contact contact) {
+    User addContact(@RequestBody Contact contact) {
         return contactService.addContact(contact);
     }
 
-    @DeleteMapping("/contact/{id}")
-    void deleteContact(@PathVariable(name = "id") int id){
-        contactService.deleteContact(id);
+    @DeleteMapping("/contact/{id}/{contactId}")
+    void deleteContact(@PathVariable(name = "id") int id, @PathVariable(name = "contactId") int contactId){
+        contactService.deleteContact(id, contactId);
     }
 }

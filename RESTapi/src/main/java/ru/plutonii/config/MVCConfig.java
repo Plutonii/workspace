@@ -19,7 +19,7 @@ public class MVCConfig extends WebMvcConfigurerAdapter{
                 .allowedOrigins("http://localhost:4200")
                 .allowedMethods("PUT", "DELETE", "POST", "GET", "OPTIONS")
                 .allowedHeaders("Content-Type", "Accept", "X-Requested-With", "token")
-                //.exposedHeaders("header1", "header2")
+                .exposedHeaders("token")
                 .allowCredentials(false).maxAge(3600);
     }
 }

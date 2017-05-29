@@ -32,6 +32,11 @@ public class LabelTasksServiceImpl implements LabelTasksService {
     }
 
     @Override
+    public void deleteLabelTasks(int labelId, int taskId) {
+        labelTasksDAO.removeByLabelIdAndTaskId(labelId, taskId);
+    }
+
+    @Override
     public List<LabelTasks> getLabelTasksListByTaskId(int taskId) {
         return labelTasksDAO.getLabelTasksByTaskId(taskId);
     }

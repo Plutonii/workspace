@@ -22,7 +22,7 @@ public class ContactServiceImpl implements ContactService {
         this.contactDAO = contactDAO;
     }
 
-    public Contact addContact(Contact contact) {
+    public User addContact(Contact contact) {
         return contactDAO.insert(contact);
     }
 
@@ -36,5 +36,10 @@ public class ContactServiceImpl implements ContactService {
 
     public void deleteContact(int id) {
         contactDAO.delete(contactDAO.findById(id));
+    }
+
+    @Override
+    public void deleteContact(int myId, int contactId) {
+        contactDAO.deleteByIdandContactId(myId, contactId);
     }
 }

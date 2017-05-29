@@ -10,6 +10,7 @@ import java.util.List;
 public interface LabelTasksDAO {
     LabelTasks insert(LabelTasks labelTasks);
     void remove(LabelTasks labelTasks);
+    void removeByLabelIdAndTaskId(int labelId, int taskId);
     List<LabelTasks> getLabelTasksByTaskId(int id);
     LabelTasks findById(int id);
 }

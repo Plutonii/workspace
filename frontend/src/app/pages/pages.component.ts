@@ -20,7 +20,7 @@ export class PagesComponent implements OnInit{
     }
 
     ngOnInit() {
-        this.userDataLoader.updateContactsIdByUser();
+        this.userDataLoader.updateContactsIdByUser().subscribe();
     }
 
 }

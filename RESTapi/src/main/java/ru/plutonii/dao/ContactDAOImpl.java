@@ -5,8 +5,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ResponseBody;
 import ru.plutonii.model.Contact;
+import ru.plutonii.model.User;
 
 import java.util.List;
 
@@ -18,23 +18,33 @@ import java.util.List;
 public class ContactDAOImpl implements ContactDAO {
 
     private SessionFactory sessionFactory;
+    private UserDAO userDAO;
 
     @Autowired
-    public ContactDAOImpl(SessionFactory sessionFactory){
+    public ContactDAOImpl(SessionFactory sessionFactory, UserDAO userDAO){
         this.sessionFactory = sessionFactory;
+        this.userDAO = userDAO;
     }
 
     private Session getCurrentSession(){
         return this.sessionFactory.getCurrentSession();
     }
 
-    public Contact insert(Contact contact) {
+    public User insert(Contact contact) {
         getCurrentSession().saveOrUpdate(contact);
-        return contact;
+        return userDAO.findById(contact.getContact().getId());
     }
 
     public void delete(Contact contact) {
         getCurrentSession().delete(contact);
+    }
+
+    @Override
+    public void deleteByIdandContactId(int myId, int contactId) {
+        getCurrentSession().createQuery("delete contact c where c.userId = :userId and c.contact = :contactI")
+                .setParameter("userId", myId)
+                .setParameter("contactI", new User(contactId))
+                .executeUpdate();
     }
 
     @Transactional(readOnly = true)

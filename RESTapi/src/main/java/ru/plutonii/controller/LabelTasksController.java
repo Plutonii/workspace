@@ -36,4 +36,10 @@ public class LabelTasksController {
     void deleteLabelTasks(@PathVariable(name = "id") int id){
         labelTasksService.deleteLabelTasks(id);
     }
+
+    @DeleteMapping("/labeltasks/{labelId}/{taskId}")
+    void deleteLabelTasksByLabelAndtaskId(@PathVariable(name = "labelId") int labelId,
+                                          @PathVariable(name = "taskId") int taskId){
+        labelTasksService.deleteLabelTasks(labelId, taskId);
+    }
 }
