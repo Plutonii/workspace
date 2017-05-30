@@ -38,8 +38,16 @@ public class TeamDAOImpl implements TeamDAO {
         getCurrentSession().delete(team);
     }
 
-    public List<User> findUserByProjectId(int id) {
-        List<User> userList = getCurrentSession().createQuery("from team t where t.projectId = :id")
+    @Override
+    public void removeByProjectAndUserId(int projectId, int userId) {
+        getCurrentSession().createQuery("delete from team t where t.projectId = :projectId and t.user = :user")
+                .setParameter("projectId", projectId)
+                .setParameter("user", new User(userId))
+                .executeUpdate();
+    }
+
+    public List<Team> findUserByProjectId(int id) {
+        List<Team> userList = getCurrentSession().createQuery("from team t where t.projectId = :id")
                 .setParameter("id", id).list();
         return userList;
     }

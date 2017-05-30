@@ -11,5 +11,6 @@ import java.util.List;
 public interface TeamDAO {
     Team insert(Team team);
     void delete(Team team);
-    List<User> findUserByProjectId(int id);
+    List<Team> findUserByProjectId(int id);
+    void removeByProjectAndUserId(int projectId, int userId);
 }

@@ -4,66 +4,100 @@ import {Router} from "@angular/router";
 import {ProjectService} from "../../../../services/project.service";
 import {UserAccessService} from "../../../../services/user-access.service";
 import {EventListenerService} from "../../../../services/event-listener.service";
+import {User} from "../../../../models/user";
 
 @Component({
-    selector: 'ws-project',
-    templateUrl: './project.component.html',
-    styleUrls: ['./project.component.css']
+  selector: 'ws-project',
+  templateUrl: './project.component.html',
+  styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
 
-    @ViewChild("progressBar")
-    progressBar: ElementRef;
+  @ViewChild("progressBar")
+  progressBar: ElementRef;
 
-    private authUserId: number;
+  private authUserId: number;
 
-    @Input()
-    project: Project;
+  @Input()
+  project: Project;
 
-    constructor(private router: Router,
-                private dataLoader: ProjectService,
-                private userAccess: UserAccessService,
-                private eventListener: EventListenerService) {
-        this.authUserId = this.userAccess.getUserId();
+  private contacts: Array<Object>;
+
+  constructor(private router: Router,
+              private dataLoader: ProjectService,
+              private userAccess: UserAccessService,
+              private eventListener: EventListenerService) {
+    this.authUserId = this.userAccess.getUserId();
+    this.contacts = [];
+  }
+
+  controlProgressBar() {
+    let width = Math.floor((this.numberOfCompletedTasks / this.numberOfAllTasks) * 100);
+    this.progressBar.nativeElement.style.width = width + "%";
+    if (width > 67) {
+      this.progressBar.nativeElement.style.backgroundColor = "#18a401";
+    } else if (width > 33) {
+      this.progressBar.nativeElement.style.backgroundColor = "#d6de00";
+    } else if (width > 0) {
+      this.progressBar.nativeElement.style.backgroundColor = "#de6520";
     }
+  }
 
-    controlProgressBar() {
-        let width = Math.floor((this.numberOfCompletedTasks / this.numberOfAllTasks) * 100);
-        this.progressBar.nativeElement.style.width = width + "%";
-        if (width > 67) {
-            this.progressBar.nativeElement.style.backgroundColor = "#18a401";
-        } else if (width > 33) {
-            this.progressBar.nativeElement.style.backgroundColor = "#d6de00";
-        } else if (width > 0) {
-            this.progressBar.nativeElement.style.backgroundColor = "#de6520";
-        }
-    }
+  ngOnInit() {
+    this.controlProgressBar();
+    this.dataLoader.getTeamByProjectId(this.project.id).subscribe((users) => {
+      this.project.teams = users;
+      this.userAccess.getContacts().forEach((value) => {
 
-    ngOnInit() {
-        this.controlProgressBar();
-    }
-
-    open() {
-        this.dataLoader.openProject = this.project;
-        this.router.navigate(['/pages/project', this.project.id]);
-    }
-
-    get numberOfAllTasks(): number {
-        return this.project.numberOfTasks;
-    }
-
-    get numberOfCompletedTasks(): number {
-        return this.project.numberOfCompletedTasks;
-    }
-
-    public deleteProject() {
-        this.dataLoader.removeProject(this.project).subscribe(() => {
-            this.eventListener.showAlert("Проект был перемещён в корзину.");
-        }, (errorStatusCode: number) => {
-            if (errorStatusCode === 401){
-                this.userAccess.accessDenied();
-            }
+        let ifFound = this.project.teams.find((valueIn) => {
+          if (valueIn.id === value.id) return true;
         });
-    }
+        if (ifFound) {
+          this.contacts.push({"contact": value, "isTeam": true});
+        } else {
+          this.contacts.push({"contact": value, "isTeam": false});
+        }
+      });
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
+  }
+
+  open() {
+    this.dataLoader.openProject = this.project;
+    this.router.navigate(['/pages/project', this.project.id]);
+  }
+
+  changedMember(friend) {
+
+  }
+
+  removeUserFromProject(user){
+    this.dataLoader
+  }
+
+  addUsersInProject() {
+
+  }
+
+  get numberOfAllTasks(): number {
+    return this.project.numberOfTasks;
+  }
+
+  get numberOfCompletedTasks(): number {
+    return this.project.numberOfCompletedTasks;
+  }
+
+  public deleteProject() {
+    this.dataLoader.removeProject(this.project).subscribe(() => {
+      this.eventListener.showAlert("Проект был перемещён в корзину.");
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
+  }
 
 }

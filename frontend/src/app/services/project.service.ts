@@ -4,6 +4,7 @@ import {Project} from "../models/project";
 import {UserAccessService} from "./user-access.service";
 import {Observable} from "rxjs";
 import {EventListenerService} from "./event-listener.service";
+import {User} from "../models/user";
 
 @Injectable()
 export class ProjectService {
@@ -45,6 +46,32 @@ export class ProjectService {
       const project: Project = new Project();
       project.cloneOfObjectToProject(projectObject);
       return project;
+    }).catch((error: Response) => {
+      return Observable.throw(error.status);
+    });
+  }
+
+  public getTeamByProjectId(projectId: Number): Observable<Array<User>> {
+    this.setCurrentTokenInHeader();
+    return this.http.get(this.url + 'team/users/' + projectId,
+      this.requestArgs).map((resp) => {
+      const users = resp.json();
+      console.dir(users);
+      return users;
+    }).catch((error: Response) => {
+      return Observable.throw(error.status);
+    });
+  }
+
+  //@Plutonii
+  public removeTeam(projectId: number, userId: number) {
+    this.setCurrentTokenInHeader();
+    return this.http.delete(this.url + 'project/' + project.id,
+      this.requestArgs).map((resp: Response) => {
+      if (resp.status === 200) {
+        this.eventListener.emitRemoveProject();
+      }
+      return resp.status;
     }).catch((error: Response) => {
       return Observable.throw(error.status);
     });

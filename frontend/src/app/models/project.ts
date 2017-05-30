@@ -7,9 +7,11 @@ export class Project {
     numberOfUsers: number;
     numberOfTasks: number;
     numberOfCompletedTasks: number;
+    teams:Array<User>;
 
     public constructor(){
         this.user = new User();
+        this.teams = [];
     }
 
     cloneOfObjectToProject(o:any): void {

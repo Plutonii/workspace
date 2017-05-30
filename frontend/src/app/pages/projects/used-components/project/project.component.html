@@ -10,7 +10,7 @@
                     </span>
                 <ul class="dropdown-menu dropdown-menu-right">
                     <li><a href="#">Добавить в избранное(*)</a></li>
-                    <li><a>Добавить пользователя(*)</a></li>
+                    <li data-toggle="modal" data-target="#modalOfContacts"><a>Добавить пользователя</a></li>
                     <li class="divider"></li>
                     <li><a (click)="deleteProject()">Удалить</a></li>
                 </ul>
@@ -34,4 +34,29 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal" id="modalOfContacts" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                #closeModal>&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Пользователи проекта</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" class="form-horizontal" (ngSubmit)="addUsersInProject()">
+          <div class="form-group">
+            <label class="control-label col-sm-8 col-sm-offset-2" *ngFor="let friend of contacts">{{friend.contact.username}}
+            <input type="checkbox" [checked]="friend.isTeam" value="{{friend.contact.id}}" (changed)="changedMember(friend)"/>
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>pm
 </div>
