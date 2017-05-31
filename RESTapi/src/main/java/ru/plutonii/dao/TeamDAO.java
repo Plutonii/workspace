@@ -12,5 +12,6 @@ public interface TeamDAO {
     Team insert(Team team);
     void delete(Team team);
     List<Team> findUserByProjectId(int id);
+    List<Team> findByUserId(int id);
     void removeByProjectAndUserId(int projectId, int userId);
 }

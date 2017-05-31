@@ -50,4 +50,13 @@ public class ProjectServiceImpl implements ProjectService{
     public List<Project> findByUserId(int id) {
         return projectDAO.findByUserId(id);
     }
+
+    @Override
+    public List<Project> findAllProjectsByUserId(int id) {
+        List<Project> projects = projectDAO.findByUserId(id);
+        teamDAO.findByUserId(id).forEach((value) -> {
+            projects.add(projectDAO.findById(value.getProjectId()));
+        });
+        return projects;
+    }
 }

@@ -7,6 +7,7 @@ import {Label} from "../../../../models/label";
 import {LabelService} from "../../../../services/label.service";
 import {main} from "@angular/compiler-cli/src/main";
 import {LabelTasks} from "../../../../models/labeltasks";
+import {tokenReference} from "@angular/compiler";
 declare let $: any;
 
 @Component({
@@ -19,6 +20,7 @@ export class TaskWithDetailsComponent implements OnInit {
   @Output() onClose = new EventEmitter();
   @Input() selectTask: Task;
   @Input() makerProjectId: number;
+  @Input() team: Array<User>;
 
   private labels: Label[];
   private selectedIdforLabels: Number[];
@@ -26,6 +28,7 @@ export class TaskWithDetailsComponent implements OnInit {
   private showNewLabel: boolean;
   private newLabel: Label;
   private authUserId: number;
+  private isShowEditingLabel:boolean;
 
   constructor(private taskService: TaskService,
               private userAccess: UserAccessService,
@@ -59,6 +62,7 @@ export class TaskWithDetailsComponent implements OnInit {
         }
       };
     }());
+
     function onClickByLabel(context) {
       return Handler.addListener(window, 'clickByLabel', function (e) {
         let ifFound: boolean = false;
@@ -105,10 +109,13 @@ export class TaskWithDetailsComponent implements OnInit {
       this.selectTask.labels = [];
       this.hundleId = onClickByLabel(this);
       this.getAllLabelsForProject();
+      if (this.makerProjectId === this.authUserId) {
+        this.isShowEditingLabel = true;
+      } else this.isShowEditingLabel = !!(this.selectTask.user && this.selectTask.user.id === this.authUserId);
     });
   }
 
-  private getAllLabelsForProject(){
+  private getAllLabelsForProject() {
     function getColourById(id: number): string {
       switch (id) {
         case 1:
@@ -125,6 +132,7 @@ export class TaskWithDetailsComponent implements OnInit {
           return '';
       }
     }
+
     let content: string = '';
     this.labelService.getLabelsByProjectId(this.selectTask.projectId).subscribe((labels) => {
       this.labels = labels;
@@ -217,6 +225,8 @@ export class TaskWithDetailsComponent implements OnInit {
     this.taskService.addTask(this.selectTask).subscribe((newTask: Task) => {
       this.taskService.getTaskById(newTask.id).subscribe((task1) => {
         this.selectTask.user = task1.user;
+        if (userId === this.authUserId) this.isShowEditingLabel = true;
+        if (this.makerProjectId === this.authUserId) this.isShowEditingLabel = true;
       });
     }, (errorStatusCode: number) => {
       if (errorStatusCode === 401) {
@@ -231,6 +241,7 @@ export class TaskWithDetailsComponent implements OnInit {
     taskWithoutUser.cloneOfObjectToTask(this.selectTask);
     taskWithoutUser.user = null;
     this.taskService.addTask(taskWithoutUser).subscribe(() => {
+      this.isShowEditingLabel = this.makerProjectId === this.authUserId;
     }, (errorStatusCode: number) => {
       if (errorStatusCode === 401) {
         this.userAccess.accessDenied();

@@ -52,3 +52,11 @@
 .navbar-toggle .icon-bar {
     width: 18px;
 }
+
+.color-logout{
+  color: black;
+}
+
+.color-logout:hover{
+  color: #1d1d1d;
+}

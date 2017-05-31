@@ -1,15 +1,15 @@
 <div class="hidden-xs animation" [class.left-menu]="!isHiddenLeftMenu" [class.left-menu-hidden]="isHiddenLeftMenu">
-    <div class="menu">
-        <div class="line" (click)="toggle()">
-            <div class="sandwich">
-                <div class="layer"></div>
-                <div class="layer"></div>
-                <div class="layer"></div>
-            </div>
-            <p *ngIf="!isHiddenLeftMenu"> Скрыть</p></div>
-        <div class="line" routerLink="/pages/contacts"><span class="glyphicon glyphicon-user"></span>
-            <p *ngIf="!isHiddenLeftMenu"> Контакты</p></div>
-        <div class="line"><span class="glyphicon glyphicon-envelope"></span>
-            <p *ngIf="!isHiddenLeftMenu"> Сообщения(*)</p></div>
-    </div>
+  <div class="menu">
+    <div class="line" (click)="toggle()">
+      <div class="sandwich">
+        <div class="layer"></div>
+        <div class="layer"></div>
+        <div class="layer"></div>
+      </div>
+      <p *ngIf="!isHiddenLeftMenu"> Скрыть</p></div>
+    <div class="line" routerLink="/pages/projecs"><span class="glyphicon glyphicon glyphicon-home"></span>
+      <p *ngIf="!isHiddenLeftMenu"> Главая</p></div>
+    <div class="line" routerLink="/pages/contacts"><span class="glyphicon glyphicon-user"></span>
+      <p *ngIf="!isHiddenLeftMenu"> Контакты</p></div>
+  </div>
 </div>

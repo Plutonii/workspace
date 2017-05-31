@@ -9,7 +9,7 @@
           <span *ngIf="selectTask.user.id&&!selectTask.completed" class="label label-warning">В процессе</span>
           <span *ngIf="selectTask.completed" class="label label-danger">Закрытая</span>
           {{selectTask.title}}</h4>
-        <span class="glyphicon glyphicon-pencil task-edit"></span>
+        <span *ngIf="makerProjectId===authUserId" class="glyphicon glyphicon-pencil task-edit"></span>
         <span class="glyphicon glyphicon-remove task-close" data-dismiss="modal" data-toggle="tooltip"
               data-placement="left" title="Закрыть окно"></span>
       </div>
@@ -25,16 +25,21 @@
               <div class="assignee">
                 <div class="block-title dropdown">
                   <span>Ответственный</span>
-                  <span class="glyphicon glyphicon-pencil edit-anything dropdown-toggle dropdown"
+                  <span *ngIf="!selectTask.completed&&isShowEditingLabel"
+                        class="glyphicon glyphicon-pencil edit-anything dropdown-toggle dropdown"
                         data-toggle="dropdown"></span>
                   <!--Добавить самого пользователя. Если нет закреплённых, отображать себя.
                   Список из участников проекта получать и выводить.-->
                   <ul class="dropdown-menu dropdown-menu-right">
                     <li *ngIf="!selectTask.completed&&selectTask.user.id"><a (click)="dismissUser()">Снять
                       ответственность</a></li>
-                    <li *ngIf="!selectTask.completed&&selectTask.user.id" role="presentation"
+                    <li *ngIf="makerProjectId===authUserId" role="presentation"
                         class="divider"></li>
-                    <li *ngIf="makerProjectId===authUserId"><a>юзер 1(*)</a></li>
+                    <ng-container *ngIf="makerProjectId===authUserId">
+                      <li *ngFor="let userT of team"><a (click)="assignUser(userT.id)"><span
+                        *ngIf="selectTask.user.id===userT.id"
+                        class="glyphicon glyphicon-ok"> </span> {{userT.username}}</a></li>
+                    </ng-container>
                   </ul>
                 </div>
                 <div class="block-body">
@@ -59,7 +64,8 @@
               <div class="labels">
                 <form class="block-title">
                   <span>Метки</span>
-                  <span id="editLabels" class="glyphicon glyphicon-pencil edit-anything"
+                  <span id="editLabels" *ngIf="!selectTask.completed&&isShowEditingLabel"
+                        class="glyphicon glyphicon-pencil edit-anything"
                         data-toggle="popover"> </span>
 
                 </form>
@@ -74,7 +80,8 @@
                         <span class="task-label-yellow" *ngSwitchCase="5">{{label.title}}</span>
                       </ng-container>
                     </li>
-                    <li *ngIf="!showNewLabel && authUserId===makerProjectId" class="create-label" (click)="showForm()">Создать
+                    <li *ngIf="!showNewLabel && authUserId===makerProjectId" class="create-label" (click)="showForm()">
+                      Создать
                       метку
                     </li>
                     <li *ngIf="showNewLabel" class="form-for-new-label">

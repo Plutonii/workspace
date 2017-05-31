@@ -14,6 +14,11 @@ ul {
   padding: 10px;
   margin: 10px;
   min-height: 50px;
+  border-radius: 5px;
+}
+
+.item-find {
+  background-color: #a5ffe7;
 }
 
 .item:hover {
@@ -28,4 +33,24 @@ ul {
 
 .item:hover .del-contact{
   opacity: 0.9;
+}
+
+.back {
+  background-color: #02fefd;
+  border-radius: 15px;
+}
+
+h3{
+  text-align: center;
+}
+
+.find-user {
+  position: absolute;
+  top: 28px;
+  right: 35px;
+}
+
+.find-user:hover {
+  cursor: pointer;
+  color: #2588ff;
 }

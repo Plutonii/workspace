@@ -2,8 +2,11 @@ package ru.plutonii.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.plutonii.model.User;
 import ru.plutonii.model.UserWithProfile;
 import ru.plutonii.service.UserInfoService;
+
+import java.util.List;
 
 /**
  * Created by plutonii on 12.03.17.
@@ -23,6 +26,12 @@ public class UserController {
     @ResponseBody
     UserWithProfile getUserWithProfile(@PathVariable(name = "id") int id){
         return userInfoService.findById(id);
+    }
+
+    @GetMapping(path = "/user/find/{username}", produces = "application/json")
+    @ResponseBody
+    List<User> findUsersByUsername(@PathVariable(name = "username") String username){
+        return userInfoService.findUsersByUsername(username);
     }
 
 }

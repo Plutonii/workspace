@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.plutonii.dao.TeamDAO;
 import ru.plutonii.dao.UserDAO;
-import ru.plutonii.model.Project;
-import ru.plutonii.model.Task;
-import ru.plutonii.model.Team;
-import ru.plutonii.model.User;
+import ru.plutonii.model.*;
 
 /**
  * Created by plutonii on 26.02.17.
@@ -18,23 +15,33 @@ public class LearnNewUserServiceImpl implements LearnNewUserService {
     private TaskService taskService;
     private UserDAO userDAO;
     private TeamDAO teamDAO;
+    private ContactService contactService;
+
     private final int ID_BOT = 3;
 
     @Autowired
     public LearnNewUserServiceImpl(ProjectService projectService,
                                    TaskService taskService,
                                    UserDAO userDAO,
-                                   TeamDAO teamDAO) {
+                                   TeamDAO teamDAO, ContactService contactService) {
         this.projectService = projectService;
         this.taskService = taskService;
         this.userDAO = userDAO;
         this.teamDAO = teamDAO;
+        this.contactService = contactService;
     }
 
     public void learn(User user){
         this.addTasksForFirstProject(this.addFirstProjectForUser(user));
+        this.addContact(user);
     }
 
+    private void addContact(User user){
+        Contact contact = new Contact();
+        contact.setContact(new User(ID_BOT));
+        contact.setUserId(user.getId());
+        this.contactService.addContact(contact);
+    }
 
     private Project addFirstProjectForUser(User user) {
         Project project = new Project();

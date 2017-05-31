@@ -1,19 +1,30 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
-            <section class="user" *ngIf="user">
-                <div class="user-head">
-                    <div class="avatar"></div>
-                    <h3 class="username">{{user.username}}</h3>
-                    <button type="button" *ngIf="authUserId===user.id">Редактировать(*)</button>
-                    <button type="button" *ngIf="authUserId!==user.id&&!isFriend" (click)="friends()">Добавить в контакты</button>
-                    <button type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">Удалить из друзей</button>
-                    <div class="last-activity">Последняя активность 17:26 2017-01-21</div>
-                </div>
-                <div class="user-body">
-                    <span class="counters"></span>
-                </div>
-            </section>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
+      <section class="user" *ngIf="user">
+        <div class="row">
+          <div class="col-sm-10">
+            <div class="user-head">
+              <div class="avatar"></div>
+              <h3 class="username">{{user.username}}</h3>
+              <!--<button type="button" *ngIf="authUserId===user.id">Редактировать(*)</button>-->
+              <button type="button" *ngIf="authUserId!==user.id&&!isFriend" (click)="friends()">Добавить в контакты
+              </button>
+              <button type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">Удалить из
+                друзей
+              </button>
+              <div class="user-body">
+                    <span class="counters">
+                      <p>Количество задач, в которых {{user.username}} принял участие: {{user.numberOfTasks}}</p>
+                      <p>Из них успешно завершено {{user.numberOfCompletedTasks}} задач.</p>
+                      <p>Пользователь состоит в {{user.numberOfProjects}} проектах.</p>
+                    </span>
+              </div>
+              <!--<div class="last-activity">Последняя активность 17:26 2017-01-21</div>-->
+            </div>
+          </div>
         </div>
+      </section>
     </div>
+  </div>
 </div>

@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.plutonii.dao.UserDAO;
 import ru.plutonii.dao.UserProfileDAO;
+import ru.plutonii.model.User;
 import ru.plutonii.model.UserProfile;
 import ru.plutonii.model.UserWithProfile;
+
+import java.util.List;
 
 /**
  * Created by plutonii on 12.03.17.
@@ -32,5 +35,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         userWithProfile.setUser(userDAO.findById(id));
         userWithProfile.setUserProfile(userProfileDAO.findById(id));
         return userWithProfile;
+    }
+
+    @Override
+    public List<User> findUsersByUsername(String username) {
+        return userDAO.findByUserNameFirstFive(username);
     }
 }

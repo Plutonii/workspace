@@ -29,7 +29,6 @@
             </span>
             <ul *ngIf="project&&project.user&&project.user.id===authUserId" class="dropdown-menu dropdown-menu-right">
               <li><a (click)="assignUser(task)">Закрепиться</a></li>
-              <li><a href="#">Закрепить пользователя(*)</a></li>
             </ul>
           </div>
         </div>
@@ -84,5 +83,5 @@
 </div>
 
 <!-- Modal window for show details about selected task-->
-<ws-task-with-details [selectTask]="selectTask" [makerProjectId]="project&&project.user&&project.user.id"
+<ws-task-with-details [selectTask]="selectTask" [makerProjectId]="project&&project.user&&project.user.id" [team]="project&&project.teams"
                       (onClose)="closeDetailWindow()"></ws-task-with-details>

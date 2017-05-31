@@ -33,6 +33,16 @@ export class UserDataService {
     });
   }
 
+  public getUsersByUsername(username: string): Observable<Array<User>> {
+    this.setCurrentTokenInHeader();
+    return this.http.get(this.url + 'user/find/' + username,
+      this.requestArgs).map((resp) => {
+      return resp.json();
+    }).catch((error: Response) => {
+      return Observable.throw(error.status);
+    });
+  }
+
   public addContact(contact: Contact) {
     this.setCurrentTokenInHeader();
     return this.http.post(this.url + 'contact', JSON.stringify(contact),

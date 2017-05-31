@@ -36,6 +36,7 @@
 
 .line:hover {
     opacity: 0.95;
+  cursor: pointer;
 }
 
 .sandwich {

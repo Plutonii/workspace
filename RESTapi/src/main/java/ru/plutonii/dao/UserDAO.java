@@ -11,6 +11,7 @@ public interface UserDAO {
     User insertOrUpdate(User user);
     void delete(User user);
     List<User> findAll();
+    List<User> findByUserNameFirstFive(String username);
     User findById(int id);
     User findByUsername(String username);
     User findByEmail(String email);

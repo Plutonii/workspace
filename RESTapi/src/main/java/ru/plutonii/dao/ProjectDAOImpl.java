@@ -8,8 +8,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ru.plutonii.exception.ProjectNotFound;
 import ru.plutonii.model.Project;
+import ru.plutonii.model.Team;
 import ru.plutonii.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**

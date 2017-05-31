@@ -67,4 +67,12 @@ public class UserDAOImpl implements UserDAO {
                 .setParameter("email", email)
                 .uniqueResult();
     }
+
+    @Override
+    public List<User> findByUserNameFirstFive(String username) {
+        username += '%';
+        return getCurrentSession().createQuery("from user u where u.username LIKE :username")
+                .setMaxResults(5)
+                .setParameter("username", username).list();
+    }
 }

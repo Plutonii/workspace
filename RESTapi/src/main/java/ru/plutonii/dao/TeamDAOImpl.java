@@ -20,11 +20,11 @@ public class TeamDAOImpl implements TeamDAO {
     private SessionFactory sessionFactory;
 
     @Autowired
-    TeamDAOImpl(SessionFactory sessionFactory){
+    TeamDAOImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    private Session getCurrentSession(){
+    private Session getCurrentSession() {
         return this.sessionFactory.getCurrentSession();
     }
 
@@ -50,5 +50,12 @@ public class TeamDAOImpl implements TeamDAO {
         List<Team> userList = getCurrentSession().createQuery("from team t where t.projectId = :id")
                 .setParameter("id", id).list();
         return userList;
+    }
+
+    @Override
+    public List<Team> findByUserId(int id) {
+        List<Team> teams = getCurrentSession().createQuery("from team t where t.user = :user")
+                .setParameter("user", new User(id)).list();
+        return teams;
     }
 }

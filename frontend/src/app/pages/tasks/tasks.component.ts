@@ -39,6 +39,13 @@ export class TasksComponent implements OnInit, OnDestroy {
                 if (!this.project) {
                     this.projectService.getProjectById(params['id']).subscribe((project) => {
                         this.project = project;
+                        this.projectService.getTeamByProjectId(this.project.id).subscribe((users) => {
+                        this.project.teams = users;
+                      }, (errorStatusCode: number) => {
+                        if (errorStatusCode === 401) {
+                          this.userAccess.accessDenied();
+                        }
+                      });
                     }, (errorStatusCode: number) => {
                         if (errorStatusCode === 401){
                             this.userAccess.accessDenied();

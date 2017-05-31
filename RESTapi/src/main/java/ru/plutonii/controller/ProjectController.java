@@ -31,7 +31,7 @@ public class ProjectController {
     @GetMapping(path = "/project/userid/{id}")
     @ResponseBody
     List<Project> getProjectsByUserId(@PathVariable(name = "id") int id){
-        return projectService.findByUserId(id);
+        return projectService.findAllProjectsByUserId(id);
     }
 
     @PostMapping("/project")

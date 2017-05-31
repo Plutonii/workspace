@@ -21,7 +21,7 @@ export class ProjectComponent implements OnInit {
   @Input()
   project: Project;
 
-  private contacts: Array<Object>;
+  private contacts: Array<any>;
 
   constructor(private router: Router,
               private dataLoader: ProjectService,
@@ -71,15 +71,44 @@ export class ProjectComponent implements OnInit {
   }
 
   changedMember(friend) {
-
+    if (friend.isTeam) {
+      this.removeUserFromProject(friend.contact);
+    } else {
+      this.addUsersInProject(friend.contact);
+    }
   }
 
-  removeUserFromProject(user){
-    this.dataLoader
+  removeUserFromProject(user: User) {
+    this.dataLoader.removeTeam(this.project.id, user.id).subscribe(() => {
+      const indexContact = this.contacts.findIndex((value) => {
+        if (value.contact.id === user.id) return true;
+      });
+      this.contacts[indexContact].isTeam = false;
+      const indexTeam = this.project.teams.findIndex((value) => {
+        if (value.id === user.id) return true;
+      });
+      this.project.teams.splice(indexTeam, 1);
+      this.project.numberOfUsers--;
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
   }
 
-  addUsersInProject() {
-
+  addUsersInProject(user: User) {
+    this.dataLoader.addUserToProject(this.project.id, user).subscribe(() => {
+      const indexContact = this.contacts.findIndex((value) => {
+        if (value.contact.id === user.id) return true;
+      });
+      this.contacts[indexContact].isTeam = true;
+      this.project.teams.push(user);
+      this.project.numberOfUsers++;
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
   }
 
   get numberOfAllTasks(): number {

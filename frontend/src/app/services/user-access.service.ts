@@ -25,12 +25,6 @@ export class UserAccessService {
     /*this.url = 'http://plutonii.ru:8888/workspace/access/';*/
     this.url = 'http://localhost:8080/access/';
     this.contacts = [];
-    /*setInterval(() => {
-      console.log("this.user.contactsId");
-      console.dir(this.user.contactsId);
-      console.log("this.contacts");
-      console.dir(this.contacts);
-    }, 5000);*/
   }
 
   public init(): boolean {
