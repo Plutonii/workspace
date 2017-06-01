@@ -3,7 +3,8 @@ import {Task} from "../../../../models/task";
 import {UserAccessService} from "../../../../services/user-access.service";
 import {Project} from "../../../../models/project";
 import {TaskService} from "../../../../services/task.service";
-declare let $:any;
+import {Router} from "@angular/router";
+declare let $: any;
 
 
 @Component({
@@ -27,9 +28,15 @@ export class FirstViewComponent implements OnInit {
   @Input()
   private project: Project;
 
+  private fieldComplete: string;
+  private fieldBoolean: boolean;
+
   constructor(private userAccess: UserAccessService,
-              private taskService: TaskService) {
+              private taskService: TaskService,
+              private router: Router) {
     this.newTask = new Task();
+    this.fieldComplete = '';
+    this.fieldBoolean = true;
   }
 
   ngOnInit() {
@@ -86,5 +93,12 @@ export class FirstViewComponent implements OnInit {
     });
   }
 
-
+  changeFilter(is: boolean) {
+    if (is === null) {
+      this.fieldComplete = '';
+    } else {
+      this.fieldComplete = 'completed';
+      this.fieldBoolean = is;
+    }
+  }
 }

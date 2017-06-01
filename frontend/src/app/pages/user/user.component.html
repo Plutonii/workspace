@@ -1,27 +1,52 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-10 col-lg-8 col-sm-offset-1 col-md-offset-1 col-lg-offset-2">
-      <section class="user" *ngIf="user">
+      <section class="user">
         <div class="row">
-          <div class="col-sm-10">
+          <div class="col-sm-12">
+            <div class="user-info2">
+            </div>
             <div class="user-head">
-              <div class="avatar"></div>
-              <h3 class="username">{{user.username}}</h3>
+              <div class="avatar">
+                <div class="user-info2">
+                  <div class="user-info-avatar2" id="avatar2"></div>
+                  <div class="user-info-name2" id="name2"></div>
+                </div>
+              </div>
+              <!--<h3 class="username">{{user.username}}</h3>-->
               <!--<button type="button" *ngIf="authUserId===user.id">Редактировать(*)</button>-->
-              <button type="button" *ngIf="authUserId!==user.id&&!isFriend" (click)="friends()">Добавить в контакты
-              </button>
-              <button type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">Удалить из
-                друзей
-              </button>
-              <div class="user-body">
-                    <span class="counters">
+              <ng-container *ngIf="user">
+                <div class="user-body">
+                  <span class="counters">
+                    <p class="lead">Количество задач, в которых <strong>{{user.username}}</strong> принял участие: <strong>{{user.numberOfTasks}}</strong></p>
+                    <p class="lead">Из них успешно завершено <strong>{{user.numberOfCompletedTasks}}</strong> задач.</p>
+                    <p class="lead">Пользователь состоит в <strong>{{user.numberOfProjects}}</strong> проектах.</p>
+                  </span>
+                  <button class="btn btn-success" type="button" *ngIf="authUserId!==user.id&&!isFriend" (click)="friends()">Добавить в контакты
+                  </button>
+                  <button class="btn btn-danger" type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">Удалить из
+                    друзей
+                  </button>
+                </div>
+              </ng-container>
+              <!--<div class="last-activity">Последняя активность 17:26 2017-01-21</div>-->
+            </div>
+            <!--<h3>
+              {{user.username}}
+              <h5>
+                <button class="btn btn-success" type="button" *ngIf="authUserId!==user.id&&!isFriend" (click)="friends()">
+                  Добавить в контакты
+                </button>
+                <button class="btn btn-danger" type="button" *ngIf="authUserId!==user.id&&isFriend" (click)="removeFromFriend()">
+                  Удалить из друзей
+                </button>
+              </h5>
+            </h3>
+            <span class="counters">
                       <p>Количество задач, в которых {{user.username}} принял участие: {{user.numberOfTasks}}</p>
                       <p>Из них успешно завершено {{user.numberOfCompletedTasks}} задач.</p>
                       <p>Пользователь состоит в {{user.numberOfProjects}} проектах.</p>
-                    </span>
-              </div>
-              <!--<div class="last-activity">Последняя активность 17:26 2017-01-21</div>-->
-            </div>
+            </span>-->
           </div>
         </div>
       </section>

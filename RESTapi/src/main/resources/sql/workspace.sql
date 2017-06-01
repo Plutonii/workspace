@@ -31,7 +31,7 @@ CREATE TABLE `contact` (
   KEY `fk_contacts_2_idx` (`contact_id`),
   CONSTRAINT `fk_contacts_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_contacts_2` FOREIGN KEY (`contact_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
+INSERT INTO `contact` VALUES (48,799,3),(49,799,793),(50,799,798),(57,798,799),(60,798,796),(66,798,801),(72,798,794),(73,792,801),(74,792,802),(75,792,800),(79,803,3),(80,803,802),(81,803,800),(82,803,792);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +59,7 @@ CREATE TABLE `label` (
   PRIMARY KEY (`id`),
   KEY `project_idx` (`projectId`),
   CONSTRAINT `project` FOREIGN KEY (`projectId`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,7 +68,7 @@ CREATE TABLE `label` (
 
 LOCK TABLES `label` WRITE;
 /*!40000 ALTER TABLE `label` DISABLE KEYS */;
-INSERT INTO `label` VALUES (2,'rdh3333grdh',2,60),(3,'rdh3333grdh',2,60),(4,'rdh3333grdh',2,60),(5,'rdh3333grdh',2,60),(6,'rdh3333grdh',2,60),(7,'333',2,60),(8,'rdh3333grdh',2,60),(9,'rdh3333grdh',2,60),(10,'rdh3333grdh',2,60),(11,'rdh3333grdh',2,60),(12,'rdh3333grdh',2,60);
+INSERT INTO `label` VALUES (43,'ukh',2,69),(44,'iuiuk',2,69),(45,'6767',5,69),(46,'',3,69),(47,'5656',2,69),(48,'456456',3,69),(49,'rtt',1,68),(50,'1414',2,69);
 /*!40000 ALTER TABLE `label` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +88,7 @@ CREATE TABLE `labeltasks` (
   KEY `task_idx` (`taskId`),
   CONSTRAINT `label` FOREIGN KEY (`labelId`) REFERENCES `label` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `task` FOREIGN KEY (`taskId`) REFERENCES `task` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +97,7 @@ CREATE TABLE `labeltasks` (
 
 LOCK TABLES `labeltasks` WRITE;
 /*!40000 ALTER TABLE `labeltasks` DISABLE KEYS */;
-INSERT INTO `labeltasks` VALUES (1,2,18);
+INSERT INTO `labeltasks` VALUES (151,43,47),(152,44,47),(153,45,47),(154,45,48),(155,44,46),(156,44,48),(157,49,44);
 /*!40000 ALTER TABLE `labeltasks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -119,7 +120,7 @@ CREATE TABLE `project` (
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `fk_project_1_idx` (`user_id`),
   CONSTRAINT `fk_project_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=63 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -128,7 +129,7 @@ CREATE TABLE `project` (
 
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
-INSERT INTO `project` VALUES (60,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',792,3,1,2),(62,'erg','ghvgh',792,1,0,1);
+INSERT INTO `project` VALUES (63,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',793,3,1,2),(64,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',794,3,1,2),(65,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',795,3,1,2),(66,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',796,3,1,2),(67,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',797,3,1,2),(68,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',798,3,1,2),(69,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',799,5,2,3),(70,'Первый проект','Это ваш первый проект, в котором вы являетесь администратором. Для открытия проекта щелкните по его названию',803,3,1,5),(75,'6666666',NULL,792,NULL,NULL,3),(76,'7777','777',792,NULL,NULL,1),(77,'333','333',792,NULL,NULL,1);
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +152,7 @@ CREATE TABLE `task` (
   KEY `project` (`project_id`),
   CONSTRAINT `fk_task_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_task_user` FOREIGN KEY (`maker_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -160,7 +161,7 @@ CREATE TABLE `task` (
 
 LOCK TABLES `task` WRITE;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
-INSERT INTO `task` VALUES (18,'Задача номер Раз','Чужая выполненная задача',3,60,1),(19,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',792,60,0),(20,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,60,0),(22,'eefsf','efxfexf',NULL,62,0);
+INSERT INTO `task` VALUES (28,'Задача номер Раз','Чужая выполненная задача',3,63,1),(29,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',793,63,0),(30,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,63,0),(31,'Задача номер Раз','Чужая выполненная задача',3,64,1),(32,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',794,64,0),(33,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,64,0),(34,'Задача номер Раз','Чужая выполненная задача',3,65,1),(35,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',795,65,0),(36,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,65,0),(37,'Задача номер Раз','Чужая выполненная задача',3,66,1),(38,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',796,66,0),(39,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,66,0),(40,'Задача номер Раз','Чужая выполненная задача',3,67,1),(41,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',797,67,0),(42,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,67,0),(43,'Задача номер Раз','Чужая выполненная задача',3,68,1),(44,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',3,68,0),(45,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',NULL,68,0),(46,'Задача номер Раз','Чужая выполненная задача',799,69,0),(47,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',799,69,0),(48,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',798,69,1),(49,'123123','123123123',3,69,1),(50,'etrd','rdtrdt',798,69,0),(51,'Задача номер Раз','Чужая выполненная задача',3,70,1),(52,'Задача номер Два','Это ваша задача (вы за ней закреплены). Сделайте задачу \"выполненной\"(с помощью меню вправом верхнем углу текущего окна)',803,70,0),(53,'Задача номер Три','Это свободная задача. Закрепитесь за ней ивыполните её',792,70,0);
 /*!40000 ALTER TABLE `task` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -185,7 +186,7 @@ SET @count_completed =
 	update user_profile set number_of_tasks = @count_user_tasks where user_profile.user_id = new.maker_id;
 	SET @count_user_completed_tasks =
 	(select count('id') from task where completed = 1 AND maker_id = NEW.maker_id);
-	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;
+	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;	
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -214,7 +215,7 @@ BEGIN
 	update user_profile set number_of_tasks = @count_user_tasks where user_profile.user_id = new.maker_id;
 	SET @count_user_completed_tasks =
 	(select count('id') from task where  completed = 1 AND maker_id = NEW.maker_id);
-	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;
+	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = new.maker_id;	
 END */;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -243,7 +244,7 @@ SET @count_completed =
 	update user_profile set number_of_tasks = @count_user_tasks where user_profile.user_id = old.maker_id;
 	SET @count_user_completed_tasks =
 	(select count('id') from task where  completed = 1 AND maker_id = OLD.maker_id);
-	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = old.maker_id;
+	update user_profile set number_of_completed_tasks = @count_user_completed_tasks where user_profile.user_id = old.maker_id;	
 
 END */;;
 DELIMITER ;
@@ -269,7 +270,7 @@ CREATE TABLE `team` (
   KEY `fk_team_user_idx` (`user_id`),
   CONSTRAINT `fk_team_project` FOREIGN KEY (`project_id`) REFERENCES `project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_team_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +279,7 @@ CREATE TABLE `team` (
 
 LOCK TABLES `team` WRITE;
 /*!40000 ALTER TABLE `team` DISABLE KEYS */;
-INSERT INTO `team` VALUES (53,60,792),(54,60,3),(56,62,792);
+INSERT INTO `team` VALUES (57,63,793),(58,63,3),(59,64,794),(60,64,3),(61,65,795),(62,65,3),(63,66,796),(64,66,3),(65,67,797),(66,67,3),(67,68,798),(68,68,3),(69,69,799),(87,69,3),(89,69,798),(90,70,803),(91,70,3),(92,70,802),(93,70,800),(94,70,792),(102,75,792),(103,75,801),(104,76,792),(105,77,792),(109,75,802);
 /*!40000 ALTER TABLE `team` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -292,7 +293,7 @@ UNLOCK TABLES;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `workspace`.`team_AFTER_INSERT` AFTER INSERT ON `team` FOR EACH ROW
 BEGIN
-	UPDATE `project` SET number_of_users =
+	UPDATE `project` SET number_of_users = 
     (select count(id) from team where project_id = NEW.project_id)
     where id = NEW.project_id;
 	SET @count_user_project =
@@ -315,7 +316,7 @@ DELIMITER ;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `workspace`.`team_AFTER_DELETE` AFTER DELETE ON `team` FOR EACH ROW
 BEGIN
-	UPDATE `project` SET number_of_users =
+	UPDATE `project` SET number_of_users = 
     (select count(id) from team where project_id = OLD.project_id)
     where id = OLD.project_id;
 END */;;
@@ -340,7 +341,7 @@ CREATE TABLE `token` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
   CONSTRAINT `fk_token_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -349,7 +350,7 @@ CREATE TABLE `token` (
 
 LOCK TABLES `token` WRITE;
 /*!40000 ALTER TABLE `token` DISABLE KEYS */;
-INSERT INTO `token` VALUES (23,792,'UzWwL2uunVcYnzufQTdlPU0be0EQK5u65R9Aq','2017-05-26 13:29:28');
+INSERT INTO `token` VALUES (25,794,'iWeXyY9tqqRPFXn5n3rbfsDLC2TyQ1pVnRRmi','2017-05-29 13:27:01'),(26,795,'GMHRcc57gRGM6FEbnhiHXUbLfMlJCKHefgeMl','2017-05-29 13:29:42'),(27,796,'YkyafSOtjMe9d0dFYEB5eoh8l5Wt2MFQaI7sf','2017-05-29 13:30:34'),(28,797,'apIyeqtMa26riKvC8bmdV6nOr6Q6cTHDHbDI5','2017-05-29 13:32:15'),(37,792,'GsSx1dpV6kSJ7TskftM58YELkO4IG9XAunuBi','2017-06-01 11:37:46');
 /*!40000 ALTER TABLE `token` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +369,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=793 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=804 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -377,7 +378,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (3,'bot','bot',NULL),(792,'plutonii','12345','roman1.kreidich@yandex.ru');
+INSERT INTO `user` VALUES (3,'bot','bot',NULL),(792,'plutonii','12345','roman1.kreidich@yandex.ru'),(793,'11111','11111','1111111@ttt.ttt'),(794,'22222','22222','33333@dd.uu'),(795,'33333','33333','3333@ff.ff'),(796,'232323','232323','232323@wd.df'),(797,'rrrrrrr','rrrrrrr','gfhj@gdrhd.fe'),(798,'aaaaa','aaaaa','rdgrd@rgfdgd.tdhg'),(799,'7777777','7777777','gyfjgj@rgdg.jyf'),(800,'ffFff','fd','dfd'),(801,'fffefef','fd','f'),(802,'ffffefefefef','fd','fe'),(803,'88888','88888','riomarewrer@resfes.fe');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -424,7 +425,7 @@ CREATE TABLE `user_profile` (
 
 LOCK TABLES `user_profile` WRITE;
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
-INSERT INTO `user_profile` VALUES (3,NULL,1,1,1,NULL),(792,NULL,2,0,2,NULL);
+INSERT INTO `user_profile` VALUES (3,NULL,10,9,9,NULL),(792,NULL,10,6,4,NULL),(793,NULL,1,0,2,NULL),(794,NULL,1,0,1,NULL),(795,NULL,1,0,1,NULL),(796,NULL,1,0,1,NULL),(797,NULL,1,0,1,NULL),(798,NULL,4,1,2,NULL),(799,NULL,3,0,1,NULL),(800,NULL,0,0,2,NULL),(801,NULL,0,0,1,NULL),(802,NULL,0,0,2,NULL),(803,NULL,1,0,1,NULL);
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -437,4 +438,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-26 17:04:01
+-- Dump completed on 2017-06-01 13:07:07

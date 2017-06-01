@@ -8,6 +8,7 @@ import {LabelService} from "../../../../services/label.service";
 import {main} from "@angular/compiler-cli/src/main";
 import {LabelTasks} from "../../../../models/labeltasks";
 import {tokenReference} from "@angular/compiler";
+import {Router} from "@angular/router";
 declare let $: any;
 
 @Component({
@@ -28,11 +29,12 @@ export class TaskWithDetailsComponent implements OnInit {
   private showNewLabel: boolean;
   private newLabel: Label;
   private authUserId: number;
-  private isShowEditingLabel:boolean;
+  private isShowEditingLabel: boolean;
 
   constructor(private taskService: TaskService,
               private userAccess: UserAccessService,
-              private labelService: LabelService) {
+              private labelService: LabelService,
+              private router: Router) {
     this.labels = [];
     this.selectedIdforLabels = [];
     this.authUserId = this.userAccess.getUserId();
@@ -112,8 +114,42 @@ export class TaskWithDetailsComponent implements OnInit {
       if (this.makerProjectId === this.authUserId) {
         this.isShowEditingLabel = true;
       } else this.isShowEditingLabel = !!(this.selectTask.user && this.selectTask.user.id === this.authUserId);
+      if (this.selectTask.user.id) {
+        let letter = this.selectTask.user.username.substr(0, 2);
+        let backgroundColour = this.stringToColor(this.selectTask.user.username);
+        let elementAvatar = document.getElementById('avatar1');
+        let elementName = document.getElementById('name1');
+        elementName.innerHTML = this.selectTask.user.username;
+        elementAvatar.innerHTML = letter;
+        elementAvatar.style.backgroundColor = backgroundColour;
+      }
     });
   }
+
+  stringToColor(str) {
+    let hash = 0;
+    let color = '#';
+    let i;
+    let value;
+    let strLength;
+
+    if (!str) {
+      return color + '333333';
+    }
+
+    strLength = str.length;
+
+    for (i = 0; i < strLength; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    for (i = 0; i < 3; i++) {
+      value = (hash >> (i * 8)) & 0xFF;
+      color += ('00' + value.toString(16)).substr(-2);
+    }
+
+    return color;
+  };
 
   private getAllLabelsForProject() {
     function getColourById(id: number): string {
@@ -227,6 +263,15 @@ export class TaskWithDetailsComponent implements OnInit {
         this.selectTask.user = task1.user;
         if (userId === this.authUserId) this.isShowEditingLabel = true;
         if (this.makerProjectId === this.authUserId) this.isShowEditingLabel = true;
+        if (this.selectTask.user) {
+          let letter = this.selectTask.user.username.substr(0, 2);
+          let backgroundColour = this.stringToColor(this.selectTask.user.username);
+          let elementAvatar = document.getElementById('avatar1');
+          let elementName = document.getElementById('name1');
+          elementName.innerHTML = this.selectTask.user.username;
+          elementAvatar.innerHTML = letter;
+          elementAvatar.style.backgroundColor = backgroundColour;
+        }
       });
     }, (errorStatusCode: number) => {
       if (errorStatusCode === 401) {
@@ -262,6 +307,11 @@ export class TaskWithDetailsComponent implements OnInit {
      div.style.width = 'auto';
      div.appendChild(document.createTextNode('Я обычный текст'));
      document.body.appendChild(div);*/
+  }
+
+  openUser(id: number) {
+    this.router.navigate(['/pages/user/' + id]);
+    $('#taskWithDetails').modal('hide');
   }
 
 }

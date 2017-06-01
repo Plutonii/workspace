@@ -92,14 +92,3 @@
     overflow: auto;
     min-height: 58px;
 }
-
-.user-item {
-  padding: 20px;
-  margin: 5px;
-  background-color: #e6ffe3;
-  border-radius: 15px;
-}
-
-.user-item:hover {
-  background-color: #f4ffd5;
-}

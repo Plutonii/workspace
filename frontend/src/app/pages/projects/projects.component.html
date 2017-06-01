@@ -2,48 +2,78 @@
     <span class="new-project-button" data-toggle="modal" data-target="#modalOfFormNewProject">
         Создать новый проект...
     </span>
-    <div class="filter"></div>
+  <div class="filter"></div>
 </div>
 <div class="container-fluid">
-    <div class="rows">
-        <ws-project *ngFor="let projectSingle of projects" [project]="projectSingle"></ws-project>
-    </div>
+  <div class="rows">
+    <ws-project *ngFor="let projectSingle of projects" (onShow)="showing($event)" [project]="projectSingle"></ws-project>
+  </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="modalOfFormNewProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                            #closeModal>&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Создание нового проекта</h4>
-                </div>
-                <div class="modal-body">
-                    <form role="form" class="form-horizontal" (ngSubmit)="createProject()">
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="title-of-project">Название проект</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="title-of-project"
-                                       name="title-of-project" required [(ngModel)]="newProject.title" #newTitle>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-3" for="description-of-project">Описание</label>
-                            <div class="col-sm-9">
+  <!-- Modal -->
+  <div class="modal fade" id="modalOfFormNewProject" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                  #closeModal>&times;
+          </button>
+          <h4 class="modal-title" id="myModalLabel">Создание нового проекта</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" class="form-horizontal" (ngSubmit)="createProject()">
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="title-of-project">Название проект</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" id="title-of-project"
+                       name="title-of-project" required [(ngModel)]="newProject.title" #newTitle>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3" for="description-of-project">Описание</label>
+              <div class="col-sm-9">
                             <textarea class="form-control" id="description-of-project"
                                       name="title-of-project" [(ngModel)]="newProject.description"></textarea>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
-                    <button type="submit" class="btn btn-success" (click)="createProject()"
-                            [disabled]="newTitle.value===''">Создать
-                    </button>
-                </div>
+              </div>
             </div>
+          </form>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Отмена</button>
+          <button type="submit" class="btn btn-success" (click)="createProject()"
+                  [disabled]="newTitle.value===''">Создать
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="modal" id="modalOfContacts" tabindex="-1" role="dialog" aria-labelledby="myModalLabels"
+       aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabels">Пользователи проекта</h4>
+        </div>
+        <div class="modal-body">
+          <p>Ваши пользователи из списка контактов, которые состоят в команде проекта.</p>
+          <form role="form" class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-8 col-sm-offset-2" *ngFor="let friend of contacts">
+                <div class="user-item">
+                  <input type="checkbox" [checked]="friend.isTeam" value="{{friend.contact.id}}"
+                         (change)="changedMember(friend)" />
+                  {{friend.contact.username}}
+                </div>
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

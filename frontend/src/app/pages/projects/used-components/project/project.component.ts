@@ -1,10 +1,11 @@
-import {Component, OnInit, ViewChild, ElementRef, Input} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter} from '@angular/core';
 import {Project} from "../../../../models/project";
 import {Router} from "@angular/router";
 import {ProjectService} from "../../../../services/project.service";
 import {UserAccessService} from "../../../../services/user-access.service";
 import {EventListenerService} from "../../../../services/event-listener.service";
 import {User} from "../../../../models/user";
+declare let $: any;
 
 @Component({
   selector: 'ws-project',
@@ -17,6 +18,8 @@ export class ProjectComponent implements OnInit {
   progressBar: ElementRef;
 
   private authUserId: number;
+
+  @Output() onShow = new EventEmitter();
 
   @Input()
   project: Project;
@@ -44,24 +47,15 @@ export class ProjectComponent implements OnInit {
   }
 
   ngOnInit() {
+    //когда открывается ставим событие на открытие модалки и только тогда обнавляем контакты и друья
+    //Только проверь преждевременно, действительно ли баг в этом (т.е. установи причину бага).
     this.controlProgressBar();
-    this.dataLoader.getTeamByProjectId(this.project.id).subscribe((users) => {
-      this.project.teams = users;
-      this.userAccess.getContacts().forEach((value) => {
 
-        let ifFound = this.project.teams.find((valueIn) => {
-          if (valueIn.id === value.id) return true;
-        });
-        if (ifFound) {
-          this.contacts.push({"contact": value, "isTeam": true});
-        } else {
-          this.contacts.push({"contact": value, "isTeam": false});
-        }
-      });
-    }, (errorStatusCode: number) => {
-      if (errorStatusCode === 401) {
-        this.userAccess.accessDenied();
-      }
+    $('#modalOfContacts').on('hidden.bs.modal', () => {
+      /*this.contacts.forEach((value) => {
+       console.dir(value.isTeam);
+       });
+       console.dir(this.project.teams);*/
     });
   }
 
@@ -70,7 +64,7 @@ export class ProjectComponent implements OnInit {
     this.router.navigate(['/pages/project', this.project.id]);
   }
 
-  changedMember(friend) {
+  /*changedMember(friend) {
     if (friend.isTeam) {
       this.removeUserFromProject(friend.contact);
     } else {
@@ -109,7 +103,7 @@ export class ProjectComponent implements OnInit {
         this.userAccess.accessDenied();
       }
     });
-  }
+  }*/
 
   get numberOfAllTasks(): number {
     return this.project.numberOfTasks;
@@ -127,6 +121,34 @@ export class ProjectComponent implements OnInit {
         this.userAccess.accessDenied();
       }
     });
+  }
+
+  showAllContacts() {
+    $('#modalOfContacts').modal('show');
+    this.dataLoader.getTeamByProjectId(this.project.id).subscribe((users) => {
+      this.project.teams = users;
+      this.contacts = [];
+      this.userAccess.getContacts().forEach((value) => {
+        let ifFound = this.project.teams.find((valueIn) => {
+          if (valueIn.id === value.id) return true;
+        });
+        if (ifFound) {
+          this.contacts.push({"contact": value, "isTeam": true});
+        } else {
+          this.contacts.push({"contact": value, "isTeam": false});
+        }
+      });
+      const emmiter = {
+        "contacts": this.contacts,
+        "project": this.project
+      };
+      this.onShow.emit(emmiter);
+    }, (errorStatusCode: number) => {
+      if (errorStatusCode === 401) {
+        this.userAccess.accessDenied();
+      }
+    });
+
   }
 
 }

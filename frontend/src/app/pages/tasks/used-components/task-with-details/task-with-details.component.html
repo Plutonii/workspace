@@ -45,14 +45,18 @@
                 <div class="block-body">
                   <div *ngIf="selectTask.user.id; else assign_yourself" class="user" data-toggle="tooltip"
                        title="@{{selectTask.user.username}}">
-                    <div class="avatar">
+                    <div (click)="openUser(selectTask.user.id)" class="user-info1">
+                      <div class="user-info-avatar1" id="avatar1"></div>
+                      <div class="user-info-name1" id="name1"></div>
+                    </div>
+                    <!--<div class="avatar">
                       <img src="https://pp.userapi.com/c637728/v637728858/156b3/v4yQ7O8VWgg.jpg"
                            class="img-responsive img-circle">
-                    </div>
-                    <div class="username">
-                      <div>Имя</div>
-                      <div>@{{selectTask.user.username}}</div>
-                    </div>
+                    </div>-->
+                    <!--<div class="username">
+                      &lt;!&ndash;<div>Имя</div>&ndash;&gt;
+                      <div (click)="openUser(selectTask.user.id)">@{{selectTask.user.username}}</div>
+                    </div>-->
                   </div>
                   <ng-template #assign_yourself>
                     <div class="not-user">

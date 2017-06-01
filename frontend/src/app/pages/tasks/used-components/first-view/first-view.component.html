@@ -4,13 +4,22 @@
             <span class="glyphicon glyphicon-arrow-left" data-toggle="tooltip" data-placement="left" title="Назад"
                   routerLink="/pages/projects"></span>
       <h3>{{project&&project.title||"Загрузка..."}}</h3>
+      <div (click)="changeFilter(true);" class="not-completed filter-nc">
+        <div></div>
+      </div>
+      <div (click)="changeFilter(false);" class="completed filter-c">
+        <div></div>
+      </div>
+      <div (click)="changeFilter(null);"class="completed filter-all">
+        <div></div>
+      </div>
     </div>
     <ul>
       <li *ngIf="project&&project.user&&project.user.id==authUserId" data-toggle="modal"
           data-target="#modalOfFormNewTask" (click)="openAddNewTask()">
         <span class="glyphicon glyphicon-plus"></span> Добавить новую задачу...
       </li>
-      <li *ngFor="let task of tasks" [ngClass]="{'selected': selectTask&&selectTask.id===task.id}">
+      <li *ngFor="let task of tasks|filterTasks:fieldComplete:fieldBoolean" [ngClass]="{'selected': selectTask&&selectTask.id===task.id}">
         <div class="single-task">
           <div [ngClass]="{'not-completed': !task.completed, 'completed': task.completed}">
             <div></div>
@@ -19,7 +28,7 @@
                data-placement="left" title="Показать детали">{{task.title}}
           </div>
           <div *ngIf="task.user.id" class="user-maker" [ngClass]="{'my-task':task.user.id===authUserId}">
-            <b>{{task.user.username}}</b>
+            <b (click)="router.navigate(['/pages/user/' + task.user.id]);">{{task.user.username}}</b>
           </div>
           <div *ngIf="!task.user.id" class="user-maker" data-toggle="tooltip" data-placement="left" title="Закрепиться">
             <span *ngIf="project&&project.user&&project.user.id!==authUserId" class="glyphicon glyphicon-plus-sign"

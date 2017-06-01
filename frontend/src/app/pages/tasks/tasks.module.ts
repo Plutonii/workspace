@@ -9,11 +9,12 @@ import {ViewDetailsOfTaskComponent} from './used-components/view-details-of-task
 import {TaskService} from "../../services/task.service";
 import {TaskWithDetailsComponent} from "./used-components/task-with-details/task-with-details.component";
 import {LabelService} from "../../services/label.service";
+import {FilterTasks} from "../../services/filterTasks";
 
 @NgModule({
   imports: [routing, CommonModule, FormsModule],
   declarations: [TasksComponent, FirstViewComponent, SecondViewComponent,
-    ViewDetailsOfTaskComponent, TaskWithDetailsComponent],
+    ViewDetailsOfTaskComponent, TaskWithDetailsComponent, FilterTasks],
   providers: [TaskService, LabelService]
 })
 export class TasksModule {

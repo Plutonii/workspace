@@ -58,7 +58,6 @@ export class ContactsComponent implements OnInit {
           this.foundUsers.push({"user": value, "isFriend": false});
         }
       });
-      console.dir(this.foundUsers);
     }, (errorStatusCode: number) => {
       if (errorStatusCode === 401) {
         this.userAccess.accessDenied();

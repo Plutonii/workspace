@@ -184,3 +184,22 @@ ul {
 .form-for-new-label {
   list-style-type: none;
 }
+
+.user-info1 {
+
+}
+
+.user-info-avatar1 {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-right: 10px;
+  color: white;
+}
+
+.user-info-name1 {
+  display: inline-block;
+}

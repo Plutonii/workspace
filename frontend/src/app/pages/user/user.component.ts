@@ -22,6 +22,7 @@ export class UserComponent implements OnInit, OnDestroy {
   constructor(private userAccess: UserAccessService,
               private userDataLoader: UserDataService,
               private activateRoute: ActivatedRoute) {
+
   }
 
   ngOnInit() {
@@ -30,6 +31,13 @@ export class UserComponent implements OnInit, OnDestroy {
       this.userDataLoader.getUserProfileById(params['id']).subscribe((userProfile: UserProfile) => {
         this.user = userProfile;
         this.isFriend = this.userAccess.isFriend(this.user.id);
+        let letter = this.user.username.substr(0, 3);
+        let backgroundColour = this. stringToColor(this.user.username);
+        let elementAvatar = document.getElementById('avatar2');
+        let elementName = document.getElementById('name2');
+        elementName.innerHTML = this.user.username;
+        elementAvatar.innerHTML = letter;
+        elementAvatar.style.backgroundColor = backgroundColour;
       }, (error) => {
         if (error === 401) {
           this.userAccess.accessDenied();
@@ -37,6 +45,31 @@ export class UserComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  stringToColor(str) {
+    let hash = 0;
+    let color = '#';
+    let i;
+    let value;
+    let strLength;
+
+    if(!str) {
+      return color + '333333';
+    }
+
+    strLength = str.length;
+
+    for (i = 0; i < strLength; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    for (i = 0; i < 3; i++) {
+      value = (hash >> (i * 8)) & 0xFF;
+      color += ('00' + value.toString(16)).substr(-2);
+    }
+
+    return color;
+  };
 
   ngOnDestroy() {
     this.subscriptionOnParamsUrl.unsubscribe();

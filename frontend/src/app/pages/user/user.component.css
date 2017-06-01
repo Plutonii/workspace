@@ -18,7 +18,7 @@
 .avatar {
     height: 200px;
     width: 200px;
-    background-color: green;
+    ///background-color: green;
 }
 
 .username {
@@ -40,7 +40,29 @@
 
 .user-body {
   position: absolute;
-  top: 30px;
+  top: 7px;
   left: 240px;
   margin: 0;
+}
+
+user-info2 {
+
+}
+
+.user-info-avatar2 {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+  line-height: 30px;
+  border-radius: 100px;
+  text-align: center;
+  margin-right: 10px;
+  color: white;
+  font-size: 50px;
+  padding-top: 80px;
+}
+
+.user-info-name2 {
+  display: none;
+  font-size: 30px;
 }
